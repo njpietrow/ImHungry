@@ -18,6 +18,16 @@ public class Restaurant extends Result {
 		this.phoneNum = phoneNum;
 		this.priceRange = priceRange;
 	}
+	
+	public Restaurant(String name, double distance, String address, int priceRange) {
+		super.setName(name);
+		driveTime = -1;
+		this.distance = distance;
+		websiteURL = null;
+		this.address = address;
+		phoneNum = null;
+		this.priceRange = priceRange;
+	}
 
 	public int getDriveTime() {
 		return driveTime;
