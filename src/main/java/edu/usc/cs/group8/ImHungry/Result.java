@@ -1,4 +1,4 @@
-package classes;
+package edu.usc.cs.group8.ImHungry;
 
 public abstract class Result {
 	

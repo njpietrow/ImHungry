@@ -1,4 +1,4 @@
-package classes;
+package edu.usc.cs.group8.ImHungry;
 
 public class Restaurant extends Result {
 

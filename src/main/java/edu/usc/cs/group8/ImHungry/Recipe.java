@@ -1,4 +1,4 @@
-package classes;
+package edu.usc.cs.group8.ImHungry;
 import java.util.ArrayList;
 
 public class Recipe extends Result {
