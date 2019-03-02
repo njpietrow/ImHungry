@@ -1,8 +1,23 @@
 @charset "UTF-8";
 .btn-group-vertical {
+	top:100px !important;
 	left:85%;
 }
 .btn-group-vertical > button{
     margin-bottom:10px;
     border-radius:10px !important;
 }
+
+.recipe_information {
+	position: absolute;
+	top:10%;
+}
+
+#recipe_title {
+	font-size: 50px;
+}
+/* 
+#recipe_title {
+	position: absolute;
+	top:0%;
+} */
