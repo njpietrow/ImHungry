@@ -25,7 +25,7 @@ public class RecipeGetter {
 		  content = scanner.next();
 		  scanner.close();
 		}catch ( Exception ex ) {
-		    ex.printStackTrace();
+		    return null;
 		}
 		
 		int jsonStart = 0;

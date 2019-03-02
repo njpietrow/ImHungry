@@ -1,7 +1,10 @@
 package edu.usc.cs.group8.ImHungry;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +41,80 @@ public class IHSearch extends HttpServlet {
 		response.getWriter().flush();
 	}
 	
+	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Recipe> doRecipeSearch(String keyword, String number) {
+		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
+		if (results == null) return null;
+		else {
+			
+			// "class="r"><a href=
+			ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+			int i = 0;
+			while (recipes.size() < Integer.parseInt(number) && i < results.length() - 18 ) {
+				for (int j = i; j < results.length() - 18; i++, j++) {
+					if (results.substring(j, j+18).equals("class=\"r\"><a href=")) {
+						j += 19;
+						i = j;
+						while (results.charAt(i) != '"' && i < results.length()) i++;
+						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
+						if (recipe == null || ListManager.getInstance().doNotShowContains(recipe)) {
+							continue;
+						}
+						else {
+							recipes.add(recipe);
+							break;
+						}
+					}
+				}
+			}
+			return recipes;
+		}
+	}
+
+	public ArrayList<String> doImageSearch(String keyword) {
+		String results = readWebsite("https://www.google.com/search?q=" + keyword + "&tbm=isch&gws_rd=ssl");
+		if (results == null) return null;
+		else {
+			ArrayList<String> images = new ArrayList<String>();
+			int i = 0;
+			while (images.size() < 10 && i < results.length() - 5) {
+				for (int j = i; j < results.length() - 5; i++, j++) {
+					if (results.substring(j, j+5).equals("\"ou\":")) {
+						j += 6;
+						i = j;
+						while (results.charAt(i) != '"' && i < results.length()) i++;
+						images.add(results.substring(j,i));
+						break;
+					}
+				}
+			}
+			return images;
+		}
+	}
+
+	public String readWebsite(String url) {
+		/*
+		 * Copied from StackOverflow and from https://community.oracle.com/thread/1691281
+		 */
+		String content = null;
+		URLConnection connection = null;
+		try {
+		  connection =  new URL(url).openConnection();
+		  connection.setRequestProperty("User-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
+		  Scanner scanner = new Scanner(connection.getInputStream());
+		  scanner.useDelimiter("\\Z");
+		  content = scanner.next();
+		  scanner.close();
+		}catch ( Exception ex ) {
+		    return null;
+		}
+		return content;
+	}
+
 	private void setAccessControlHeaders(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "GET");

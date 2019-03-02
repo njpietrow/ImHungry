@@ -8,7 +8,7 @@ public class ListManager {
 	private ArrayList<Result> toExplore;
 	private ArrayList<Result> doNotShow;
 	
-	private ListManager singleton;
+	private static ListManager singleton;
 	
 	private ListManager() {
 		favorites = new ArrayList<Result>();
@@ -16,7 +16,7 @@ public class ListManager {
 		doNotShow = new ArrayList<Result>();
 	}
 	
-	public ListManager getInstance() {
+	public static ListManager getInstance() {
 		if (singleton == null) {
 			singleton = new ListManager();
 		}

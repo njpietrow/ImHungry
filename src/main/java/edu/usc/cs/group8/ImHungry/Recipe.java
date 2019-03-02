@@ -59,7 +59,7 @@ public class Recipe extends Result {
 	}
 	
 	public String toString() {
-		return super.getName() + "\n" + prepTime + "\n" + cookTime + "\n" + ingredients + "\n\n" + instructions;
+		return super.getName() + "\n" + prepTime + "\n" + cookTime + "\n" + ingredients + "\n" + instructions + "\n";
 	}
 
 	@Override
