@@ -8,14 +8,14 @@ import org.junit.Test;
 
 public class RecipeTest {
 	
-	public static Recipe recipe = new Recipe("Food", 20, 10, "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
+	public static Recipe recipe = new Recipe("Food", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
 	
 	@Test
 	public void testConstructor() {
-		Recipe myRecipe = new Recipe("Food", 20, 10, "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
+		Recipe myRecipe = new Recipe("Food", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
 		assertEquals(myRecipe.getName(),"Food");
-		assertEquals(myRecipe.getPrepTime(),20);
-		assertEquals(myRecipe.getCookTime(),10);
+		assertEquals(myRecipe.getPrepTime(),"20");
+		assertEquals(myRecipe.getCookTime(),"10");
 		assertEquals(myRecipe.getImgURL(),"food.jpg");
 		assertEquals(myRecipe.getIngredients().size(),0);
 		assertEquals(myRecipe.getInstructions().size(),0);
@@ -29,14 +29,14 @@ public class RecipeTest {
 	
 	@Test
 	public void testPrepTime() {
-		recipe.setPrepTime(50);
-		assertEquals(recipe.getPrepTime(),50);
+		recipe.setPrepTime("50");
+		assertEquals(recipe.getPrepTime(),"50");
 	}
 
 	@Test
 	public void testCookTime() {
-		recipe.setCookTime(60);
-		assertEquals(recipe.getCookTime(),60);
+		recipe.setCookTime("60");
+		assertEquals(recipe.getCookTime(),"60");
 	}
 	
 	@Test
