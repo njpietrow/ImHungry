@@ -16,6 +16,21 @@
 #recipe_title {
 	font-size: 50px;
 }
+#prep_time {
+	font-size: 20px;
+}
+
+#cook_time {
+	font-size: 20px;
+}
+
+#ingredients_unordered {
+	font-size: 20px;
+}
+
+#instructions_for_food {
+	font-size: 20px;
+}
 /* 
 #recipe_title {
 	position: absolute;
