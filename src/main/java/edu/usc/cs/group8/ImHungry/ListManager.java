@@ -2,6 +2,13 @@ package edu.usc.cs.group8.ImHungry;
 
 import java.util.ArrayList;
 
+/*
+ * ListManager.java
+ * Class that contains the three predefined lists as well as specific functions for accessing them.
+ * Author: Kevin Calaway
+ * USC ID: 9724507315
+ * Email: calaway@usc.edu
+ */
 public class ListManager {
 	
 	private ArrayList<Result> favorites;
@@ -16,6 +23,9 @@ public class ListManager {
 		doNotShow = new ArrayList<Result>();
 	}
 	
+	/*
+	 * There is one list manager for the whole website.
+	 */
 	public static ListManager getInstance() {
 		if (singleton == null) {
 			singleton = new ListManager();
