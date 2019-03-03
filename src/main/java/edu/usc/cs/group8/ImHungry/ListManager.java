@@ -52,6 +52,21 @@ public class ListManager {
 		}
 	}
 	
+	public void removeFromFavorites(int index){
+		if (favorites.size() > index)
+			favorites.remove(index);
+	}
+	
+	public void removeFromToExplore(int index){
+		if (toExplore.size() > index)
+			toExplore.remove(index);
+	}
+	
+	public void removeFromDoNotShow(int index){
+		if (doNotShow.size() > index)
+			doNotShow.remove(index);
+	}
+	
 	public boolean favoritesContains(Result r) {
 		return favorites.contains(r);
 	}

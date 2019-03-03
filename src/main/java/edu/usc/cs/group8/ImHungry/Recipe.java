@@ -3,35 +3,82 @@ import java.util.ArrayList;
 
 public class Recipe extends Result {
 
-	private String prepTime;
-	private String cookTime;
+	private String prepTimeText;
+	private String cookTimeText;
 	private String imgURL;
 	private ArrayList<String> ingredients;
 	private ArrayList<String> instructions;
 	
+	private int prepTimeInt;
+	private int cookTimeInt;
+	
 	public Recipe(String name, String prepTime, String cookTime, String imgURL, ArrayList<String> ingredients, ArrayList<String> instructions) {
 		super.setName(name);
-		this.prepTime = prepTime;
-		this.cookTime = cookTime;
+		this.prepTimeText = prepTime;
+		this.cookTimeText = cookTime;
 		this.imgURL = imgURL;
 		this.ingredients = ingredients;
 		this.instructions = instructions;
+		prepTimeInt = parsePrepTime(prepTimeText);
+		cookTimeInt = parsePrepTime(cookTimeText);
 	}
 	
-	public String getPrepTime() {
-		return prepTime;
+	private int parsePrepTime(String text) {
+		int parsedValue = 0;
+		try {
+			parsedValue = Integer.parseInt(text);
+		} catch (Exception e) {
+			try {
+				parsedValue = 0;
+				for (int i = 0; i < text.length(); i++) {
+					if (text.charAt(i) < '0' || text.charAt(i) > '9') {
+						continue;
+					}
+					int j = i;
+					while (text.charAt(j) >= '0' && text.charAt(j) <= '9') {
+						j++;
+					}
+					int factor = -1;
+					switch (text.charAt(j)) {
+						case 'D':
+							factor = 1440;
+							break;
+						case 'H':
+							factor = 60;
+							break;
+						case 'M':
+							factor = 1;
+							break;
+						default:
+							factor = 0;
+							break;
+					}
+					parsedValue += Integer.parseInt(text.substring(i, j)) * factor;
+					i = j;
+				}
+			} catch (Exception f) {
+				parsedValue = 0;
+			}
+		}
+		return parsedValue;
+	}
+
+	public int getPrepTime() {
+		return prepTimeInt;
 	}
 
 	public void setPrepTime(String prepTime) {
-		this.prepTime = prepTime;
+		this.prepTimeText = prepTime;
+		prepTimeInt = parsePrepTime(prepTimeText);
 	}
 
-	public String getCookTime() {
-		return cookTime;
+	public int getCookTime() {
+		return cookTimeInt;
 	}
 
 	public void setCookTime(String cookTime) {
-		this.cookTime = cookTime;
+		this.cookTimeText = cookTime;
+		cookTimeInt = parsePrepTime(cookTimeText);
 	}
 
 	public String getImgURL() {
@@ -59,18 +106,18 @@ public class Recipe extends Result {
 	}
 	
 	public String toString() {
-		return super.getName() + "\n" + prepTime + "\n" + cookTime + "\n" + ingredients + "\n" + instructions + "\n";
+		return super.getName() + "\n" + prepTimeInt + "\n" + cookTimeInt + "\n" + ingredients + "\n" + instructions + "\n";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cookTime == null) ? 0 : cookTime.hashCode());
+		result = prime * result + cookTimeInt;
 		result = prime * result + ((imgURL == null) ? 0 : imgURL.hashCode());
 		result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
 		result = prime * result + ((instructions == null) ? 0 : instructions.hashCode());
-		result = prime * result + ((prepTime == null) ? 0 : prepTime.hashCode());
+		result = prime * result + prepTimeInt;
 		return result;
 	}
 
@@ -83,10 +130,7 @@ public class Recipe extends Result {
 		if (getClass() != obj.getClass())
 			return false;
 		Recipe other = (Recipe) obj;
-		if (cookTime == null) {
-			if (other.cookTime != null)
-				return false;
-		} else if (!cookTime.equals(other.cookTime))
+		if (cookTimeInt != other.cookTimeInt)
 			return false;
 		if (imgURL == null) {
 			if (other.imgURL != null)
@@ -103,10 +147,7 @@ public class Recipe extends Result {
 				return false;
 		} else if (!instructions.equals(other.instructions))
 			return false;
-		if (prepTime == null) {
-			if (other.prepTime != null)
-				return false;
-		} else if (!prepTime.equals(other.prepTime))
+		if (cookTimeInt != other.cookTimeInt)
 			return false;
 		return true;
 	}

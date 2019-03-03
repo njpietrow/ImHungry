@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import javax.servlet.ServletException;
@@ -36,11 +37,29 @@ public class IHSearch extends HttpServlet {
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number);
 		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
 		
+		if (images != null && recipes != null && restaurants != null) {
+			sortRecipes(recipes);
+			sortRestaurants(restaurants);
+			request.getSession().setAttribute("images", images);
+			request.getSession().setAttribute("recipes", recipes);
+			request.getSession().setAttribute("restaurants", restaurants);
+			request.getRequestDispatcher("results_page.jsp").forward(request, response);
+		}
+		
 		response.setStatus(response.SC_BAD_GATEWAY);
 		response.getWriter().println("Unknown error occurred.");
 		response.getWriter().flush();
 	}
 	
+	public void sortRestaurants(ArrayList<Restaurant> restaurants) {
+		restaurants.sort(new RestaurantComparator());
+		
+	}
+
+	public void sortRecipes(ArrayList<Recipe> recipes) {
+		recipes.sort(new RecipeComparator());
+	}
+
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
 		// TODO Auto-generated method stub
 		return null;
@@ -121,3 +140,33 @@ public class IHSearch extends HttpServlet {
     }
 
 }
+
+class RestaurantComparator implements Comparator<Restaurant>{
+	public int compare(edu.usc.cs.group8.ImHungry.Restaurant r1, edu.usc.cs.group8.ImHungry.Restaurant r2) {
+		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+			return Integer.MAX_VALUE;
+		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MIN_VALUE;
+		}
+		else return r1.getDriveTime() - r2.getDriveTime();
+	}
+}
+
+class RecipeComparator implements Comparator<Recipe>{
+	public int compare(edu.usc.cs.group8.ImHungry.Recipe r1, edu.usc.cs.group8.ImHungry.Recipe r2) {
+		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+			return Integer.MAX_VALUE;
+		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MIN_VALUE;
+		}
+		if (r1.getPrepTime() == 0) {
+			return Integer.MAX_VALUE;
+		}
+		if (r2.getPrepTime() == 0) {
+			return Integer.MIN_VALUE;
+		}
+		else return r1.getPrepTime() - r2.getPrepTime();
+	}
+}
+
+
