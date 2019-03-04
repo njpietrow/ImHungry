@@ -1,6 +1,9 @@
 package edu.usc.cs.group8.ImHungry;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -64,7 +67,7 @@ public class IHSearch extends HttpServlet {
 	}
 
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
-ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
