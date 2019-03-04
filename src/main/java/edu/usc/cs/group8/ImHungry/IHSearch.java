@@ -100,6 +100,7 @@ public class IHSearch extends HttpServlet {
 			//Parse the JSON file to retrieve relevant Restaurants
 			JSONObject mainObj= new JSONObject(json_string);
 			JSONArray jsonArray = (JSONArray) mainObj.get("results");
+
 			int check = Integer.parseInt(number);
 			if (jsonArray.length()<check)
 				check = jsonArray.length();

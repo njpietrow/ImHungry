@@ -10,13 +10,15 @@ public class IHSearchTest {
 	public void test() {
 		IHSearch search = new IHSearch();
 		
-		ArrayList<Recipe> stewArray = search.doRecipeSearch("Stew", "10");
-		search.sortRecipes(stewArray);
-		System.out.println(stewArray);
+//		ArrayList<Recipe> stewArray = search.doRecipeSearch("Stew", "10");
+//		search.sortRecipes(stewArray);
+//		System.out.println(stewArray);
 		
-		System.out.println(search.doImageSearch("Hamburger"));
+//		System.out.println(search.doImageSearch("Hamburger"));
+//		
+//		System.out.println(search.doRecipeSearch("Pizza", "10"));
 		
-		System.out.println(search.doRecipeSearch("Pizza", "10"));
+		ArrayList<Restaurant> rests = search.doRestaurantSearch("Stew", "30");
 	}
 
 }

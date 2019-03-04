@@ -6,14 +6,13 @@ import org.junit.Test;
 
 public class RestaurantTest {
 	
-	public static Restaurant restaurant = new Restaurant("Food", 20, 10.0, "food.com", "123 Main Street", "555-555-5585", 1);
+	public static Restaurant restaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1);
 
 	@Test
 	public void testConstructor() {
-		Restaurant myRestaurant = new Restaurant("Food", 20, 10.0, "food.com", "123 Main Street", "555-555-5585", 1);
+		Restaurant myRestaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1);
 		assertEquals(myRestaurant.getName(),"Food");
 		assertEquals(myRestaurant.getDriveTime(),20);
-		assertEquals(myRestaurant.getDistance(),10.0,0.1);
 		assertEquals(myRestaurant.getWebsiteURL(),"food.com");
 		assertEquals(myRestaurant.getAddress(),"123 Main Street");
 		assertEquals(myRestaurant.getPhoneNum(),"555-555-5585");
@@ -32,11 +31,6 @@ public class RestaurantTest {
 		assertEquals(restaurant.getDriveTime(),50);
 	}
 
-	@Test
-	public void testDistance() {
-		restaurant.setDistance(60.0);
-		assertEquals(restaurant.getDistance(),60.0,0.1);
-	}
 	
 	@Test
 	public void testWebsiteURL() {
