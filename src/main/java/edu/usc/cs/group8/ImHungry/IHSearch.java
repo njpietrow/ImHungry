@@ -1,9 +1,6 @@
 package edu.usc.cs.group8.ImHungry;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -91,6 +88,7 @@ public class IHSearch extends HttpServlet {
 			int check = Integer.parseInt(number);
 			if (jsonArray.length()<check)
 				check = jsonArray.length();
+			
 			for (int i = 0; i < check; i++) {
 				JSONObject iterate_obj = (JSONObject) jsonArray.get(i);
 				String id = (String) iterate_obj.get("place_id");
@@ -102,9 +100,9 @@ public class IHSearch extends HttpServlet {
 			//Populate the array of Restaurant objects with the rest of the required info
 			for (int i =0; i < restaurants.size();i++) {
 				Restaurant curr_restaurant = restaurants.get(i);
-				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); //get the rest of the info excl. driving time
-				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   //get driving time info
-				restaurants.set(i, curr_restaurant);                                //reset the updated Restaurant in the array
+				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); 
+				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   
+				restaurants.set(i, curr_restaurant);                                
 			}
 		} catch(Exception ex) {
 			return null;

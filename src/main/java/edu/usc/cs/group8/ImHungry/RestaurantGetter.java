@@ -1,15 +1,15 @@
 package edu.usc.cs.group8.ImHungry;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URLConnection;
+import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
 public class RestaurantGetter {
+	
 	
 	public static Restaurant getContactInfo(Restaurant r) {
 		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
@@ -18,26 +18,13 @@ public class RestaurantGetter {
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
 
 		try {
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine; 
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-			
-			String json_string = response.toString();
-//			System.out.println(json_string);
+			String json_string = readWebsite(url);
+			if (json_string == null) return null;
 
 			//Parse the JSON object to retrieve necessary Restaurant info
 			JSONObject mainObj= new JSONObject(json_string);
 			JSONObject result = (JSONObject) mainObj.get("result");
+			
 			String address = "",phoneNum = "",website = "";
 			int price_level = -1;
 			double rating = -1;
@@ -83,22 +70,8 @@ public class RestaurantGetter {
 				+ "&destinations=" + address
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
 		try {
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine; 
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-			
-			String json_string = response.toString();
-//			System.out.println(json_string);
+			String json_string = readWebsite(url);
+			if (json_string == null) return null;
 			
 			JSONObject mainObj= new JSONObject(json_string);
 			
@@ -109,17 +82,34 @@ public class RestaurantGetter {
 	        JSONObject obj5=(JSONObject)obj3.get("duration");
 	        
 			int driving_time = 0;
+			
 			driving_time = obj5.getInt("value");
 			driving_time = driving_time/60;
 			
-			
 			r.setDriveTime(driving_time);
-			
 			
 		} catch(Exception ex) {
 			System.out.println("exception");
 		}
 		return r;
+	}
+	public static String readWebsite(String url) {
+		/*
+		 * Copied from StackOverflow and from https://community.oracle.com/thread/1691281
+		 */
+		String content = null;
+		URLConnection connection = null;
+		try {
+		  connection =  new URL(url).openConnection();
+		  connection.setRequestProperty("User-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
+		  Scanner scanner = new Scanner(connection.getInputStream());
+		  scanner.useDelimiter("\\Z");
+		  content = scanner.next();
+		  scanner.close();
+		}catch ( Exception ex ) {
+		    return null;
+		}
+		return content;
 	}
 
 }
