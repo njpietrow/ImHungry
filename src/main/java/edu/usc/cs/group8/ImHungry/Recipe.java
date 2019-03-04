@@ -151,7 +151,7 @@ public class Recipe extends Result {
 		result = prime * result + prepTimeInt;
 		return result;
 	}
-
+ 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

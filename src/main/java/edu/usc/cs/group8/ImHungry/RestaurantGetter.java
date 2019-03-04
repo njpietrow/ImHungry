@@ -7,10 +7,18 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+/*
+ * RestaurantGetter.java
+ * This class gets additional information from Google place restaurants
+ * Author: Nick Pietrow
+ * USC ID: 5425773820
+ * Email: pietrow@usc.edu
+ */
 public class RestaurantGetter {
 	
-	
+	/*
+	 * this method gets all parameters except for driving time from Google Place Detail Search
+	 */
 	public static Restaurant getContactInfo(Restaurant r) {
 		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
 				+ "placeid=" + r.getId()
@@ -44,7 +52,8 @@ public class RestaurantGetter {
 			if (result.has("rating") && !result.isNull("rating")) {
 				rating = result.getDouble("rating");
 			}
-	
+			
+			//set restaurant attributes taken from JSON file
 			r.setAddress(address);
 			r.setPhoneNum(phoneNum);
 			r.setWebsiteURL(website);
@@ -58,6 +67,10 @@ public class RestaurantGetter {
 		return r;
 	}
 	
+	/*
+	 * This method gets the driving time from Tommy Trojan to the Restaurant
+	 * Uses the Google Distance Matrix API
+	 */
 	public static Restaurant getDriveTime(Restaurant r) {
 		String address = r.getAddress();
 		address = address.replaceAll(" ", "+");
@@ -82,10 +95,10 @@ public class RestaurantGetter {
 	        JSONObject obj5=(JSONObject)obj3.get("duration");
 	        
 			int driving_time = 0;
-			
 			driving_time = obj5.getInt("value");
 			driving_time = driving_time/60;
 			
+			//set driving time attribute taken from JSON file
 			r.setDriveTime(driving_time);
 			
 		} catch(Exception ex) {
