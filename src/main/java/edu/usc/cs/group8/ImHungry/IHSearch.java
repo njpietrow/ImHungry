@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 @WebServlet("/IHSearch")
 public class IHSearch extends HttpServlet {
 
@@ -61,8 +64,69 @@ public class IHSearch extends HttpServlet {
 	}
 
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
-		// TODO Auto-generated method stub
-		return null;
+ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		
+		//add "+" to keyword string
+		keyword = keyword.replaceAll(" ", "+").toLowerCase();
+		
+		//set url for Google Nearby Search API request
+		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+				+ "location=34.020593,-118.285447"
+//				+ "&radius=2500"
+				+ "&type=restaurant"
+				+ "&rankby=distance"
+				+ "&keyword=" + keyword
+				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+		try {
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("User-","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine; 
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			
+			String json_string = response.toString();
+
+			//Parse the JSON file to retrieve relevant Restaurants
+			JSONObject mainObj= new JSONObject(json_string);
+			JSONArray jsonArray = (JSONArray) mainObj.get("results");
+			int check = Integer.parseInt(number);
+			if (jsonArray.length()<check)
+				check = jsonArray.length();
+			for (int i = 0; i < check; i++) {
+				JSONObject iterate_obj = (JSONObject) jsonArray.get(i);
+				String id = (String) iterate_obj.get("place_id");
+				String name = (String) iterate_obj.get("name");
+				Restaurant temp = new Restaurant(name,id);
+				restaurants.add(temp);
+			}
+
+			//Populate the array of Restaurant objects with the rest of the required info
+			for (int i =0; i < restaurants.size();i++) {
+				Restaurant curr_restaurant = restaurants.get(i);
+				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); //get the rest of the info excl. driving time
+				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   //get driving time info
+				restaurants.set(i, curr_restaurant);                                //reset the updated Restaurant in the array
+				System.out.println(curr_restaurant.getName() 
+						+ "\n phoneNum=" + curr_restaurant.getPhoneNum()
+						+ "\n drivetime="+ curr_restaurant.getDriveTime()  
+						+ "\n rating=" + curr_restaurant.getRating() 
+						+ "\n price_level=" + curr_restaurant.getPriceRange()
+						+ "\n website=" + curr_restaurant.getWebsiteURL()
+						+ "\n address=" + curr_restaurant.getAddress()
+						);
+			}
+		} catch(Exception ex) {
+			return null;
+		}
+		return restaurants;
 	}
 
 	public ArrayList<Recipe> doRecipeSearch(String keyword, String number) {

@@ -3,31 +3,36 @@ package edu.usc.cs.group8.ImHungry;
 public class Restaurant extends Result {
 
 	private int driveTime;
-	private double distance;
+	private double rating;
+	private int priceRange;
 	private String websiteURL;
 	private String address;
 	private String phoneNum;
-	private int priceRange;
+	private String id;
+
 	
-	public Restaurant(String name, int driveTime, double distance, String websiteURL, String address, String phoneNum, int priceRange) {
+	public Restaurant(String name, int driveTime, String websiteURL, String address, String phoneNum, int priceRange) {
 		super.setName(name);
 		this.driveTime = driveTime;
-		this.distance = distance;
 		this.websiteURL = websiteURL;
 		this.address = address;
 		this.phoneNum = phoneNum;
 		this.priceRange = priceRange;
 	}
 	
-	public Restaurant(String name, double distance, String address, int priceRange) {
+	public Restaurant(String name, String address, int priceRange) {
 		super.setName(name);
 		driveTime = -1;
-		this.distance = distance;
 		websiteURL = null;
 		this.address = address;
 		phoneNum = null;
 		this.priceRange = priceRange;
 	}
+	public Restaurant(String name, String id) {
+		super.setName(name);
+		this.id= id;
+	}
+	
 
 	public int getDriveTime() {
 		return driveTime;
@@ -35,14 +40,6 @@ public class Restaurant extends Result {
 
 	public void setDriveTime(int driveTime) {
 		this.driveTime = driveTime;
-	}
-
-	public double getDistance() {
-		return distance;
-	}
-
-	public void setDistance(double distance) {
-		this.distance = distance;
 	}
 
 	public String getWebsiteURL() {
@@ -77,21 +74,22 @@ public class Restaurant extends Result {
 		this.priceRange = priceRange;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(distance);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + driveTime;
-		result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
-		result = prime * result + priceRange;
-		result = prime * result + ((websiteURL == null) ? 0 : websiteURL.hashCode());
-		return result;
+	public double getRating() {
+		return rating;
 	}
 
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -105,8 +103,6 @@ public class Restaurant extends Result {
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
-			return false;
-		if (Double.doubleToLongBits(distance) != Double.doubleToLongBits(other.distance))
 			return false;
 		if (driveTime != other.driveTime)
 			return false;
