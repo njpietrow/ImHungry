@@ -81,21 +81,8 @@ public class IHSearch extends HttpServlet {
 				+ "&keyword=" + keyword
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
 		try {
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("User-","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36");
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine; 
-			StringBuffer response = new StringBuffer();
-
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
-			
-			String json_string = response.toString();
+			String json_string = readWebsite(url);
+			if (json_string == null) return null;
 
 			//Parse the JSON file to retrieve relevant Restaurants
 			JSONObject mainObj= new JSONObject(json_string);
@@ -118,14 +105,6 @@ public class IHSearch extends HttpServlet {
 				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); //get the rest of the info excl. driving time
 				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   //get driving time info
 				restaurants.set(i, curr_restaurant);                                //reset the updated Restaurant in the array
-				System.out.println(curr_restaurant.getName() 
-						+ "\n phoneNum=" + curr_restaurant.getPhoneNum()
-						+ "\n drivetime="+ curr_restaurant.getDriveTime()  
-						+ "\n rating=" + curr_restaurant.getRating() 
-						+ "\n price_level=" + curr_restaurant.getPriceRange()
-						+ "\n website=" + curr_restaurant.getWebsiteURL()
-						+ "\n address=" + curr_restaurant.getAddress()
-						);
 			}
 		} catch(Exception ex) {
 			return null;

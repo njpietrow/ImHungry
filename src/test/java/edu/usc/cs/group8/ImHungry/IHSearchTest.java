@@ -19,6 +19,16 @@ public class IHSearchTest {
 //		System.out.println(search.doRecipeSearch("Pizza", "10"));
 		
 		ArrayList<Restaurant> rests = search.doRestaurantSearch("Stew", "30");
+		for (int i =0; i<rests.size();i++) {
+			System.out.println(rests.get(i).getName() 
+					+ "\n  phoneNum=" + rests.get(i).getPhoneNum()
+					+ "\n  drivetime="+ rests.get(i).getDriveTime()  
+					+ "\n  rating=" + rests.get(i).getRating() 
+					+ "\n  price_level=" + rests.get(i).getPriceRange()
+					+ "\n  website=" + rests.get(i).getWebsiteURL()
+					+ "\n  address=" + rests.get(i).getAddress()
+					);
+		}
 	}
 
 }
