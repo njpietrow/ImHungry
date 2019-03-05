@@ -19,41 +19,36 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<div class = "div_for_entire_content">
+		<!-- Title text -->
 		<div class = "text-center"> 
 			I'm Hungry
 		</div>
 	
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-		
+		<!-- Container class-->
 		<div class="container">
 	    <br/>
-		<div class="row justify-content-center">
-           <form class="form-inline" action="IHSearch">
-                 <div class="input_group"> 
-                 	<input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Enter Food" name="search_query" >
-                 	<span></span>
-                 	<input class="form-control form-control-borderless" id="ex2" type="number" min="1" value="5" name="num_results" >
-                 	<span class="tooltiptext">Number of items to show in results</span>
-                 </div>
-          </form> 
-        </div>
+			<div class="row justify-content-center">
+	           <form class="form-inline" action="IHSearch">
+	                 <div class="input_group"> 
+	                 	<input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Enter Food" name="search_query" >
+	                 	<span></span>
+	                 	<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
+	                 	<!-- <span class="tooltiptext">Number of items to show in results</span> -->
+	                 </div>
+	          </form> 
+	        </div>
         <br>
+        <!-- Submit button -->
         <div class="form-actions"> 
         	<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
         </div>
         
-        <!-- <script type="text/javascript">
-		    document.getElementById("submit_button").onclick = function () {
-		    	sessionStorage.setItem("recipe_title_from_results_page", "Parmesan");
-		    	sessionStorage.setItem("prep_time_from_results_page", "1 hour");
-		    	sessionStorage.setItem("cook_time_from_results_page", "30 minutes");
-		    	sessionStorage.setItem("ingredients_from_results_page", "lots of cheese");
-		    	sessionStorage.setItem("instructions_from_results_page", "do x, do y");
-		    	
-		        location.href = "recipe_page.jsp";
-		    };
-		</script> -->
-  
+        <script>
+			$(document).ready(function(){
+			  $('[data-toggle="tooltip"]').tooltip(); 
+			});
+		</script>
 		</div>
 	</div>
 	
