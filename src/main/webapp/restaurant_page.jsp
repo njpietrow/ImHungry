@@ -10,7 +10,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="recipe_page.css" />
+    <link rel="stylesheet" type="text/css" href="restaurant_page.css" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -60,6 +60,7 @@
 			        int price_range = restaurant.getPriceRange();
 			    %>
 		    	<div id=restaurant_name><%=restaurant_name%></div>
+		    	<br>
 		    	<div id=restaurant_address><%=restaurant_address%></div>
 		    	<div id=restaurant_phone_number><%=restaurant_phone_num%></div>
 		    	<div id=restaurant_website><%=website_URL%></div>
