@@ -82,9 +82,16 @@
 		    		}
 		    		
 		    		String recipe_name = recipe.getName();
-			        String prepTime = recipe.getPrepTime() + " min";
+		    		String cookTime, prepTime;
+					if (recipe.getCookTime() == 0){
+						cookTime = "No cook time available.";
+					}
+					else cookTime = recipe.getCookTime() + " min";
+					if (recipe.getPrepTime() == 0){
+						prepTime = "No prep time available.";
+					}
+					else prepTime = recipe.getPrepTime() + " min";
 			        String imgURL = recipe.getImgURL();
-			        String cookTime = recipe.getCookTime()  + " min";
 			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
 		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
 			    %>

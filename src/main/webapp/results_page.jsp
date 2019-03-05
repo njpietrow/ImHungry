@@ -86,8 +86,15 @@
 								for (int i = 0; i < list_of_recipe_results.size(); i++){
 									Recipe recipe = list_of_recipe_results.get(i);
 									String recipe_name = recipe.getName();
-									String cookTime = recipe.getCookTime() + " min";
-									String prepTime = recipe.getPrepTime() + " min";
+									String cookTime, prepTime;
+									if (recipe.getCookTime() == 0){
+										cookTime = "No cook time available.";
+									}
+									else cookTime = recipe.getCookTime() + " min";
+									if (recipe.getPrepTime() == 0){
+										prepTime = "No prep time available.";
+									}
+									else prepTime = recipe.getPrepTime() + " min";
 									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th><%=cookTime %></th> <th><%=prepTime %></th></tr> <%
 								}
 								
