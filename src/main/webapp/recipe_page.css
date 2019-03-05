@@ -35,6 +35,14 @@ html body {
 #instructions_for_food {
 	font-size: 20px;
 }
+#image_url_div {
+	max-width:300px;
+	height:
+}
+#actual_image_link {
+	max-height:100%;
+	max-width:100%
+}
 /* 
 #recipe_title {
 	position: absolute;
