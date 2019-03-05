@@ -97,7 +97,9 @@
 			    %>
 		    	<div id=recipe_title><%=recipe_name%></div>
 		    	<br></br>
-		   	<img src=<%=imgURL%> alt="Recipe_Image">
+		   	<div id=image_url_div>
+				<img id="actual_image_link" src=<%=imgURL%> alt="Recipe_Image"></div>
+		    	<br></br>
 		    	<br></br>
 		    	<div id=prep_time>Prep Time: <%=prepTime%></div>
 		    	<div id=cook_time>Cook Time: <%=cookTime%></div>
