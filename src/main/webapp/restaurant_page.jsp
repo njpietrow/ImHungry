@@ -50,10 +50,13 @@
         	<div class="restaurant_information">
 		    	<%
 		    	//Creating a new recipe object
-			        Restaurant restaurant = new Restaurant("In N Out",15, 10.5, "ininout.com","address","2134536784",16);
+			        int index = Integer.parseInt(request.getParameter("restaurant_id"));
+		    		if (session.getAttribute("restaurants") == null){
+		    			return;
+		    		}
+		    		Restaurant restaurant = ((ArrayList<Restaurant>)(session.getAttribute("restaurants"))).get(index);
 		    		String restaurant_name = restaurant.getName();
 			        int drive_time = restaurant.getDriveTime();
-			        double restaurant_distance = restaurant.getDistance();
 			        String website_URL = restaurant.getWebsiteURL();
 			        String restaurant_address = restaurant.getAddress();
 			        String restaurant_phone_num = restaurant.getPhoneNum();

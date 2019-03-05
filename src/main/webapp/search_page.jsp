@@ -46,7 +46,7 @@
 		<script type="text/javascript">
 		    document.getElementById("submit_button").onclick = function () {
 		    document.getElementById("feed_me_form").submit();
-			location.href = "results_page.jsp";
+			//location.href = "results_page.jsp";
 		    };
 		</script>
         </div>
