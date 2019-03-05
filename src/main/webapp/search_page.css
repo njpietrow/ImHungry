@@ -38,7 +38,7 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-.tooltiptext {
+/* .tooltiptext {
   visibility: hidden;
   width:300px;
   background-color: green;
@@ -47,14 +47,13 @@ input::-webkit-inner-spin-button {
   border-radius: 6px;
   padding: 10px 10px;
   
-  /* Position the tooltip */
+  Position the tooltip
   position: absolute;
   z-index: 1;
   bottom: 50%;
   left: 64%;
   margin-left: -60px;
-}
-
-.form-inline:hover .tooltiptext {
+} */
+/* #ex2:hover .tooltiptext {
   visibility: visible;
-}
+} */
