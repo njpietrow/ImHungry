@@ -58,31 +58,18 @@
 		    	<%
 		    	//Creating a new recipe object
 		    	
-		    		ArrayList<String> stuff_ingredients = new ArrayList<String>();
-		    		ArrayList<String> stuff_instructions = new ArrayList<String>();
+		    		int index = Integer.parseInt(request.getParameter("recipe_id"));
+		    		if (session.getAttribute("recipes") == null){
+		    			return;
+		    		}
+		    		Recipe recipe = ((ArrayList<Recipe>)(session.getAttribute("recipes"))).get(index);
 		    		
-		    		//DELETE LATER
-		    		
-		    		stuff_ingredients.add("ingredient 1");
-		    		stuff_ingredients.add("ingredient 2");
-		    		stuff_ingredients.add("ingredient 3");
-		    		
-		    		stuff_instructions.add("instruction 1");
-		    		stuff_instructions.add("instruction 2");
-		    		stuff_instructions.add("instruction 3");
-		    		
-			        Recipe recipe = new Recipe("Chicken Parmesan", "1 hour, 20 minutes", "2 hours", "img.url", stuff_ingredients, stuff_instructions);
 		    		String recipe_name = recipe.getName();
 			        String prepTime = recipe.getPrepTime() + " min";
 			        String imgURL = recipe.getImgURL();
 			        String cookTime = recipe.getCookTime()  + " min";
-			        List<String> new_ingredients = new ArrayList<String>();
-			        for(int i = 0; i < new_ingredients.size(); i++) {
-			        	
-			        }
-			        List<String> new_instructions = new ArrayList<String>();
-			        new_ingredients= recipe.getIngredients();
-			        new_instructions = recipe.getInstructions();
+			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
+		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
 			    %>
 		    	<div id=recipe_title><%=recipe_name%></div>
 		    	<br></br>

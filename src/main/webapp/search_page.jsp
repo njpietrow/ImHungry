@@ -42,13 +42,10 @@
         <!-- Submit button -->
         <div class="form-actions"> 
         	<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
-		<script> 
-	        	function myFunction() {
-	      		  document.getElementById("feed_me_form").submit();
-	    		}
-        	</script>
+
 		<script type="text/javascript">
 		    document.getElementById("submit_button").onclick = function () {
+		    document.getElementById("feed_me_form").submit();
 			location.href = "results_page.jsp";
 		    };
 		</script>

@@ -68,7 +68,7 @@ public class RecipeGetter {
 				}
 			}
 			if (content.substring(i, i+2).equals("</") && jsonFlag) {
-				while (content.charAt(i-1) != '}') {
+				while (content.charAt(i-1) != '}' && i > jsonStart) {
 					i--;
 				}
 				jsonEnd = i;

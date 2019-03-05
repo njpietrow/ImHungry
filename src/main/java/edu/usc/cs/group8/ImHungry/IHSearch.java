@@ -43,6 +43,7 @@ public class IHSearch extends HttpServlet {
 		if (images != null && recipes != null && restaurants != null) {
 			sortRecipes(recipes);
 			sortRestaurants(restaurants);
+			System.out.println(recipes);
 			request.getSession().setAttribute("images", images);
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
@@ -111,6 +112,7 @@ public class IHSearch extends HttpServlet {
 	}
 
 	public ArrayList<Recipe> doRecipeSearch(String keyword, String number) {
+		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
 		if (results == null) return null;
 		else {
@@ -140,6 +142,7 @@ public class IHSearch extends HttpServlet {
 	}
 
 	public ArrayList<String> doImageSearch(String keyword) {
+		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "&tbm=isch&gws_rd=ssl");
 		if (results == null) return null;
 		else {
@@ -174,6 +177,7 @@ public class IHSearch extends HttpServlet {
 		  content = scanner.next();
 		  scanner.close();
 		}catch ( Exception ex ) {
+			ex.printStackTrace();
 		    return null;
 		}
 		return content;
