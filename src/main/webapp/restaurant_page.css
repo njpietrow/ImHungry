@@ -1,8 +1,35 @@
 @charset "UTF-8";
+
+html body {
+	background-color: #f5f5f5;
+}
 .btn-group-vertical {
+	top:100px !important;
 	left:85%;
 }
 .btn-group-vertical > button{
     margin-bottom:10px;
     border-radius:10px !important;
 }
+
+.restaurant_information {
+	position: absolute;
+	top:10%;
+}	    	
+		    	
+#restaurant_name {
+	font-size: 50px;
+}
+
+#restaurant_address {
+	font-size:20px;
+}
+
+#restaurant_phone_number {
+	font-size:20px;
+}
+
+#restaurant_website {
+	font-size:20px;
+}
+
