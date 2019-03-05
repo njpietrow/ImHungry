@@ -26,7 +26,7 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
 			<div class = "text-center"> 
-				Results for the Item
+				Results for <%= session.getAttribute("query") %>
 			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
@@ -67,7 +67,7 @@
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
 									String address = restaurant.getAddress();
-									%> <tr><th><%=restaurant_name%>, </th> <th><%=driveTime%> min, </th> <th><%=address %></th></tr> <%
+									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a>, </th> <th><%=driveTime%> min, </th> <th><%=address %></th></tr> <%
 								}
 								
 								
@@ -88,7 +88,7 @@
 									String recipe_name = recipe.getName();
 									String cookTime = recipe.getCookTime() + " min";
 									String prepTime = recipe.getPrepTime() + " min";
-									%> <tr><th><%=recipe_name%></th> <th><%=cookTime %></th> <th><%=prepTime %></th></tr> <%
+									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th><%=cookTime %></th> <th><%=prepTime %></th></tr> <%
 								}
 								
 								

@@ -47,6 +47,7 @@ public class IHSearch extends HttpServlet {
 			request.getSession().setAttribute("images", images);
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
+			request.getSession().setAttribute("query", keyword);
 			request.getRequestDispatcher("results_page.jsp").forward(request, response);
 		}
 		

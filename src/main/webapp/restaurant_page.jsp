@@ -3,6 +3,7 @@
     <%@ page import="java.util.List" %>
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.ListManager" %>
     <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -50,11 +51,28 @@
         	<div class="restaurant_information">
 		    	<%
 		    	//Creating a new recipe object
-			        int index = Integer.parseInt(request.getParameter("restaurant_id"));
-		    		if (session.getAttribute("restaurants") == null){
-		    			return;
+			        Restaurant restaurant = new Restaurant("",0,"","","",0);
+		    		
+		    		if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("restaurant_id"));
+			    		if (session.getAttribute("restaurants") == null){
+			    			return;
+			    		}
+			    		restaurant = ((ArrayList<Restaurant>)(session.getAttribute("restaurants"))).get(index);
 		    		}
-		    		Restaurant restaurant = ((ArrayList<Restaurant>)(session.getAttribute("restaurants"))).get(index);
+		    		
+		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("item_id"));
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				restaurant = (Restaurant)ListManager.getInstance().getFavorites().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
+		    				restaurant = (Restaurant)ListManager.getInstance().getToExplore().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				restaurant = (Restaurant)ListManager.getInstance().getDoNotShow().get(index);
+		    			}
+		    		}
 		    		String restaurant_name = restaurant.getName();
 			        int drive_time = restaurant.getDriveTime();
 			        String website_URL = restaurant.getWebsiteURL();

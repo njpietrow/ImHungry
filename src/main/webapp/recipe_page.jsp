@@ -3,6 +3,7 @@
     <%@ page import="java.util.List" %>
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Recipe" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.ListManager" %>
     <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -57,12 +58,28 @@
         	<div class="recipe_information" id="all_stuff_on_page">	
 		    	<%
 		    	//Creating a new recipe object
-		    	
-		    		int index = Integer.parseInt(request.getParameter("recipe_id"));
-		    		if (session.getAttribute("recipes") == null){
-		    			return;
+		    		Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>());
+		    		
+		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("recipe_id"));
+			    		if (session.getAttribute("recipes") == null){
+			    			return;
+			    		}
+			    		recipe = ((ArrayList<Recipe>)(session.getAttribute("recipes"))).get(index);
 		    		}
-		    		Recipe recipe = ((ArrayList<Recipe>)(session.getAttribute("recipes"))).get(index);
+		    		
+		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("item_id"));
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				recipe = (Recipe)ListManager.getInstance().getFavorites().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
+		    				recipe = (Recipe)ListManager.getInstance().getToExplore().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				recipe = (Recipe)ListManager.getInstance().getDoNotShow().get(index);
+		    			}
+		    		}
 		    		
 		    		String recipe_name = recipe.getName();
 			        String prepTime = recipe.getPrepTime() + " min";

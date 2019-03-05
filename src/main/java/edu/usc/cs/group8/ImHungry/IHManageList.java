@@ -122,5 +122,36 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 		}
+		
+		if (action.equals("DISPLAY")) {
+			String itemID = request.getParameter("item_id");
+			if (itemID != null && !itemID.equals("")) {
+				int index = Integer.parseInt(itemID);
+				if (listID.equals("FAVORITES")) {
+					if (ListManager.getInstance().getFavorites().get(index) instanceof Recipe) {
+						request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=" + index).forward(request, response);
+					}
+					else if (ListManager.getInstance().getFavorites().get(index) instanceof Restaurant) {
+						request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=" + index).forward(request, response);
+					}
+				}
+				if (listID.equals("TO_EXPLORE")) {
+					if (ListManager.getInstance().getToExplore().get(index) instanceof Recipe) {
+						request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=" + index).forward(request, response);
+					}
+					else if (ListManager.getInstance().getToExplore().get(index) instanceof Restaurant) {
+						request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=" + index).forward(request, response);
+					}
+				}
+				if (listID.equals("DO_NOT_SHOW")) {
+					if (ListManager.getInstance().getDoNotShow().get(index) instanceof Recipe) {
+						request.getRequestDispatcher("recipe_page.jsp?list_id=DO_NOT_SHOW&item_id=" + index).forward(request, response);
+					}
+					else if (ListManager.getInstance().getDoNotShow().get(index) instanceof Restaurant) {
+						request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=" + index).forward(request, response);
+					}
+				}
+			}
+		}
 	}
 }	
