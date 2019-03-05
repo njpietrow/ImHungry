@@ -127,7 +127,7 @@ public class IHSearch extends HttpServlet {
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
 						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
-						if (recipe == null || ListManager.getInstance().doNotShowContains(recipe)) {
+						if (recipe == null || ListManager.getInstance().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;
 						}
 						else {
