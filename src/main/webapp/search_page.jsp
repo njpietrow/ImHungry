@@ -29,7 +29,7 @@
 		<div class="container">
 	    <br/>
 			<div class="row justify-content-center">
-	           <form class="form-inline" action="IHSearch">
+	           <form id="feed_me_form" class="form-inline" action="IHSearch">
 	                 <div class="input_group"> 
 	                 	<input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Enter Food" name="search_query" >
 	                 	<span></span>
@@ -42,6 +42,11 @@
         <!-- Submit button -->
         <div class="form-actions"> 
         	<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
+		<script> 
+	        	function myFunction() {
+	      		  document.getElementById("feed_me_form").submit();
+	    		}
+        	</script>
 		<script type="text/javascript">
 		    document.getElementById("submit_button").onclick = function () {
 			location.href = "results_page.jsp";
