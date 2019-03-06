@@ -52,7 +52,22 @@
 					   });
 					});
 			      </script>
-	        	<button class="btn btn-success">Add to list</button> 
+				<button class="btn btn-success" id="add_to_list_button">Add to list</button> 
+				<script>
+					 document.getElementById("add_to_list_button").onclick = function () {
+						var list_id;
+						if($("#btnGroupVerticalDrop2").text() =="Favorites") {
+							list_id = "FAVORITES";
+						}
+						else if($("#btnGroupVerticalDrop2").text() =="To Explore") {
+							list_id = "TO_EXPLORE";
+						}
+						else {
+							list_id = "DO_NOT_SHOW"; 
+						}
+						location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=request.getParameter("restaurant_id") %>;	
+					    };
+				</script>
 	        </div> 
         	<div class="restaurant_information">
 		    	<%
