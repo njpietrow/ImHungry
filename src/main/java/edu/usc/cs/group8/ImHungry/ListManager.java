@@ -100,5 +100,11 @@ public class ListManager {
 	public ArrayList<Result> getDoNotShow(){
 		return doNotShow;
 	}
+	
+	public void reset() {
+		favorites.clear();
+		toExplore.clear();
+		doNotShow.clear();
+	}
 
 }

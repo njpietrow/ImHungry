@@ -43,7 +43,6 @@ public class IHSearch extends HttpServlet {
 		if (images != null && recipes != null && restaurants != null) {
 			sortRecipes(recipes);
 			sortRestaurants(restaurants);
-			System.out.println(recipes);
 			request.getSession().setAttribute("images", images);
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
@@ -96,7 +95,9 @@ public class IHSearch extends HttpServlet {
 				String id = (String) iterate_obj.get("place_id");
 				String name = (String) iterate_obj.get("name");
 				Restaurant temp = new Restaurant(name,id);
-				restaurants.add(temp);
+				if (temp != null && !ListManager.getInstance().doNotShowContains(temp) && !restaurants.contains(temp)) {
+					restaurants.add(temp);
+				}
 			}
 
 			//Populate the array of Restaurant objects with the rest of the required info
@@ -194,9 +195,9 @@ public class IHSearch extends HttpServlet {
 class RestaurantComparator implements Comparator<Restaurant>{
 	public int compare(edu.usc.cs.group8.ImHungry.Restaurant r1, edu.usc.cs.group8.ImHungry.Restaurant r2) {
 		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
-			return Integer.MAX_VALUE;
-		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
 			return Integer.MIN_VALUE;
+		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MAX_VALUE;
 		}
 		else return r1.getDriveTime() - r2.getDriveTime();
 	}
@@ -205,9 +206,9 @@ class RestaurantComparator implements Comparator<Restaurant>{
 class RecipeComparator implements Comparator<Recipe>{
 	public int compare(edu.usc.cs.group8.ImHungry.Recipe r1, edu.usc.cs.group8.ImHungry.Recipe r2) {
 		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
-			return Integer.MAX_VALUE;
-		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
 			return Integer.MIN_VALUE;
+		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MAX_VALUE;
 		}
 		if (r1.getPrepTime() == 0) {
 			return Integer.MAX_VALUE;

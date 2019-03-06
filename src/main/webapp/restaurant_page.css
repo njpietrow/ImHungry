@@ -6,6 +6,7 @@ html body {
 .btn-group-vertical {
 	top:100px !important;
 	left:85%;
+	z-index:1;
 }
 .btn-group-vertical > button{
     margin-bottom:10px;
@@ -19,6 +20,7 @@ html body {
 		    	
 #restaurant_name {
 	font-size: 50px;
+	max-width: 800px;
 }
 
 #restaurant_address {
