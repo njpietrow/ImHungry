@@ -48,16 +48,16 @@ public class IHSearchTest {
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         
-        when(MockSearch.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
-        when(MockSearch.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
-        when(MockSearch.doRecipeSearch("spaghetti","10")).thenReturn(new ArrayList<Recipe>());
+        IHSearch IHS = spy(new IHSearch());
+        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
+        Mockito.when(IHS.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
+        Mockito.when(IHS.doRecipeSearch("spaghetti","10")).thenReturn(new ArrayList<Recipe>());
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
         when(request.getRequestDispatcher("results_page.jsp")).thenReturn(RD);
- 
-        IHSearch search = new IHSearch();
-        search.doGet(request, response);
+
+        IHS.doGet(request, response);
         String result = sw.getBuffer().toString().trim();
         //assertEquals(result, new String("Full Name: Vinod Kashyap"));
     }
@@ -125,6 +125,26 @@ public class IHSearchTest {
         //assertEquals(result, new String("Full Name: Vinod Kashyap"));
     }
 	
+	@Test
+    public void testDoGetRecipeSearchReturnsNull() throws Exception {
+		when(request.getParameter("search_query")).thenReturn("spaghetti");
+		when(request.getParameter("num_results")).thenReturn("10");
+		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        
+        IHSearch IHS = spy(new IHSearch());
+        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
+        when(MockSearch.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
+        when(MockSearch.doRecipeSearch("spaghetti","10")).thenReturn(null);
+         
+        when(response.getWriter()).thenReturn(pw);
+        when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher("results_page.jsp")).thenReturn(RD);
+ 
+        IHS.doGet(request, response);
+        String result = sw.getBuffer().toString().trim();
+        //assertEquals(result, new String("Full Name: Vinod Kashyap"));
+    }
 
 	
 	@Test
