@@ -30,26 +30,26 @@ public class Restaurant extends Result {
 	
 
 	
-	public Restaurant(String name, int driveTime, String websiteURL, String address, String phoneNum, int priceRange) {
+	public Restaurant(String name, int driveTime, String websiteURL, String address, String phoneNum, int priceRange, double rating, String id) {
 		super.setName(name);
 		this.driveTime = driveTime;
 		this.websiteURL = websiteURL;
 		this.address = address;
 		this.phoneNum = phoneNum;
 		this.priceRange = priceRange;
+		this.rating =rating;
+		this.id = id;
 	}
 	
-	public Restaurant(String name, String address, int priceRange) {
-		super.setName(name);
-		driveTime = -1;
-		websiteURL = null;
-		this.address = address;
-		phoneNum = null;
-		this.priceRange = priceRange;
-	}
 	public Restaurant(String name, String id) {
 		super.setName(name);
 		this.id= id;
+		this.driveTime = -1;
+		this.websiteURL = "";
+		this.address = "";
+		this.phoneNum = "";
+		this.priceRange = -1;
+		this.rating = 0.0;
 	}
 	
 

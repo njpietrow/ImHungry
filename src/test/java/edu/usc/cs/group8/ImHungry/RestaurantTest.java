@@ -6,17 +6,27 @@ import org.junit.Test;
 
 public class RestaurantTest {
 	
-	public static Restaurant restaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1);
+	public static Restaurant restaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1, 4.2,"id123");
 
 	@Test
 	public void testConstructor() {
-		Restaurant myRestaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1);
+		Restaurant myRestaurant = new Restaurant("Food", 20, "food.com", "123 Main Street", "555-555-5585", 1, 4.2,"id123");
 		assertEquals(myRestaurant.getName(),"Food");
 		assertEquals(myRestaurant.getDriveTime(),20);
 		assertEquals(myRestaurant.getWebsiteURL(),"food.com");
 		assertEquals(myRestaurant.getAddress(),"123 Main Street");
 		assertEquals(myRestaurant.getPhoneNum(),"555-555-5585");
 		assertEquals(myRestaurant.getPriceRange(),1);
+		assertEquals(myRestaurant.getId(),"id123");
+		assertEquals(myRestaurant.getRating(),4.2,0.001);
+		
+	}
+	
+	@Test
+	public void testConstructorSimple() {
+		Restaurant myRestaurant = new Restaurant("Food", "id123");
+		assertEquals(myRestaurant.getName(),"Food");
+		assertEquals(myRestaurant.getId(),"id123");
 	}
 	
 	@Test
@@ -54,5 +64,17 @@ public class RestaurantTest {
 	public void testPriceRange() {
 		restaurant.setPriceRange(4);
 		assertEquals(restaurant.getPriceRange(),4);
+	}
+	
+	@Test
+	public void testRating() {
+		restaurant.setRating(3.1);
+		assertEquals(restaurant.getRating(),3.1,0.001);
+	}
+	
+	@Test
+	public void testId() {
+		restaurant.setId("what is this");
+		assertEquals(restaurant.getId(),"what is this");
 	}
 }
