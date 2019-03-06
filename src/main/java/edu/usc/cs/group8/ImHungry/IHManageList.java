@@ -89,7 +89,7 @@ public class IHManageList extends HttpServlet {
 		}
 	}
 	
-	private void moveToList(String listID, String destinationID, String itemID) {
+	public void moveToList(String listID, String destinationID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
 			if (listID.equals("FAVORITES") && !destinationID.equals("FAVORITES")) {
@@ -113,7 +113,7 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 			if (listID.equals("DO_NOT_SHOW") && !destinationID.equals("DO_NOT_SHOW")) {
-				Result r = ListManager.getInstance().getToExplore().get(index);
+				Result r = ListManager.getInstance().getDoNotShow().get(index);
 				ListManager.getInstance().removeFromDoNotShow(r);
 				if (destinationID.equals("FAVORITES")) {
 					ListManager.getInstance().addToFavorites(r);
@@ -126,7 +126,7 @@ public class IHManageList extends HttpServlet {
 		
 	}
 
-	private void removeFromList(String listID, String itemID) {
+	public void removeFromList(String listID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
 			if (listID.equals("FAVORITES")) {
