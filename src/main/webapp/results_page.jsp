@@ -11,7 +11,7 @@
 	    <!-- Required meta tags -->
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <link rel="stylesheet" type="text/css" href="result_page.css" />
+	    <link rel="stylesheet" type="text/css" href="list_management_page.css" />
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -42,14 +42,47 @@
 			        			<a class="dropdown-item" href="#">Do Not Show</a>
 			      			</div>
 			      			<script>
+			      				var list_has_been_chosen = false;
+			      				var chosen_list = "";
 							     $(function(){
 								    $(".dropdown-item").click(function(){					
 								      $("#btnGroupVerticalDrop2").text($(this).text());
 								      $("#btnGroupVerticalDrop2").val($(this).text());
+								      list_has_been_chosen = true;
+								      chosen_list = $(this).text();
 								   });
+								    
 								});
 							</script>
-							<button class="btn btn-success">Manage List</button>
+							<button class="btn btn-success" id="manage_list_button">Manage List</button>
+								<!-- Redirect to the List Management Page -->
+								<script type="text/javascript">
+									document.getElementById("manage_list_button").onclick = function(){
+										if (list_has_been_chosen) {
+											var list_name = "";
+											if (chosen_list == "Favorites"){
+												list_name = "FAVORITES";
+											}
+											else if (chosen_list == "To Explore"){
+												list_name = "TO_EXPLORE";
+											}
+											else if (chosen_list == "Do Not Show"){
+												list_name = "DO_NOT_SHOW";
+											}
+											
+											location.href = "list_management_page.jsp?list_id=" + list_name;
+										}
+									};
+									
+								</script>
+							
+							<button id="back_to_search_button" class="btn btn-success">Back to Search</button>
+								<!-- Back to Search -->
+								<script type="text/javascript">
+									document.getElementById("back_to_search_button").onclick = function(){
+										location.href = "search_page.jsp";
+									};
+								</script>
 					</div>
 				
 					<div class="recipe_and_restaurant_results">
