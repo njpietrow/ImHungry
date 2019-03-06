@@ -15,24 +15,67 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 public class IHSearchTest {
 	
-	@Test
-    public void testRestaurantSearch() throws Exception {
-       IHSearch IHS = new IHSearch();
-       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("spaghetti", "10");
-       assertEquals(restaurants.get(0).getName(),"Lemonade - USC");
-       assertEquals(restaurants.get(1).getName(),"Viztango Cafe");
+	@Mock
+	HttpServletRequest request;
+	
+	@Mock
+	HttpServletResponse response;
+	
+	@Mock 
+	HttpSession session;
+	
+	@Mock 
+	RequestDispatcher RD;
+	
+	@Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
     }
 	
 	@Test
-    public void testRecipeSearch() throws Exception {
+    public void testDoGet() throws Exception {
+		when(request.getParameter("search_query")).thenReturn("spaghetti");
+		when(request.getParameter("num_results")).thenReturn("10");
+		StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+         
+        when(response.getWriter()).thenReturn(pw);
+        when(request.getSession()).thenReturn(session);
+        when(request.getRequestDispatcher("results_page.jsp")).thenReturn(RD);
+ 
+        IHSearch search = new IHSearch();
+        search.doGet(request, response);
+        String result = sw.getBuffer().toString().trim();
+        //assertEquals(result, new String("Full Name: Vinod Kashyap"));
+    }
+	
+	@Test
+    public void testRestaurantSearchSorted() throws Exception {
+       IHSearch IHS = new IHSearch();
+       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("spaghetti", "10");
+       IHS.sortRestaurants(restaurants);
+       assertEquals(restaurants.size(),10);
+       for(int i =0;i<restaurants.size()-1; i++ ) {
+    	   assertTrue(restaurants.get(i).getDriveTime()<=restaurants.get(i+1).getDriveTime());
+       }
+
+    }
+	
+	@Test
+    public void testRecipeSearchSorted() throws Exception {
        IHSearch IHS = new IHSearch();
        ArrayList<Recipe> recipes = IHS.doRecipeSearch("spaghetti", "10");
-       assertEquals(recipes.get(0).getName(),"Easy Meaty Spaghetti");
-       assertEquals(recipes.get(1).getName(),"Mozzarella Baked Spaghetti");
+       IHS.sortRecipes(recipes);
+       assertEquals(recipes.size(),10);
+       for(int i =0;i<recipes.size()-1; i++ ) {
+    	   assertTrue(recipes.get(i).getPrepTime() <= recipes.get(i+1).getPrepTime() || recipes.get(i+1).getPrepTime() == 0);
+       }
     }
 	
 	
