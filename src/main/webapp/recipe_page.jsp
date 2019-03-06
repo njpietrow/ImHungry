@@ -135,11 +135,19 @@
 		    	</div>
 		    	
 		    	<script>
-			    	function PrintPreview() {
-			    		var div = document.getElementById('button_stuff');
-			    	    div.style.display = 'none';
-			        }
+				function PrintPreview() {
+					window.print;
+					/* var div = document.getElementById('button_stuff');
+				    div.style.display = 'none'; */
+				}
 		    	</script>
+		    	<style type="text/css">
+				@media print {
+				    .btn-group-vertical {
+					display :  none;
+				    }
+				}
+			</style>
         	</div>
 	    </div>
 	</div>
