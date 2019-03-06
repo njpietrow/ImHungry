@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/*
+ * Servlet: IHManageList
+ * This servlet takes care of any of the list management processes the front end needs to take care of.
+ * Author: Kevin Calaway
+ * USC ID: 9724507315
+ * Email: calaway@usc.edu
+ */
 @WebServlet("/IHManageList")
 public class IHManageList extends HttpServlet {
 
@@ -23,6 +30,11 @@ public class IHManageList extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 	
+	/*
+	 * This function determines what function is being called, gathers the necessary parameters, and passes them along.
+	 * The display functionality determines what object is being presented and therefore needs access to the response
+	 * object.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -89,6 +101,9 @@ public class IHManageList extends HttpServlet {
 		}
 	}
 	
+	/*
+	 * Based on the provided source and destination lists, this function moves the specified item.
+	 */
 	public void moveToList(String listID, String destinationID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
@@ -126,6 +141,9 @@ public class IHManageList extends HttpServlet {
 		
 	}
 
+	/*
+	 * Based on the specified list and item number, it removes it from the list.
+	 */
 	public void removeFromList(String listID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
@@ -142,6 +160,10 @@ public class IHManageList extends HttpServlet {
 		
 	}
 
+	/*
+	 * Based on the specified list and item number (gathered from the "recipeID" or "restaurantID" parameters)
+	 * it adds an item to a list.
+	 */
 	public void addToList(String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
 		if (recipeID != null && !recipeID.equals("")) {
 			int index = Integer.parseInt(recipeID);

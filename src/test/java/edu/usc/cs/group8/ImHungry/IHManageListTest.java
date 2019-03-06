@@ -2,12 +2,71 @@ package edu.usc.cs.group8.ImHungry;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
 
 public class IHManageListTest {
+	
+	@Test
+	public void testDoGet() throws Exception {
+		IHSearch search = new IHSearch();
+		
+		HttpServletRequest request = mock(HttpServletRequest.class);       
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
+        RequestDispatcher RD = mock(RequestDispatcher.class);
+
+
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("recipe_id")).thenReturn("0");
+        when(request.getParameter("restaurant_id")).thenReturn("");
+        
+        when(request.getSession()).thenReturn(session);
+        when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5"));
+        when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5"));
+        when(request.getRequestDispatcher("results_page.jsp")).thenReturn(RD);
+        
+        IHManageList manager = new IHManageList();
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("MOVE");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("destination_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("REMOVE");
+        when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("recipe_id")).thenReturn("0");
+        when(request.getParameter("restaurant_id")).thenReturn("");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+	}
 
 	@Test
 	public void testAddToList() {
