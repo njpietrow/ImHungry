@@ -25,6 +25,13 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
+			<div id=collage>
+		    	<% Random r = new Random(); %>
+		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
+			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:10%; max-height:10%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
+			    <% } %>
+			    
+		    	</div>
 			<div class = "text-center"> 
 				Results for <%= session.getAttribute("query") %>
 			</div>
