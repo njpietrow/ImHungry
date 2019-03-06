@@ -20,6 +20,8 @@ public class IHManageListTest {
 	
 	@Test
 	public void testDoGet() throws Exception {
+		ListManager.getInstance().reset();
+		
 		IHSearch search = new IHSearch();
 		
 		HttpServletRequest request = mock(HttpServletRequest.class);       
