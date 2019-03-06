@@ -16,7 +16,7 @@ import org.json.JSONObject;
  */
 public class RestaurantGetter {
 	
-	/*
+	/* 
 	 * this method gets all parameters except for driving time from Google Place Detail Search
 	 */
 	public static Restaurant getContactInfo(Restaurant r) {
@@ -27,7 +27,7 @@ public class RestaurantGetter {
 
 		try {
 			String json_string = readWebsite(url);
-			if (json_string == null) return null;
+			if (json_string == null) return null; 
 
 			//Parse the JSON object to retrieve necessary Restaurant info
 			JSONObject mainObj= new JSONObject(json_string);
