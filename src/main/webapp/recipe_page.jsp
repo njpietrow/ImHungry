@@ -91,7 +91,7 @@
 		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
 		    				recipe = (Recipe)ListManager.getInstance().getToExplore().get(index);
 		    			}
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
 		    				recipe = (Recipe)ListManager.getInstance().getDoNotShow().get(index);
 		    			}
 		    		}
@@ -135,19 +135,19 @@
 		    	</div>
 		    	
 		    	<script>
-				function PrintPreview() {
-					window.print;
-					/* var div = document.getElementById('button_stuff');
-				    div.style.display = 'none'; */
-				}
-		    	</script>
-		    	<style type="text/css">
-				@media print {
-				    .btn-group-vertical {
-					display :  none;
-				    }
-				}
-			</style>
+			    	function PrintPreview() {
+			    		window.print();
+			    		/* var div = document.getElementById('button_stuff');
+			    	    div.style.display = 'none'; */
+			        }
+			   	</script>
+			   	<style type="text/css">
+					@media print {
+					    .btn-group-vertical {
+					        display :  none;
+					    }
+					}
+				</style>
         	</div>
 	    </div>
 	</div>

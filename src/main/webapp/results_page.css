@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+html body {
+	background-color: #f5f5f5;
+}
+
 #collage {
 	 position: relative;
 	  margin: auto;
@@ -9,6 +13,32 @@
 	  /* width: 500px;
 	  height: 200px; */
 	  height:35vh;
-	  width: 40vh;
+	  width: 50vh;
 	  border-radius: 3px;
 	}
+
+.btn-group-vertical {
+	top:100px !important;
+	left:85%;
+	z-index:1;
+}
+
+.btn-group-vertical > button{
+    margin-bottom:10px;
+    border-radius:10px !important;
+}
+
+.restaurant_results{
+	background-color: lightblue;
+	width: 45%;
+	float: right;
+}
+
+.recipe_results{
+	background-color: lightblue;
+	width: 45%;
+	float: left;
+}
+
+tr:nth-child(even) {background: Silver}
+tr:nth-child(odd) {background: LightGray}

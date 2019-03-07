@@ -16,6 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/*
+ * Servlet: IHSearch
+ * This servlet performs the recipe, restaurant, and image searches to set up the results page and the session lookup.
+ * Authors: Kevin Calaway & Nick Pietrow
+ * USC ID: 9724507315
+ * Email: calaway@usc.edu, pietrow@usc.edu
+ */
 @WebServlet("/IHSearch")
 public class IHSearch extends HttpServlet {
 
@@ -30,6 +37,10 @@ public class IHSearch extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 	
+	/*
+	 * This function takes the search query and requested number of results, and calls the three
+	 * search functions to retrieve the results. The results are stored in session data.
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setAccessControlHeaders(response);
 		String keyword = request.getParameter("search_query");
@@ -55,15 +66,24 @@ public class IHSearch extends HttpServlet {
 		response.getWriter().flush();
 	}
 	
+	/*
+	 * Sorts restaurants according to the comparator RestaurantComparator below
+	 */
 	public void sortRestaurants(ArrayList<Restaurant> restaurants) {
 		restaurants.sort(new RestaurantComparator());
 		
 	}
 
+	/*
+	 * Sorts recipes according to the comparator RecipeComparator below
+	 */
 	public void sortRecipes(ArrayList<Recipe> recipes) {
 		recipes.sort(new RecipeComparator());
 	}
 
+	/*
+	 * TODO: Write comments about restaurant search
+	 */
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		
@@ -113,13 +133,19 @@ public class IHSearch extends HttpServlet {
 		return restaurants;
 	}
 
+	/*
+	 * This sends a request out to Google for one hundred recipes, then parses in as many
+	 * as requested, ignoring duplicates and those on the Do Not Show predefined list. It
+	 * calls the RecipeGetter functions to get recipes from each of the web results.
+	 * See: RecipeGetter.java
+	 */
 	public ArrayList<Recipe> doRecipeSearch(String keyword, String number) {
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
 		if (results == null) return null;
 		else {
 			
-			// "class="r"><a href=
+			// "class="r"><a href= is the key that means a new result is starting.
 			ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 			int i = 0;
 			while (recipes.size() < Integer.parseInt(number) && i < results.length() - 18 ) {
@@ -143,6 +169,10 @@ public class IHSearch extends HttpServlet {
 		}
 	}
 
+	/*
+	 * This sends a request out to Google to find images related to the keyword. It
+	 * grabs the first ten and returns them in an ArrayList as raw URLs in Strings.
+	 */
 	public ArrayList<String> doImageSearch(String keyword) {
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "&tbm=isch&gws_rd=ssl");
@@ -165,6 +195,11 @@ public class IHSearch extends HttpServlet {
 		}
 	}
 
+	/*
+	 * This code was borrowed from https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
+     * to parse an HTML file in Java and contains also an added line setting the User-Agent to simulate
+     * Chrome performing a search, because without it Google returns garbage results or Forbidden errors.
+	 */
 	public String readWebsite(String url) {
 		/*
 		 * Copied from StackOverflow and from https://community.oracle.com/thread/1691281
@@ -192,6 +227,10 @@ public class IHSearch extends HttpServlet {
 
 }
 
+/*
+ * If a restaurant is in Favorites, it appears first;
+ * Otherwise, the list is sorted by drive time, lowest first.
+ */
 class RestaurantComparator implements Comparator<Restaurant>{
 	public int compare(edu.usc.cs.group8.ImHungry.Restaurant r1, edu.usc.cs.group8.ImHungry.Restaurant r2) {
 		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
@@ -203,6 +242,13 @@ class RestaurantComparator implements Comparator<Restaurant>{
 	}
 }
 
+/*
+ * If a recipe is in Favorites, it appears first;
+ * Otherwise, the list is sorted by prep time, lowest first.
+ * 0 was used as a flag to mean that the recipe had no listed prep time,
+ * and Group 8 decided that no prep time should be sorted behind rather
+ * than ahead of recipes with listed prep times.
+ */
 class RecipeComparator implements Comparator<Recipe>{
 	public int compare(edu.usc.cs.group8.ImHungry.Recipe r1, edu.usc.cs.group8.ImHungry.Recipe r2) {
 		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
