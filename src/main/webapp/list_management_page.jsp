@@ -128,7 +128,7 @@
 			      						}
 			      						else prepTime = recipe.getPrepTime() + " min";
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%><tr><th><a href=redirect_link><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
+			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=recipe_name %> from this List</input>
 			      						</tr><%
@@ -139,7 +139,7 @@
 			      						int driveTime = restaurant.getDriveTime();
 			      						String address = restaurant.getAddress();
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%> <tr><th><a href=redirect_link><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
+			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
 			      						
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=restaurant_name %> from this list </input>
 			      						</tr><%

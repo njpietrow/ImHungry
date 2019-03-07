@@ -91,7 +91,7 @@
 		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
 		    				recipe = (Recipe)ListManager.getInstance().getToExplore().get(index);
 		    			}
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
 		    				recipe = (Recipe)ListManager.getInstance().getDoNotShow().get(index);
 		    			}
 		    		}
