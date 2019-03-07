@@ -62,7 +62,8 @@
 								<script type="text/javascript">
 									document.getElementById("manage_list_button").onclick = function(){
 										if (list_has_been_chosen) {
-											location.href = "list_management_page.jsp";
+											//NEED CHANGE
+											location.href = "list_management_page.jsp?list_id=" + "FAVORITES";
 										}
 									}
 									
@@ -115,7 +116,20 @@
 			      						}
 			      						else prepTime = recipe.getPrepTime() + " min";
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%><tr><th><a href=redirect_link><%=recipe_name %>, </th> <th><%=prepTime %>, </th> <th><%=cookTime %></th></a></tr><%
+			      						%><tr><th><a href=redirect_link><%=recipe_name %>, </th> <th><%=prepTime %>, </th> <th><%=cookTime %></th></a>
+			      						
+			      						<input type="radio" value=<%=i %>>Delete from the current list</input>
+			      						<!-- Delete the item from list -->
+			      						<script type="text/javascript">
+			      							$(function(){
+			      								$(".delete_button").click(function(){
+			      									var list_name = getUrlVars()["list_id"];
+			      									
+			      									String redirect_link = "IHManageList?list"
+			      								});
+			      							});
+			      						</script>
+			      						</tr><%
 			      					}
 			      					else if (list.get(i) instanceof Restaurant){
 			      						Restaurant restaurant = (Restaurant)list.get(i);
@@ -123,13 +137,35 @@
 			      						int driveTime = restaurant.getDriveTime();
 			      						String address = restaurant.getAddress();
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%> <tr><th><a href=redirect_link><%=restaurant_name %>, </th> <th><%=driveTime %> min, </th> <th><%=address %></th></a>  <%
+			      						%> <tr><th><a href=redirect_link><%=restaurant_name %>, </th> <th><%=driveTime %> min, </th> <th><%=address %></th></a>  
+			      						
+			      						<button class="delete_button">Delete this item from the current list</button>
+			      						</tr><%
 			      					}
 			      				}
 			      			
 			      			%>
+			      			
+			      		</table>      
 			      		
-			      		</table>      	
+			      		<button type="submit" id="delete_button">Delete the Selected Item from the list</button>
+			      		<!-- Delete the Selected Item from the Current List -->
+			      		<script type="text/javascript">
+			      			document.getElementById("delete_button").onclick=function(){
+			      				var list_name = getUrlVars()["list_id"];
+			      				var radios = document.getElementsByTagName('input');
+			      				var item_index;
+			      				for (var i = 0; i < radios.length; i++) {
+			      				    if (radios[i].type === 'radio' && radios[i].checked) {
+			      				        // get the item_index from the radio button input
+			      				        item_index = radios[i].value;       
+			      				    }
+			      				}
+			      				var redirect_link = "IHManageList?list_id=" + list_name + "&action=REMOVE&item_id=" + item_index.toString();
+			      				location.href = redirect_link;
+			      			}
+			      			
+			      		</script>
 			      	</div>
 				
 				
