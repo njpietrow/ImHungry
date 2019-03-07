@@ -59,7 +59,18 @@ public class RestaurantGetter {
 			r.setWebsiteURL(website);
 			r.setPriceRange(price_level);
 			r.setRating(rating);
-
+			String name = r.getName();
+			name = name.replaceAll(" ", "+");
+			name = name.replaceAll(",", "");
+			name = name.replaceAll("#", "");
+			r.setMapURL("https://www.google.com/maps/dir/?api=1&origin=" 
+					+ "801+Childs+Way+Los+Angeles+CA"
+					+ "&destination="
+					+ name
+					+ "&destination_place_id="
+					+ r.getId()
+					+ "&travelmode=driving"
+					);
 		} 
 		catch(Exception ex) {
 			System.out.println("exception");

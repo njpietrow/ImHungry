@@ -101,7 +101,6 @@ public class IHSearch extends HttpServlet {
 			}
 
 			//Populate the array of Restaurant objects with the rest of the required info
-			RestaurantGetter RG = new RestaurantGetter();
 			for (int i =0; i < restaurants.size();i++) {
 				Restaurant curr_restaurant = restaurants.get(i);
 				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); 
@@ -129,7 +128,6 @@ public class IHSearch extends HttpServlet {
 						j += 19;
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
-						RecipeGetter RG = new RecipeGetter();
 						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
 						if (recipe == null || ListManager.getInstance().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;

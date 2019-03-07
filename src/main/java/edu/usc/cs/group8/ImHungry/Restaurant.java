@@ -27,6 +27,7 @@ public class Restaurant extends Result {
 	 * This will be calculated as from a Google Distance Matrix search
 	 */
 	private int driveTime;
+	private String mapURL;
 	
 
 	
@@ -125,6 +126,14 @@ public class Restaurant extends Result {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getMapURL() {
+		return mapURL;
+	}
+
+	public void setMapURL(String mapURL) {
+		this.mapURL = mapURL;
 	}
 	
 	
