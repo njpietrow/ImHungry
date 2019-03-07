@@ -1,4 +1,5 @@
 package edu.usc.cs.group8.ImHungry;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -8,8 +9,12 @@ import java.util.ArrayList;
  * USC ID: 9724507315
  * Email: calaway@usc.edu
  */
-public class Recipe extends Result {
+public class Recipe extends Result implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/*
 	 * This is the raw information that will be parsed from the Json
 	 * (see RecipeGetter)

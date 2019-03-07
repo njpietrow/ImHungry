@@ -1,6 +1,8 @@
 package edu.usc.cs.group8.ImHungry;
 
-public class Restaurant extends Result {
+import java.io.Serializable;
+
+public class Restaurant extends Result implements Serializable{
 	/*
 	 * Recipe.java
 	 * The container for information parsed by RestaurantGetter to be passed into the front end.
@@ -9,6 +11,11 @@ public class Restaurant extends Result {
 	 * Email: pietrow@usc.edu
 	 */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * This is the raw information that will be parsed from the Json from a Google Nearby place search
 	 * (see RecipeGetter)
