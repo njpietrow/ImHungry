@@ -34,15 +34,15 @@ public class ListManager {
 	}
 	
 	public void addToFavorites(Result r) {
-		favorites.add(r);
+		if (!favorites.contains(r)) favorites.add(r);
 	}
 	
 	public void addToToExplore(Result r) {
-		toExplore.add(r);
+		if (!toExplore.contains(r)) toExplore.add(r);
 	}
 	
 	public void addToDoNotShow(Result r) {
-		doNotShow.add(r);
+		if (!doNotShow.contains(r)) doNotShow.add(r);doNotShow.add(r);
 	}
 	
 	public void removeFromFavorites(Result r) {

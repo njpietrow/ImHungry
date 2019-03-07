@@ -11,7 +11,7 @@
 	    <!-- Required meta tags -->
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <link rel="stylesheet" type="text/css" href="list_management_page.css" />
+	    <link rel="stylesheet" type="text/css" href="results_page.css" />
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -28,7 +28,7 @@
 			<div id=collage>
 		    	<% Random r = new Random(); %>
 		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
-			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:10%; max-height:10%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
+			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
 			    
 		    	</div>
@@ -107,7 +107,7 @@
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
 									String address = restaurant.getAddress();
-									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a>, </th> <th><%=driveTime%> min, </th> <th><%=address %></th></tr> <%
+									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a>, </th> <th>Drive Time: <%=driveTime%> min, </th> <th><%=address %></th></tr> <%
 								}
 								
 								
@@ -135,7 +135,7 @@
 										prepTime = "No prep time available.";
 									}
 									else prepTime = recipe.getPrepTime() + " min";
-									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th><%=cookTime %></th> <th><%=prepTime %></th></tr> <%
+									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th> </tr> <%
 								}
 								
 								

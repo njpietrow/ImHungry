@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+#collage {
+	 position: relative;
+	  margin: auto;
+	  top: 0;
+	  right: 0;
+	  left: 0;
+	  /* width: 500px;
+	  height: 200px; */
+	  height:35vh;
+	  width: 50vh;
+	  border-radius: 3px;
+	}
