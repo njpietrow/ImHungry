@@ -76,6 +76,10 @@ public class IHManageList extends HttpServlet {
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
+		/*
+		 * This chunk of code cannot call out because it relies on the request object;
+		 * However, all it does is display an item when clicked on a list.
+		 */
 		if (action.equals("DISPLAY")) {
 			String itemID = request.getParameter("item_id");
 			if (itemID != null && !itemID.equals("")) {
