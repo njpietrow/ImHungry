@@ -2,124 +2,32 @@ package edu.usc.cs.group8.ImHungry;
 
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /*
- * RestaurantGetter.java
- * This class gets additional information from Google place restaurants
- * Author: Nick Pietrow
- * USC ID: 5425773820
- * Email: pietrow@usc.edu
+ * RecipeGetter.java
+ * This class goes to websites and returns recipe objects from them. :)
+ * Author: Kevin Calaway
+ * USC ID: 9724507315
+ * Email: calaway@usc.edu
  */
-public class RestaurantGetter {
-	
-	/* 
-	 * this method gets all parameters except for driving time from Google Place Detail Search
-	 */
-	public static Restaurant getContactInfo(Restaurant r) {
-		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
-				+ "placeid=" + r.getId()
-				+ "&fields=name,rating,formatted_phone_number,formatted_address,website,price_level"
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
-
-		try {
-			String json_string = readWebsite(url);
-			if (json_string == null) return null; 
-
-			//Parse the JSON object to retrieve necessary Restaurant info
-			JSONObject mainObj= new JSONObject(json_string);
-			JSONObject result = (JSONObject) mainObj.get("result");
-			
-			String address = "",phoneNum = "",website = "";
-			int price_level = -1;
-			double rating = -1;
-			
-			if (result.has("formatted_address") && !result.isNull("formatted_address")) {
-				address = result.getString("formatted_address");
-		     }
-			if (result.has("formatted_phone_number") && !result.isNull("formatted_phone_number")) {
-				phoneNum = result.getString("formatted_phone_number");
-		     }
-			if (result.has("website") && !result.isNull("website")) {
-				website = result.getString("website");
-		     }
-			if (result.has("price_level") && !result.isNull("price_level")) {
-				price_level = result.getInt("price_level");
-			}
-			if (result.has("rating") && !result.isNull("rating")) {
-				rating = result.getDouble("rating");
-			}
-			
-			//set restaurant attributes taken from JSON file
-			r.setAddress(address);
-			r.setPhoneNum(phoneNum);
-			r.setWebsiteURL(website);
-			r.setPriceRange(price_level);
-			r.setRating(rating);
-			String name = r.getName();
-			name = name.replaceAll(" ", "+");
-			name = name.replaceAll(",", "");
-			name = name.replaceAll("#", "");
-			r.setMapURL("https://www.google.com/maps/dir/?api=1&origin=" 
-					+ "801+Childs+Way+Los+Angeles+CA"
-					+ "&destination="
-					+ name
-					+ "&destination_place_id="
-					+ r.getId()
-					+ "&travelmode=driving"
-					);
-		} 
-		catch(Exception ex) {
-			System.out.println("exception");
-		}
-		return r;
-	}
+public class RecipeGetter {
 	
 	/*
-	 * This method gets the driving time from Tommy Trojan to the Restaurant
-	 * Uses the Google Distance Matrix API
+	 * This function takes in a web address as an input, and tries to return
+	 * a JSON containing a recipe from the website. If there is no JSON on the
+	 * website, it returns null.
 	 */
-	public static Restaurant getDriveTime(Restaurant r) {
-		String address = r.getAddress();
-		address = address.replaceAll(" ", "+");
-		address = address.replaceAll(",", "");
-		address = address.replaceAll("#", "");
+	public static String readRecipe(String url) {
 		
-		String url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-				+ "units=imperial"
-				+ "&origins=801+Childs+Way+Los+Angeles"
-				+ "&destinations=" + address
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
-		try {
-			String json_string = readWebsite(url);
-			if (json_string == null) return null;
-			
-			JSONObject mainObj= new JSONObject(json_string);
-			
-			JSONArray dist=(JSONArray)mainObj.get("rows");
-	        JSONObject obj2 = (JSONObject)dist.get(0);
-	        JSONArray disting=(JSONArray)obj2.get("elements");
-	        JSONObject obj3 = (JSONObject)disting.get(0);
-	        JSONObject obj5=(JSONObject)obj3.get("duration");
-	        
-			int driving_time = 0;
-			driving_time = obj5.getInt("value");
-			driving_time = driving_time/60;
-			
-			//set driving time attribute taken from JSON file
-			r.setDriveTime(driving_time);
-			
-		} catch(Exception ex) {
-			System.out.println("exception");
-		}
-		return r;
-	}
-	public static String readWebsite(String url) {
 		/*
-		 * Copied from StackOverflow and from https://community.oracle.com/thread/1691281
+		 * This code snippet taken from https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
+		 * to parse an HTML file in Java.
 		 */
 		String content = null;
 		URLConnection connection = null;
@@ -133,7 +41,130 @@ public class RestaurantGetter {
 		}catch ( Exception ex ) {
 		    return null;
 		}
-		return content;
+		
+		/*
+		 * These are flags we will use to identify where the Json has started
+		 * where it ends, and if it exists
+		 */
+		int jsonStart = 0;
+		int jsonEnd = 0;
+		boolean jsonFlag = false;
+		String recipeJson = "";
+		
+		/*
+		 * Every recipe json is of "@type":"Recipe" and runs until the closing HTML tag that begins <\
+		 * So we look for that chunk of text in a website
+		 * 
+		 */
+		for (int i = 0; i < content.length() - 16; i++) {
+			if (content.substring(i, i+16).equals("\"@type\":\"Recipe\"") ||
+			    content.substring(i, i+16).equals("\"@type\": \"Recipe") ) {
+				for (int j = i; j > 0; j--) {
+					if (content.charAt(j) == '{') {
+						jsonStart = j;
+						jsonFlag = true;
+						break;
+					}
+				}
+			}
+			if (content.substring(i, i+2).equals("</") && jsonFlag) {
+				while (content.charAt(i-1) != '}' && i > jsonStart) {
+					i--;
+				}
+				jsonEnd = i;
+				break;
+			}
+		}
+		return content.substring(jsonStart,jsonEnd);
 	}
 
+	/*
+	 * This function takes the JSON file the website created and parses it
+	 * according to https://developers.google.com/search/docs/data-types/recipe.
+	 * A few options are provided for instructions and ingredients due to differences
+	 * in how those are presented by the webmasters of the recipe websites.
+	 * 
+	 * It then returns a Recipe object with all relevant information for
+	 * I'm Hungry.
+	 */
+	public static Recipe parseRecipe(String recipe) {
+		JsonParser parser = new JsonParser();
+		JsonObject bigRecipe;
+		try{
+			bigRecipe = parser.parse(recipe).getAsJsonObject();
+		} catch (Exception e) {
+			return null;
+		}
+		String name, prepTime, cookTime, img;
+		try {
+			name = bigRecipe.get("name").getAsString();
+		} catch (Exception e) {
+			name = "Yummy food.";
+		}
+		try {
+			prepTime = bigRecipe.get("prepTime").getAsString();
+		} catch (Exception e) {
+			prepTime = "Unknown prep time.";
+		}
+		try {
+			cookTime = bigRecipe.get("cookTime").getAsString();
+		} catch (Exception e) {
+			cookTime = "Unknown cook time.";
+		}
+		try {
+			img = bigRecipe.get("image").getAsJsonArray().get(0).getAsString();
+		} catch (Exception e) {
+			img = "";
+		}
+		
+		JsonArray jsonIngredients, jsonInstructions; 
+		try{
+			jsonIngredients = bigRecipe.get("recipeIngredient").getAsJsonArray();
+		} catch (Exception e) {
+			jsonIngredients = new JsonArray();
+			try {
+				jsonIngredients.add(bigRecipe.get("recipeIngredient"));
+			} catch (Exception f) {
+				jsonIngredients.add("No ingredients available.");
+			}
+		}
+		try {
+			jsonInstructions = bigRecipe.get("recipeInstructions").getAsJsonArray();
+		} catch (Exception e) {
+			jsonInstructions = new JsonArray();
+			try {
+				jsonInstructions.add(bigRecipe.get("recipeInstructions"));
+			} catch (Exception f) {
+				jsonInstructions.add("No instructions available.");
+			}
+		}
+		
+		ArrayList<String> ingredients = new ArrayList<String>();
+		for (int i = 0; i < jsonIngredients.size(); i++) {
+			try {
+				ingredients.add(jsonIngredients.get(i).getAsString());
+			}
+			catch (Exception e) {
+				ingredients.add("Ingredients could not be parsed.");
+			}
+		}
+		ArrayList<String> instructions = new ArrayList<String>();
+		for (int i = 0; i < jsonInstructions.size(); i++) {
+			try {
+				instructions.add(jsonInstructions.get(i).getAsString());
+			}
+			catch (Exception e) {
+				try {
+					instructions.add(jsonInstructions.get(i).getAsJsonObject().get("text").getAsString());
+				}
+				catch (Exception f) {
+					instructions.add("Instructions could not be parsed.");
+					break;
+				}
+			}
+		}
+		return new Recipe(name,prepTime,cookTime,img,ingredients,instructions);
+	}
+	
+	
 }
