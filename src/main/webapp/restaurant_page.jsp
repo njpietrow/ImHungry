@@ -90,7 +90,7 @@
 		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
 		    				restaurant = (Restaurant)ListManager.getInstance().getToExplore().get(index);
 		    			}
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
 		    				restaurant = (Restaurant)ListManager.getInstance().getDoNotShow().get(index);
 		    			}
 		    		}
