@@ -30,12 +30,14 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
-			<div class = "list_name_header"> 				
+			<div class = "list_name_header"> 
+							
 				<h1><%
-				//Get the list_name of the current page
+				//The following will get the list_name of the current page
 				String list_name = request.getParameter("list_id");
 				%>
 				<%=list_name %> List</h1>
+				
  			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
@@ -43,6 +45,7 @@
 			<br/>
 		    	<!-- Button Group for Dropdown for Predefined Lists, Back to Results Page and Back to Search Page-->	
 				<div class="overall_information">
+					<!-- The following are the menu list; dropdown menu; and buttons -->
 					<div class="btn-group-vertical" id="button_stuff">
 						<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 							<!-- This is the dropdown menu to select the desired list from -->
@@ -52,7 +55,8 @@
 			        			<a class="dropdown-item" href="#">Do Not Show</a>
 			      			</div>
 			      			<script>
-			      				//The following code will get the name of the list that the user has chosen
+			      				//The following code will get the name of the list that the user has chosen from the dropdown menu
+			  					//And the name of the list will be of use when passing back to the backend or redirecting to another frontend page
 			      				var list_has_been_chosen = false;
 			      				var chosen_list = "";
 							     $(function(){
@@ -64,6 +68,9 @@
 								   });
 								});
 							</script>
+							
+							<!-- Manage List Button is the button to be clicked after user has selected a list from the dropdown menu
+							 And by clicking the manage list button, user will be redirected to the page that s/he selected-->
 							<button class="btn btn-success" id="manage_list_button">Manage List</button>
 							<!-- Redirect to the List Management Page -->
 								<script type="text/javascript">
@@ -79,13 +86,14 @@
 											else if (chosen_list == "Do Not Show"){
 												list_name = "DO_NOT_SHOW";
 											}
-											//Redirect the user to the chosen 
+											//Redirect the user to the chosen list
 											location.href = "list_management_page.jsp?list_id=" + list_name;
 										}
 									}
-									
 								</script>
 							
+							<!-- Back to Results button, when clicked, will take the user back 
+							the result page with the previous search items -->
 							<button id="back_to_results_button" class="btn btn-success">Back to Results</button>
 								<!-- Back to Results -->
 					        	<script type="text/javascript">
@@ -93,6 +101,8 @@
 								        location.href = "results_page.jsp";
 								    };
 								</script>
+								
+							<!-- Back to Search button, when clicked, will take the user back to the search page -->
 							<button id="back_to_search_button" class="btn btn-success">Back to Search</button>
 								<!-- Back to Search -->
 								<script type="text/javascript">
@@ -102,11 +112,11 @@
 								</script>
 			      	</div>
 			      	
+			      	<!-- The following list will display all the items that the user has put into this list earlier -->
 			      	<div class = "list_results">
 			      		<table id="list_results_table">
 			      			<%
-			      				//request.getParameter() to get the parameter from the url
-			      				
+			      				//The following will get the corresponding singleton list object based on the current list user is at
 			      				ArrayList list = null;
 			      				if (list_name.equals("FAVORITES")){
 			      					list = ListManager.getInstance().getFavorites();
@@ -119,8 +129,9 @@
 			      				}
 			      				else return;
 			      				
+			      				//The following will iterate through each item and determine if the item is a recipe or a restaurant. 
 			      				for (int i = 0; i < list.size(); i++){
-			      					if (list.get(i) instanceof Recipe){
+			      					if (list.get(i) instanceof Recipe){	//If it is a recipe, then required recipe information will be displayed in one row in the table
 			      						Recipe recipe = (Recipe)list.get(i);
 			      						String recipe_name = recipe.getName();
 			      						String cookTime, prepTime;
@@ -135,10 +146,12 @@
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
+			      						<!-- The following radio button will allow the user to choose one of the items 
+			      						from the current list, and conduct the MOVE or DELETE function -->
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=recipe_name %> from this List</input>
 			      						<br></tr><%
 			      					}
-			      					else if (list.get(i) instanceof Restaurant){
+			      					else if (list.get(i) instanceof Restaurant){ //If it is a restaurant, then required restaurant information will be displayed in one row in the table
 			      						Restaurant restaurant = (Restaurant)list.get(i);
 			      						String restaurant_name = restaurant.getName();
 			      						int driveTime = restaurant.getDriveTime();
@@ -150,7 +163,8 @@
 												$
 											<% } %></th></a>  
 
-			      						
+			      						<!-- The following radio button will allow the user to choose one of the items 
+			      						from the current list, and conduct the MOVE or DELETE function -->
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=restaurant_name %> from this list </input>
 			      						<br></tr><%
 			      					}
@@ -161,6 +175,8 @@
 			      		</table>      
 			      		
 			      		<br>
+			      		<!-- If the user clicks on the delete button, then the selected item from the radio buttons
+			      		 will be deleted from the current list -->
 			      		<button type="submit" id="delete_button">Delete the Selected Item from the list</button>
 			      		<!-- The following JavaScript function deals with Deleting the Selected Item from the Current List -->
 			      		<script type="text/javascript">
@@ -174,6 +190,7 @@
 			      				        item_index = radios[i].value;       
 			      				    }
 			      				}
+			      				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
 			      				var redirect_link = "IHManageList?list_id=" + list_name + "&action=REMOVE&item_id=" + item_index.toString();
 			      				location.href = redirect_link;
 			      			}
@@ -189,7 +206,9 @@
 			      			
 			      		</script>
 			      		
-			      		
+			      		<!-- If the user clicks on the MOVE button, then the selected item from the radio buttons
+			      		 will be moved from the current list to the list selected from the dropdown menu. 
+			      		 If nothing is selected from the dropdown menu, then the MOVE will not happen -->
 			      		<button type="submit" id="move_button">Move the Selected Item to the List chosen from the Dropdown Menu</button>
 			      		<!-- The following JavaScript function deals with moving the selected item from the current list to the list chosen from the dropdown menu -->
 			      		<script type="text/javascript">
@@ -216,6 +235,7 @@
 			      				        item_index = radios[i].value;       
 			      				    }
 			      				}
+			      				//send the MOVE request to the backend servlet and let the backend deal with the move logic and session storage.
 			      				var redirect_link = "IHManageList?list_id=" + list_name + "&destination_id=" + destination_list_name + "&action=MOVE&item_id=" + item_index.toString();
 			      			}
 			      		</script>

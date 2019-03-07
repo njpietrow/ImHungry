@@ -25,6 +25,8 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
+		
+			<!-- The following div will display the collage with random rotation angle -->
 			<div id=collage>
 		    	<% Random r = new Random(); %>
 		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
@@ -33,6 +35,7 @@
 			    
 		    	</div>
 			<div class = "text-center"> 
+				<!-- This is the header for the result page -->
 				<h1>Results for <%= session.getAttribute("query") %></h1>
 			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
@@ -49,6 +52,8 @@
 			        			<a class="dropdown-item" href="#">Do Not Show</a>
 			      			</div>
 			      			<script>
+			      				//This is a helper fuction that will help to make the dropdown menu look nicer
+			      				//Specifically, the name of the list will be displayed on the button after selected
 			      				var list_has_been_chosen = false;
 			      				var chosen_list = "";
 							     $(function(){
@@ -61,6 +66,9 @@
 								    
 								});
 							</script>
+							
+							<!-- Manage List Button is the button to be clicked after user has selected a list from the dropdown menu
+							 And by clicking the manage list button, user will be redirected to the page that s/he selected-->
 							<button class="btn btn-success" id="manage_list_button">Manage List</button>
 								<!-- Redirect to the List Management Page -->
 								<script type="text/javascript">
@@ -77,12 +85,13 @@
 												list_name = "DO_NOT_SHOW";
 											}
 											
+											//Redirect the user to the chosen list
 											location.href = "list_management_page.jsp?list_id=" + list_name;
 										}
 									};
-									
 								</script>
 							
+							<!-- Back to Search button, when clicked, will take the user back to the search page -->
 							<button id="back_to_search_button" class="btn btn-success">Back to Search</button>
 								<!-- Back to Search -->
 								<script type="text/javascript">
@@ -92,8 +101,11 @@
 								</script>
 					</div>
 				
+					<!-- The following div is an outer container div for the two tables -- restaurant results table
+					and recipe results table -->
 					<div class="recipe_and_restaurant_results">
 					
+						<!-- The following div is the container for the restaurant results table-->
 						<div class="restaurant_results">
 							<h2>Restaurant Results</h2>
 							<table id="restaurant_results_table">
@@ -104,6 +116,8 @@
 								}
 								ArrayList<Restaurant> list_of_restaurant_results = (ArrayList<Restaurant>)(session.getAttribute("restaurants"));
 								for (int i = 0; i < list_of_restaurant_results.size(); i++){
+									
+									//The following will get the detailed restaurant information needed to be displayed
 									Restaurant restaurant = list_of_restaurant_results.get(i);
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
@@ -113,12 +127,11 @@
 												$
 											<% } %></th></tr> <%
 								}
-								
-								
 								%>
 							</table>
 						</div>
 					
+						<!-- The following div is the container for the recipe results table -->
 						<div class="recipe_results">
 							<h2>Recipe Results</h2>
 							<table id="recipe_results_table">
@@ -129,6 +142,8 @@
 								}
 								ArrayList<Recipe> list_of_recipe_results = (ArrayList<Recipe>)(session.getAttribute("recipes"));
 								for (int i = 0; i < list_of_recipe_results.size(); i++){
+									
+									//The following will get the detailed recipe information needed to be displayed
 									Recipe recipe = list_of_recipe_results.get(i);
 									String recipe_name = recipe.getName();
 									String cookTime, prepTime;
@@ -142,27 +157,13 @@
 									else prepTime = recipe.getPrepTime() + " min";
 									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th> </tr> <%
 								}
-								
-								
 								%>
 							</table>
 						</div>
 					</div>
-				
-				
 		        </div>
 	        </div>
 	    </div>
-	    
-	<script type="text/javascript">
-		function listRecipeResults(){
-			var recipe_table = document.getElementById('recipe_results_table');
-			var recipe_table_row = document.createElement("tr");
-			
-			//var list_of_recipes = 
-		}
-	
-	</script>
 	    
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
