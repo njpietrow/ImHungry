@@ -57,23 +57,23 @@ public class IHManageList extends HttpServlet {
 			String restaurantID = request.getParameter("restaurant_id");
 			addToList(listID,recipeID,restaurantID,recipes,restaurants);
 			if (recipeID != "") {
-				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipeID);
+				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipeID).forward(request, response);
 			} else {
-				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + restaurantID);
+				request.getRequestDispatcher("restaurant_page.jsp?restaurant_id=" + restaurantID).forward(request, response);
 			}
 		}
 		
 		if (action.equals("REMOVE")) {
 			String itemID = request.getParameter("item_id");
 			removeFromList(listID,itemID);
-			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID);
+			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
 		if (action.equals("MOVE")) {
 			String itemID = request.getParameter("item_id");
 			String destinationID = request.getParameter("destination_id");
 			moveToList(listID,destinationID,itemID);
-			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID);
+			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
 		if (action.equals("DISPLAY")) {
@@ -172,6 +172,7 @@ public class IHManageList extends HttpServlet {
 	 * it adds an item to a list.
 	 */
 	public void addToList(String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
+		System.out.println("I got called!");
 		if (recipeID != null && !recipeID.equals("")) {
 			int index = Integer.parseInt(recipeID);
 			if (listID.equals("FAVORITES")) {
