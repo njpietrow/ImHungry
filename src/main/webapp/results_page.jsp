@@ -107,7 +107,10 @@
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
 									String address = restaurant.getAddress();
-									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a>, </th> <th>Drive Time: <%=driveTime%> min, </th> <th><%=address %></th></tr> <%
+									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a>, </th> <th>Drive Time: <%=driveTime%> min, </th> <th><%=address %>, </th> <th><%
+											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
+												$
+											<% } %></th></tr> <%
 								}
 								
 								
