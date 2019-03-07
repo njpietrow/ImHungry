@@ -49,11 +49,13 @@
 			      			</div>
 			      			<script>
 			      				var list_has_been_chosen = false;
+			      				var chosen_list = "";
 							     $(function(){
 								    $(".dropdown-item").click(function(){					
 								      $("#btnGroupVerticalDrop2").text($(this).text());
 								      $("#btnGroupVerticalDrop2").val($(this).text());
 								      list_has_been_chosen = true;
+								      chosen_list = $(this).text();
 								   });
 								});
 							</script>
@@ -62,8 +64,18 @@
 								<script type="text/javascript">
 									document.getElementById("manage_list_button").onclick = function(){
 										if (list_has_been_chosen) {
-											//NEED CHANGE
-											location.href = "list_management_page.jsp?list_id=" + "FAVORITES";
+											var list_name = "";
+											if (chosen_list == "Favorites"){
+												list_name = "FAVORITES";
+											}
+											else if (chosen_list == "To Explore"){
+												list_name = "TO_EXPLORE";
+											}
+											else if (chosen_list == "Do Not Show"){
+												list_name = "DO_NOT_SHOW";
+											}
+
+											location.href = "list_management_page.jsp?list_id=" + list_name;
 										}
 									}
 									
@@ -118,17 +130,7 @@
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%><tr><th><a href=redirect_link><%=recipe_name %>, </th> <th><%=prepTime %>, </th> <th><%=cookTime %></th></a>
 			      						
-			      						<input type="radio" value=<%=i %>>Delete from the current list</input>
-			      						<!-- Delete the item from list -->
-			      						<script type="text/javascript">
-			      							$(function(){
-			      								$(".delete_button").click(function(){
-			      									var list_name = getUrlVars()["list_id"];
-			      									
-			      									String redirect_link = "IHManageList?list"
-			      								});
-			      							});
-			      						</script>
+			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=recipe_name %> from this List</input>
 			      						</tr><%
 			      					}
 			      					else if (list.get(i) instanceof Restaurant){
@@ -139,7 +141,7 @@
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%> <tr><th><a href=redirect_link><%=restaurant_name %>, </th> <th><%=driveTime %> min, </th> <th><%=address %></th></a>  
 			      						
-			      						<button class="delete_button">Delete this item from the current list</button>
+			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=restaurant_name %> from this list </input>
 			      						</tr><%
 			      					}
 			      				}
@@ -163,6 +165,14 @@
 			      				}
 			      				var redirect_link = "IHManageList?list_id=" + list_name + "&action=REMOVE&item_id=" + item_index.toString();
 			      				location.href = redirect_link;
+			      			}
+			      			
+			      			function getUrlVars() {
+			      			    var vars = {};
+			      			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			      			        vars[key] = value;
+			      			    });
+			      			    return vars;
 			      			}
 			      			
 			      		</script>
