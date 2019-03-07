@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations;
 
 public class IHSearchTest {
 	
-/*	@Mock
+	@Mock
 	HttpServletRequest request;
 	
 	@Mock
@@ -171,13 +171,13 @@ public class IHSearchTest {
 //    }
 	
 
-*/
-	@Test
-	public void ihstest() throws Exception {
-		IHSearch search = new IHSearch();
-		ArrayList<Restaurant> rests = search.doRestaurantSearch("burger", "20");
-		for (int i = 0; i< rests.size();i++) {
-			System.out.println(rests.get(i).getName() + ", "+ rests.get(i).getWebsiteURL());
-		}
-	}
+
+//	@Test
+//	public void ihstest() throws Exception {
+//		IHSearch search = new IHSearch();
+//		ArrayList<Restaurant> rests = search.doRestaurantSearch("burger", "20");
+//		for (int i = 0; i< rests.size();i++) {
+//			System.out.println(rests.get(i).getName() + ", "+ rests.get(i).getWebsiteURL());
+//		}
+//	}
 }

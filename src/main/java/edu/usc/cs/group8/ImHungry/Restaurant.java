@@ -61,6 +61,10 @@ public class Restaurant extends Result implements Serializable{
 	}
 	
 
+	public Restaurant() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getDriveTime() {
 		return driveTime;
 	}

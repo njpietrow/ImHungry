@@ -35,6 +35,7 @@ public class IHManageList extends HttpServlet {
 	 * The display functionality determines what object is being presented and therefore needs access to the response
 	 * object.
 	 */
+	@SuppressWarnings({ "unchecked", "static-access" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -52,6 +53,7 @@ public class IHManageList extends HttpServlet {
 		String listID = request.getParameter("list_id");
 		String action = request.getParameter("action");
 		
+		//based on request parameter, will add the recipe or restaurant to the list
 		if (action.equals("ADD")) {
 			String recipeID = request.getParameter("recipe_id");
 			String restaurantID = request.getParameter("restaurant_id");
@@ -69,7 +71,7 @@ public class IHManageList extends HttpServlet {
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
-		if (action.equals("MOVE")) {
+		else if (action.equals("MOVE")) {
 			String itemID = request.getParameter("item_id");
 			String destinationID = request.getParameter("destination_id");
 			moveToList(listID,destinationID,itemID);
@@ -80,7 +82,7 @@ public class IHManageList extends HttpServlet {
 		 * This chunk of code cannot call out because it relies on the request object;
 		 * However, all it does is display an item when clicked on a list.
 		 */
-		if (action.equals("DISPLAY")) {
+		else if (action.equals("DISPLAY")) {
 			String itemID = request.getParameter("item_id");
 			if (itemID != null && !itemID.equals("")) {
 				int index = Integer.parseInt(itemID);

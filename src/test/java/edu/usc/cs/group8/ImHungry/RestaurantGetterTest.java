@@ -17,43 +17,24 @@ public class RestaurantGetterTest {
 
 	@Test
 	public void restaurantGetterTestJsonNull() {
-		RestaurantGetter RG  = Mockito.spy(new RestaurantGetter());
 
-		Restaurant r = mock(Restaurant.class);
-		r.setName("Soy Roll & Katsu");
-		r.setId("123abc");
-		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
-				+ "placeid=" + r.getId()
-				+ "&fields=name,rating,formatted_phone_number,formatted_address,website,price_level"
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+		Restaurant r = new Restaurant();
+		r.setName("Soy Test");
+		String SoyId = "ChIJj2qdPuHHwoARihm6qZwi0Gg";
+		r.setId(SoyId);
+		r = RestaurantGetter.getContactInfo(r);
+		assertEquals("3335 S Figueroa St, Los Angeles, CA 90007, USA",r.getAddress());
 		
-		doReturn("").when(RG).readWebsite(url);
-		r = getter.getContactInfo(r);
 	}
 	
 	@Test
 	public void restaurantGetterTestNormal() {    
-		Restaurant r = mock(Restaurant.class);
-		r.setName("Soy Roll & Katsu");
-		r.setId("123abc");
-		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
-				+ "placeid=" + r.getId()
-				+ "&fields=name,rating,formatted_phone_number,formatted_address,website,price_level"
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
-		
-		when(getter.readWebsite(url)).thenReturn("");
-		JSONObject mainObj = mock(JSONObject.class);
-		when(mainObj.get("result")).thenReturn(null);
-		
-
-		
-		//when();
-		r = getter.getContactInfo(r);
-
-		assertEquals(r.getRating(),4.5,0.001);
-		assertEquals(r.getAddress(),"5, 48 Pirrama Rd, Pyrmont NSW 2009, Australia");
-		assertEquals(r.getPhoneNum(),"(02) 9374 4000");
-		assertEquals(r.getWebsiteURL(),"https://www.google.com.au/about/careers/locations/sydney/");
+		Restaurant r = new Restaurant();
+		r.setName("Ebaes Test");
+		String EbaesId = "ChIJn7GRXOzHwoARNOHThxF8Kp4";
+		r.setId(EbaesId);
+		r = RestaurantGetter.getContactInfo(r);
+		assertEquals("(213) 747-6888",r.getPhoneNum());
 	}
 	
 }

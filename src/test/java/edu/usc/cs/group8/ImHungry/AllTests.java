@@ -5,8 +5,16 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AppTest.class, IHManageListTest.class, IHSearchTest.class, ListManagerTest.class,
-		RecipeGetterTest.class, RecipeTest.class, RestaurantTest.class })
+@SuiteClasses({ 
+	AppTest.class, 
+	IHManageListTest.class, 
+	IHSearchTest.class, 
+	ListManagerTest.class,
+	RecipeGetterTest.class,  
+	RestaurantGetterTest.class, 
+	RecipeTest.class, 
+	RestaurantTest.class 
+	})
 
 public class AllTests {
 
