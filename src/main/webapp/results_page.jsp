@@ -28,7 +28,7 @@
 			<div id=collage>
 		    	<% Random r = new Random(); %>
 		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
-			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:10%; max-height:10%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
+			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
 			    
 		    	</div>

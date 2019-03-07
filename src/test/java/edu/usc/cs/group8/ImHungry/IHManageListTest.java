@@ -44,6 +44,11 @@ public class IHManageListTest {
         when(request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
         when(request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("recipe_page.jsp?recipe_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?restaurant_id=0")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=FAVORITES")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=TO_EXPLORE")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=DO_NOT_SHOW")).thenReturn(RD);
         
         IHManageList manager = new IHManageList();
         manager.doGet(request, response);
@@ -83,7 +88,7 @@ public class IHManageListTest {
         
         when(request.getParameter("action")).thenReturn("DISPLAY");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
-        when(request.getParameter("item_id")).thenReturn("0");
+        when(request.getParameter("item_id")).thenReturn("1");
         
         manager.doGet(request, response);
         
@@ -109,7 +114,7 @@ public class IHManageListTest {
         
         when(request.getParameter("action")).thenReturn("DISPLAY");
         when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
-        when(request.getParameter("item_id")).thenReturn("0");
+        when(request.getParameter("item_id")).thenReturn("1");
         
         manager.doGet(request, response);
         
@@ -135,7 +140,7 @@ public class IHManageListTest {
         
         when(request.getParameter("action")).thenReturn("DISPLAY");
         when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
-        when(request.getParameter("item_id")).thenReturn("0");
+        when(request.getParameter("item_id")).thenReturn("1");
         
         manager.doGet(request, response);
 	}

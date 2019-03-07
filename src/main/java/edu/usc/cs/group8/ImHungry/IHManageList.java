@@ -56,17 +56,24 @@ public class IHManageList extends HttpServlet {
 			String recipeID = request.getParameter("recipe_id");
 			String restaurantID = request.getParameter("restaurant_id");
 			addToList(listID,recipeID,restaurantID,recipes,restaurants);
+			if (recipeID != "") {
+				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipeID);
+			} else {
+				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + restaurantID);
+			}
 		}
 		
 		if (action.equals("REMOVE")) {
 			String itemID = request.getParameter("item_id");
 			removeFromList(listID,itemID);
+			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID);
 		}
 		
 		if (action.equals("MOVE")) {
 			String itemID = request.getParameter("item_id");
 			String destinationID = request.getParameter("destination_id");
 			moveToList(listID,destinationID,itemID);
+			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID);
 		}
 		
 		if (action.equals("DISPLAY")) {
