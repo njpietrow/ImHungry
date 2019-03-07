@@ -144,7 +144,12 @@
 			      						int driveTime = restaurant.getDriveTime();
 			      						String address = restaurant.getAddress();
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%><tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
+
+			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %>, </th> <th><%
+											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
+												$
+											<% } %></th></a>  
+
 			      						
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=restaurant_name %> from this list </input>
 			      						<br></tr><%
