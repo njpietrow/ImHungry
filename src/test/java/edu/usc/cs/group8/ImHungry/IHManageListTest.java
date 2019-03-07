@@ -20,6 +20,8 @@ public class IHManageListTest {
 	
 	@Test
 	public void testDoGet() throws Exception {
+		ListManager.getInstance().reset();
+		
 		IHSearch search = new IHSearch();
 		
 		HttpServletRequest request = mock(HttpServletRequest.class);       
@@ -36,7 +38,17 @@ public class IHManageListTest {
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5"));
         when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5"));
-        when(request.getRequestDispatcher("results_page.jsp")).thenReturn(RD);
+        when(request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("recipe_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("recipe_page.jsp?recipe_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?restaurant_id=0")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=FAVORITES")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=TO_EXPLORE")).thenReturn(RD);
+		when(request.getRequestDispatcher("list_management_page.jsp?list_id=DO_NOT_SHOW")).thenReturn(RD);
         
         IHManageList manager = new IHManageList();
         manager.doGet(request, response);
@@ -64,6 +76,71 @@ public class IHManageListTest {
         when(request.getParameter("action")).thenReturn("DISPLAY");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
         when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("recipe_id")).thenReturn("");
+        when(request.getParameter("restaurant_id")).thenReturn("1");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("FAVORITES");
+        when(request.getParameter("item_id")).thenReturn("1");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("recipe_id")).thenReturn("0");
+        when(request.getParameter("restaurant_id")).thenReturn("");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("recipe_id")).thenReturn("");
+        when(request.getParameter("restaurant_id")).thenReturn("1");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
+        when(request.getParameter("item_id")).thenReturn("1");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
+        when(request.getParameter("recipe_id")).thenReturn("0");
+        when(request.getParameter("restaurant_id")).thenReturn("");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
+        when(request.getParameter("item_id")).thenReturn("0");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("ADD");
+        when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
+        when(request.getParameter("recipe_id")).thenReturn("");
+        when(request.getParameter("restaurant_id")).thenReturn("1");
+        
+        manager.doGet(request, response);
+        
+        when(request.getParameter("action")).thenReturn("DISPLAY");
+        when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
+        when(request.getParameter("item_id")).thenReturn("1");
         
         manager.doGet(request, response);
 	}
@@ -103,8 +180,6 @@ public class IHManageListTest {
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> oldRecipes = search.doRecipeSearch("falafel", "3");
 		ArrayList<Restaurant> oldRestaurants = search.doRestaurantSearch("ramen", "3");
-		
-		System.out.println(ListManager.getInstance().getDoNotShow() + "In Do Not Show");
 
 		ArrayList<Recipe> testRecipes = oldRecipes;
 		ArrayList<Restaurant> testRestaurants = oldRestaurants;
@@ -143,13 +218,10 @@ public class IHManageListTest {
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1");
 		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1");
-		System.out.println(ListManager.getInstance().getDoNotShow());
-		System.out.println(restaurant);
 		
 		manager.addToList("DO_NOT_SHOW", "0", "", recipe, restaurant);
 		manager.addToList("DO_NOT_SHOW", "", "0", recipe, restaurant);
 		
-		System.out.println(ListManager.getInstance().getDoNotShow());
 		manager.moveToList("DO_NOT_SHOW", "FAVORITES", "1");
 		manager.moveToList("DO_NOT_SHOW", "TO_EXPLORE", "0");
 		
