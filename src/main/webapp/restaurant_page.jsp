@@ -97,30 +97,35 @@
 		    		String restaurant_name = restaurant.getName();
 			        int drive_time = restaurant.getDriveTime();
 			        String website_URL = restaurant.getWebsiteURL();
+			        String map_url = restaurant.getMapURL();
 			        String restaurant_address = restaurant.getAddress();
 			        String restaurant_phone_num = restaurant.getPhoneNum();
 			        int price_range = restaurant.getPriceRange();
 			    %>
 		    	<div id=restaurant_name><%=restaurant_name%></div>
 		    	<br>
-		    	<div id=restaurant_address><%=restaurant_address%></div>
+		    	<div id=restaurant_address>
+		    		<a href=<%=map_url%> target="_blank"><%=restaurant_address%></a>
+	    		</div>
 		    	<div id=restaurant_phone_number><%=restaurant_phone_num%></div>
-		    	<div id=restaurant_website><%=website_URL%></div>
+		    	<div id=restaurant_website>
+		    		<a href=<%=website_URL%> target="_blank"><%=website_URL%></a>
+	    		</div>
         	</div>
 	    </div>
 	</div>
   	<!-- End Container Class -->	
 	<script>
-		function PrintPreview() {
-			window.print;
-			/* var div = document.getElementById('button_stuff');
-		    div.style.display = 'none'; */
-		}
-	</script>
-	<style type="text/css">
+    	function PrintPreview() {
+    		window.print();
+    		/* var div = document.getElementById('button_stuff');
+    	    div.style.display = 'none'; */
+        }
+   	</script>
+   	<style type="text/css">
 		@media print {
 		    .btn-group-vertical {
-			display :  none;
+		        display :  none;
 		    }
 		}
 	</style>
