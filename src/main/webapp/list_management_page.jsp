@@ -130,7 +130,7 @@
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%><tr><th><a href=redirect_link><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
-			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=recipe_name %> from this List</input>
+			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=recipe_name %> from this List</input>
 			      						</tr><%
 			      					}
 			      					else if (list.get(i) instanceof Restaurant){
@@ -141,7 +141,7 @@
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%> <tr><th><a href=redirect_link><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
 			      						
-			      						<input type="radio" value=<%=i %> name="only_one_selection">Delete <%=restaurant_name %> from this list </input>
+			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=restaurant_name %> from this list </input>
 			      						</tr><%
 			      					}
 			      				}
@@ -151,7 +151,7 @@
 			      		</table>      
 			      		
 			      		<button type="submit" id="delete_button">Delete the Selected Item from the list</button>
-			      		<!-- Delete the Selected Item from the Current List -->
+			      		<!-- The following JavaScript function deals with Deleting the Selected Item from the Current List -->
 			      		<script type="text/javascript">
 			      			document.getElementById("delete_button").onclick=function(){
 			      				var list_name = getUrlVars()["list_id"];
@@ -167,6 +167,7 @@
 			      				location.href = redirect_link;
 			      			}
 			      			
+			      			//Helper function to get the value of the attribute in the url
 			      			function getUrlVars() {
 			      			    var vars = {};
 			      			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -175,6 +176,36 @@
 			      			    return vars;
 			      			}
 			      			
+			      		</script>
+			      		
+			      		<button type="submit" id="move_button">Move the Selected Item to the List chosen from the Dropdown Menu</button>
+			      		<!-- The following JavaScript function deals with moving the selected item from the current list to the list chosen from the dropdown menu -->
+			      		<script type="text/javascript">
+			      			document.getElementById("move_button").onclick=function(){
+			      				var list_name = getUrlVars()["list_id"]
+			      				
+			      				//Get the destination list name
+			      				var destination_list_name = "";
+								if (chosen_list == "Favorites"){
+									destination_list_name = "FAVORITES";
+								}
+								else if (chosen_list == "To Explore"){
+									destination_list_name = "TO_EXPLORE";
+								}
+								else if (chosen_list == "Do Not Show"){
+									destination_list_name = "DO_NOT_SHOW";
+								}
+			      				
+			      				var radios = document.getElementByTagName('input');
+			      				var item_index;
+			      				for (var i = 0; i < radios.length; i++){
+			      					if (radios[i].type === 'radio' && radios[i].checked) {
+			      				        // get the item_index from the radio button input
+			      				        item_index = radios[i].value;       
+			      				    }
+			      				}
+			      				var redirect_link = "IHManageList?list_id=" + list_name + "&destination_id=" + destination_list_name + "&action=MOVE&item_id=" + item_index.toString();
+			      			}
 			      		</script>
 			      	</div>
 				
