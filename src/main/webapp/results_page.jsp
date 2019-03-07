@@ -33,7 +33,7 @@
 			    
 		    	</div>
 			<div class = "text-center"> 
-				Results for <%= session.getAttribute("query") %>
+				<h1>Results for <%= session.getAttribute("query") %></h1>
 			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
@@ -95,6 +95,7 @@
 					<div class="recipe_and_restaurant_results">
 					
 						<div class="restaurant_results">
+							<h2>Restaurant Results</h2>
 							<table id="restaurant_results_table">
 								<%
 								//Getting restaurant results array list from session
@@ -116,6 +117,7 @@
 						</div>
 					
 						<div class="recipe_results">
+							<h2>Recipe Results</h2>
 							<table id="recipe_results_table">
 								<%
 								//Getting recipe results array list from session

@@ -16,7 +16,7 @@
 	    <!-- Required meta tags -->
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	    <link rel="stylesheet" type="text/css" href="result_page.css" />
+	    <link rel="stylesheet" type="text/css" href="list_management_page.css" />
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -30,10 +30,13 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
-			<div> 
-				<!-- "L" to be changed to the proper list name -->
-				L List
-			</div>
+			<div class = "list_name_header"> 				
+				<h1><%
+				//Get the list_name of the current page
+				String list_name = request.getParameter("list_id");
+				%>
+				<%=list_name %> List</h1>
+ 			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
 			<div class="container">
@@ -42,12 +45,14 @@
 				<div class="overall_information">
 					<div class="btn-group-vertical" id="button_stuff">
 						<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+							<!-- This is the dropdown menu to select the desired list from -->
 							<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 			        			<a class="dropdown-item" href="#">Favorites</a>
 			        			<a class="dropdown-item" href="#">To Explore</a>
 			        			<a class="dropdown-item" href="#">Do Not Show</a>
 			      			</div>
 			      			<script>
+			      				//The following code will get the name of the list that the user has chosen
 			      				var list_has_been_chosen = false;
 			      				var chosen_list = "";
 							     $(function(){
@@ -74,7 +79,7 @@
 											else if (chosen_list == "Do Not Show"){
 												list_name = "DO_NOT_SHOW";
 											}
-
+											//Redirect the user to the chosen 
 											location.href = "list_management_page.jsp?list_id=" + list_name;
 										}
 									}
@@ -101,7 +106,7 @@
 			      		<table id="list_results_table">
 			      			<%
 			      				//request.getParameter() to get the parameter from the url
-			      				String list_name = request.getParameter("list_id");
+			      				
 			      				ArrayList list = null;
 			      				if (list_name.equals("FAVORITES")){
 			      					list = ListManager.getInstance().getFavorites();
@@ -131,7 +136,7 @@
 			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=recipe_name %> from this List</input>
-			      						</tr><%
+			      						<br></tr><%
 			      					}
 			      					else if (list.get(i) instanceof Restaurant){
 			      						Restaurant restaurant = (Restaurant)list.get(i);
@@ -139,10 +144,10 @@
 			      						int driveTime = restaurant.getDriveTime();
 			      						String address = restaurant.getAddress();
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
+			      						%><tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %></th></a>  
 			      						
 			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=restaurant_name %> from this list </input>
-			      						</tr><%
+			      						<br></tr><%
 			      					}
 			      				}
 			      			
@@ -150,6 +155,7 @@
 			      			
 			      		</table>      
 			      		
+			      		<br>
 			      		<button type="submit" id="delete_button">Delete the Selected Item from the list</button>
 			      		<!-- The following JavaScript function deals with Deleting the Selected Item from the Current List -->
 			      		<script type="text/javascript">
@@ -177,6 +183,7 @@
 			      			}
 			      			
 			      		</script>
+			      		
 			      		
 			      		<button type="submit" id="move_button">Move the Selected Item to the List chosen from the Dropdown Menu</button>
 			      		<!-- The following JavaScript function deals with moving the selected item from the current list to the list chosen from the dropdown menu -->
