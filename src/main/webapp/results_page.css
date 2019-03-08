@@ -42,5 +42,29 @@ html body {
 	float: right;
 }
 
+#restaurant_results_table tr{
+	padding: 10px;
+}
+
+#restaurant_results_table th{
+	padding: 10px;
+}
+
+#restaurant_results_table td{
+	padding: 10px;
+}
+
+#recipe_results_table tr{
+	padding: 10px;
+}
+
+#recipe_results_table td{
+	padding: 10px;
+}
+
+#recipe_results_table th{
+	padding: 10px;
+}
+
 tr:nth-child(even) {background: Silver}
 tr:nth-child(odd) {background: LightGray}
