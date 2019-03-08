@@ -19,8 +19,8 @@ html body {
 
 .btn-group-vertical {
 	position: absolute;
-	bottom: 30% !important;
-	left:100%;
+	bottom: 40% !important;
+	left:130%;
 	/* left:95%; */
 	z-index:1;
 }
