@@ -26,13 +26,14 @@
 	</head>
 	
 	<body>
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		
 		<div class = "div_for_entire_content">
 			<div class = "list_name_header"> 
 							
@@ -52,19 +53,19 @@
 					<!-- The following are the menu list; dropdown menu; and buttons -->
 					<div class="btn-group-vertical" id="button_stuff">
 						<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-							<!-- This is the dropdown menu to select the desired list from -->
-							<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-			        			<a class="dropdown-item" href="#">Favorites</a>
-			        			<a class="dropdown-item" href="#">To Explore</a>
-			        			<a class="dropdown-item" href="#">Do Not Show</a>
-			      			</div>
+						      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+						        <a class="dropdown-item" href="javascript:void(0);">Favorites</a>
+						        <a class="dropdown-item" href="javascript:void(0);">To Explore</a>
+						        <a class="dropdown-item" href="javascript:void(0);">Do Not Show</a>
+						      </div>
 			      			<script>
 			      				//The following code will get the name of the list that the user has chosen from the dropdown menu
 			  					//And the name of the list will be of use when passing back to the backend or redirecting to another frontend page
 			      				var list_has_been_chosen = false;
 			      				var chosen_list = "";
 							     $(function(){
-								    $(".dropdown-item").click(function(){					
+								    $(".dropdown-item").click(function(){	
+								    	console.log("HELLO");
 								      $("#btnGroupVerticalDrop2").text($(this).text());
 								      $("#btnGroupVerticalDrop2").val($(this).text());
 								      list_has_been_chosen = true;
@@ -147,7 +148,12 @@
 			      							prepTime = "No prep time available.";
 			      						}
 			      						else prepTime = recipe.getPrepTime() + " min";
-			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
+			      									      						
+			      						if (list_name.contains("#")){
+			      							list_name = list_name.substring(0,list_name.length()-1);
+			      							System.out.println("list name: " + list_name);
+			      						}
+			      						String redirect_link = "http://localhost:8080/ImHungry/IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
 			      						<!-- The following radio button will allow the user to choose one of the items 
@@ -160,6 +166,13 @@
 			      						String restaurant_name = restaurant.getName();
 			      						int driveTime = restaurant.getDriveTime();
 			      						String address = restaurant.getAddress();
+			      						
+										System.out.println("list name: " + list_name);
+			      						
+			      						if (list_name.contains("#")){
+			      							list_name = list_name.substring(0,list_name.length()-1);
+			      							System.out.println("list name: " + list_name);
+			      						}
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 
 			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %>, </th> <th><%
@@ -217,6 +230,7 @@
 			      		<!-- The following JavaScript function deals with moving the selected item from the current list to the list chosen from the dropdown menu -->
 			      		<script type="text/javascript">
 			      			document.getElementById("move_button").onclick=function(){
+			      				console.log("In function");
 			      				var list_name = getUrlVars()["list_id"]
 			      				
 			      				//Get the destination list name
@@ -225,13 +239,14 @@
 									destination_list_name = "FAVORITES";
 								}
 								else if (chosen_list == "To Explore"){
+									console.log("In to explore");
 									destination_list_name = "TO_EXPLORE";
 								}
 								else if (chosen_list == "Do Not Show"){
 									destination_list_name = "DO_NOT_SHOW";
 								}
 			      				
-			      				var radios = document.getElementByTagName('input');
+								var radios = document.getElementsByTagName('input');
 			      				var item_index;
 			      				for (var i = 0; i < radios.length; i++){
 			      					if (radios[i].type === 'radio' && radios[i].checked) {
@@ -241,13 +256,11 @@
 			      				}
 			      				//send the MOVE request to the backend servlet and let the backend deal with the move logic and session storage.
 			      				var redirect_link = "IHManageList?list_id=" + list_name + "&destination_id=" + destination_list_name + "&action=MOVE&item_id=" + item_index.toString();
+			      				location.href = redirect_link;
 			      			}
 			      		</script>
 			      	</div>
-				
-				
 				</div>
-			
 			</div>
 		</div>
 	</body>
