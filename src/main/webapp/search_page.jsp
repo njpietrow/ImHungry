@@ -29,9 +29,9 @@
 		<div class="container">
 	    <br/>
 			<div class="row justify-content-center">
-	           <form id="feed_me_form" class="form-inline" action="IHSearch">
+	           <form id="feed_me_form" class="form-inline" action="IHSearch" name="only_form">
 	                 <div class="input_group"> 
-	                 	<input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Enter Food" name="search_query" >
+	                 	<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Enter Food" name="search_query" required />
 	                 	<span></span>
 	                 	<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
 	                 	<!-- <span class="tooltiptext">Number of items to show in results</span> -->
@@ -44,8 +44,13 @@
         	<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
 
 		<script type="text/javascript">
+			
 		    document.getElementById("submit_button").onclick = function () {
-		    document.getElementById("feed_me_form").submit();
+		    	if(document.forms['only_form'].search_query.value === "") {
+					alert("Please enter a search term.");
+					return false;
+				}
+		    	document.getElementById("feed_me_form").submit();
 			//location.href = "results_page.jsp";
 		    };
 		</script>
