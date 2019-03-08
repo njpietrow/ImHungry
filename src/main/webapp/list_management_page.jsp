@@ -20,8 +20,6 @@
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-	
 		<title>List Management Page</title>
 	</head>
 	
@@ -35,14 +33,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		
 		<div class = "div_for_entire_content">
-			<div class = "list_name_header"> 
-							
+			<div class = "list_name_header"> 			
 				<h1><%
 				//The following will get the list_name of the current page
 				String list_name = request.getParameter("list_id");
 				%>
 				<%=list_name.replace("_"," ") %> List</h1>
-				
  			</div>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
