@@ -77,4 +77,12 @@ public class RestaurantTest {
 		restaurant.setId("what is this");
 		assertEquals(restaurant.getId(),"what is this");
 	}
+	
+	@Test
+	public void testMapURL() {
+		restaurant.setMapURL("https://www.google.com/maps/dir/?api=1&origin=801+Childs+Way+Los+Angeles+CA&destination=Momota+Ramen+House"
+				+ "&destination_place_id=ChIJTYnFFvjHwoARUY-0fXWieuI&travelmode=driving");
+		assertEquals(restaurant.getMapURL(),"https://www.google.com/maps/dir/?api=1&origin=801+Childs+Way+Los+Angeles+CA&destination=Momota+Ramen+House"
+				+ "&destination_place_id=ChIJTYnFFvjHwoARUY-0fXWieuI&travelmode=driving");
+	}
 }

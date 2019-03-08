@@ -82,7 +82,8 @@ public class IHSearch extends HttpServlet {
 	}
 
 	/*
-	 * TODO: Write comments about restaurant search
+	 * Restaurant search makes a nearby search request for restaurants related to the keyword
+	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -93,12 +94,11 @@ public class IHSearch extends HttpServlet {
 		//set url for Google Nearby Search API request
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 				+ "location=34.020593,-118.285447"
-//				+ "&radius=2500"
 				+ "&type=restaurant"
 				+ "&rankby=distance"
 				+ "&keyword=" + keyword
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
-		try {
+		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;
 
@@ -127,9 +127,6 @@ public class IHSearch extends HttpServlet {
 				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   
 				restaurants.set(i, curr_restaurant);                                
 			}
-		} catch(Exception ex) {
-			return null;
-		}
 		return restaurants;
 	}
 

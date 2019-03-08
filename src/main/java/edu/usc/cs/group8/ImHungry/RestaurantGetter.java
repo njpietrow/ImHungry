@@ -25,7 +25,6 @@ public class RestaurantGetter {
 				+ "&fields=name,rating,formatted_phone_number,formatted_address,website,price_level"
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
 
-		try {
 			String json_string = readWebsite(url);
 			if (json_string == null) return null; 
 
@@ -71,10 +70,6 @@ public class RestaurantGetter {
 					+ r.getId()
 					+ "&travelmode=driving"
 					);
-		} 
-		catch(Exception ex) {
-			System.out.println("exception");
-		}
 		return r;
 	}
 	
@@ -93,7 +88,7 @@ public class RestaurantGetter {
 				+ "&origins=801+Childs+Way+Los+Angeles"
 				+ "&destinations=" + address
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
-		try {
+		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;
 			
@@ -112,9 +107,6 @@ public class RestaurantGetter {
 			//set driving time attribute taken from JSON file
 			r.setDriveTime(driving_time);
 			
-		} catch(Exception ex) {
-			System.out.println("exception");
-		}
 		return r;
 	}
 	public static String readWebsite(String url) {
@@ -130,7 +122,7 @@ public class RestaurantGetter {
 		  scanner.useDelimiter("\\Z");
 		  content = scanner.next();
 		  scanner.close();
-		}catch ( Exception ex ) {
+		} catch ( Exception ex ) {
 		    return null;
 		}
 		return content;
