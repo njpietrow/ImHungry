@@ -39,11 +39,11 @@ public class IHManageListTest {
         when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5"));
         when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5"));
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
-        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=1")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
-        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=1")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
-        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=0")).thenReturn(RD);
+        when(request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=1")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?recipe_id=0")).thenReturn(RD);
         when(request.getRequestDispatcher("restaurant_page.jsp?restaurant_id=0")).thenReturn(RD);
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=FAVORITES")).thenReturn(RD);
@@ -66,6 +66,8 @@ public class IHManageListTest {
         
         manager.doGet(request, response);
         
+        ListManager.getInstance().reset();
+        
         when(request.getParameter("action")).thenReturn("ADD");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
         when(request.getParameter("recipe_id")).thenReturn("0");
@@ -82,7 +84,7 @@ public class IHManageListTest {
         when(request.getParameter("action")).thenReturn("ADD");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
         when(request.getParameter("recipe_id")).thenReturn("");
-        when(request.getParameter("restaurant_id")).thenReturn("1");
+        when(request.getParameter("restaurant_id")).thenReturn("0");
         
         manager.doGet(request, response);
         
@@ -108,7 +110,7 @@ public class IHManageListTest {
         when(request.getParameter("action")).thenReturn("ADD");
         when(request.getParameter("list_id")).thenReturn("TO_EXPLORE");
         when(request.getParameter("recipe_id")).thenReturn("");
-        when(request.getParameter("restaurant_id")).thenReturn("1");
+        when(request.getParameter("restaurant_id")).thenReturn("0");
         
         manager.doGet(request, response);
         
@@ -134,7 +136,7 @@ public class IHManageListTest {
         when(request.getParameter("action")).thenReturn("ADD");
         when(request.getParameter("list_id")).thenReturn("DO_NOT_SHOW");
         when(request.getParameter("recipe_id")).thenReturn("");
-        when(request.getParameter("restaurant_id")).thenReturn("1");
+        when(request.getParameter("restaurant_id")).thenReturn("0");
         
         manager.doGet(request, response);
         

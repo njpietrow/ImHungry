@@ -42,7 +42,7 @@ public class ListManager {
 	}
 	
 	public void addToDoNotShow(Result r) {
-		if (!doNotShow.contains(r)) doNotShow.add(r);doNotShow.add(r);
+		if (!doNotShow.contains(r)) doNotShow.add(r);
 	}
 	
 	public void removeFromFavorites(Result r) {

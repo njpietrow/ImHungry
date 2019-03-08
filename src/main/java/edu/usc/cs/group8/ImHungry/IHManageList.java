@@ -178,7 +178,6 @@ public class IHManageList extends HttpServlet {
 	 * it adds an item to a list.
 	 */
 	public void addToList(String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
-		System.out.println("I got called!");
 		if (recipeID != null && !recipeID.equals("")) {
 			int index = Integer.parseInt(recipeID);
 			if (listID.equals("FAVORITES")) {
@@ -190,7 +189,7 @@ public class IHManageList extends HttpServlet {
 			if (listID.equals("DO_NOT_SHOW")) {
 				ListManager.getInstance().addToDoNotShow(recipes.get(index));
 			}
-		} else if (restaurantID != null && !restaurantID.equals("")) {
+		} if (restaurantID != null && !restaurantID.equals("")) {
 			int index = Integer.parseInt(restaurantID);
 			if (listID.equals("FAVORITES")) {
 				ListManager.getInstance().addToFavorites(restaurants.get(index));

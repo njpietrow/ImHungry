@@ -64,4 +64,16 @@ public class RecipeTest {
 		assertEquals(recipe.getInstructions().get(0),"Mix thoroughly.");
 		assertEquals(recipe.getInstructions().get(1),"Serve warm.");
 	}
+	
+	@Test
+	public void testToString() {
+		recipe.setInstructions(new ArrayList<String>());
+		recipe.getInstructions().add("Mix thoroughly.");
+		recipe.getInstructions().add("Serve warm.");
+		assertEquals(recipe.toString(),"Spaghetti\n" + 
+				"20\n" + 
+				"10\n" + 
+				"[]\n" + 
+				"[Mix thoroughly., Serve warm.]\n");
+	}
 }
