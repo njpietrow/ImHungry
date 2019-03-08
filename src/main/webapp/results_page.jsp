@@ -33,18 +33,7 @@
 			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
 			    
-		    </div>
-			<div class = "text-center"> 
-				<!-- This is the header for the result page -->
-				<h1>Results for <%= session.getAttribute("query") %></h1>
-			</div>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-		
-			<div class="container">
-		    <br/>
-		    	<!-- Button Group for Back to Search Page and Dropdown for Predefined Lists-->	
-				<div class="overall_information">
-					<div class="btn-group-vertical" id="button_stuff">
+			    <div class="btn-group-vertical" id="button_stuff">
 						<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 			        			<a class="dropdown-item" href="#">Favorites</a>
@@ -100,6 +89,18 @@
 									};
 								</script>
 					</div>
+			    
+	    	</div>
+			<div class = "text-center"> 
+				<!-- This is the header for the result page -->
+				<h1>Results for <%= session.getAttribute("query") %></h1>
+			</div>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+		
+			<div class="container">
+		    <br/>
+		    	<!-- Button Group for Back to Search Page and Dropdown for Predefined Lists-->	
+				<div class="overall_information">
 				
 					<!-- The following div is an outer container div for the two tables -- restaurant results table
 					and recipe results table -->
