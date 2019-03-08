@@ -18,8 +18,10 @@ html body {
 	}
 
 .btn-group-vertical {
-	top:100px !important;
-	left:85%;
+	position: absolute;
+	bottom: 30% !important;
+	left:100%;
+	/* left:95%; */
 	z-index:1;
 }
 
@@ -31,13 +33,13 @@ html body {
 .restaurant_results{
 	background-color: lightblue;
 	width: 45%;
-	float: right;
+	float: left;
 }
 
 .recipe_results{
 	background-color: lightblue;
 	width: 45%;
-	float: left;
+	float: right;
 }
 
 tr:nth-child(even) {background: Silver}
