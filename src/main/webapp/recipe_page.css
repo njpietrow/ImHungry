@@ -8,6 +8,7 @@ html body {
 	left:85%;
 	z-index:1;
 }
+
 .btn-group-vertical > button{
     margin-bottom:10px;
     border-radius:10px !important;
@@ -22,6 +23,7 @@ html body {
 	font-size: 50px;
 	max-width: 800px;
 }
+
 #prep_time {
 	font-size: 20px;
 }
@@ -37,16 +39,13 @@ html body {
 #instructions_for_food {
 	font-size: 20px;
 }
+
 #image_url_div {
 	max-width:300px;
 	height:
 }
+
 #actual_image_link {
 	max-height:100%;
 	max-width:100%
 }
-/* 
-#recipe_title {
-	position: absolute;
-	top:0%;
-} */
