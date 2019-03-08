@@ -39,12 +39,14 @@
 				        location.href = "results_page.jsp";
 				    };
 				</script>
+			<!-- Dropdown list elements, Favorites, To Explore, and Do Not Show -->
 	        	<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 			      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 			        <a class="dropdown-item" href="#">Favorites</a>
 			        <a class="dropdown-item" href="#">To Explore</a>
 			        <a class="dropdown-item" href="#">Do Not Show</a>
 			      </div>
+				<!-- Function to populate the empty dropdown list title with the list that is selected-->
 			      <script>
 				      $(function(){
 					    $(".dropdown-item").click(function(){					
@@ -55,6 +57,7 @@
 			      </script>
 	        	<button class="btn btn-success" id="add_to_list_button">Add to list</button> 
 	        	<script>
+				//function to set list id to the appropriate list if selected
 		        	 document.getElementById("add_to_list_button").onclick = function () {
 	        		 	var list_id;
 				        if($("#btnGroupVerticalDrop2").text() =="Favorites") {
@@ -66,15 +69,18 @@
 				        else {
 				        	list_id = "DO_NOT_SHOW"; 
 				        }
+					 //send to servlet
 				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id="+<%=request.getParameter("recipe_id")%>+"&restaurant_id=";	
 				    };
 	        	</script>
 	        </div> 
+		<!-- Use the recipe servlet to use the relevant information -->
         	<div class="recipe_information" id="all_stuff_on_page">	
 		    	<%
 		    	//Creating a new recipe object
 		    		Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>());
 		    		
+				//grab the recipe id
 		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){
 		    			int index = Integer.parseInt(request.getParameter("recipe_id"));
 			    		if (session.getAttribute("recipes") == null){
@@ -82,7 +88,7 @@
 			    		}
 			    		recipe = ((ArrayList<Recipe>)(session.getAttribute("recipes"))).get(index);
 		    		}
-		    		
+		    		//grab the item id
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
 		    			int index = Integer.parseInt(request.getParameter("item_id"));
 		    			if (request.getParameter("list_id").equals("FAVORITES")){
@@ -96,6 +102,7 @@
 		    			}
 		    		}
 		    		
+				//use the recipe name from the servlet
 		    		String recipe_name = recipe.getName();
 		    		String cookTime, prepTime;
 					if (recipe.getCookTime() == 0){
@@ -106,6 +113,7 @@
 						prepTime = "No prep time available.";
 					}
 					else prepTime = recipe.getPrepTime() + " min";
+				//display image
 			        String imgURL = recipe.getImgURL();
 			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
 		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
@@ -119,8 +127,10 @@
 		    	<div id=prep_time>Prep Time: <%=prepTime%></div>
 		    	<div id=cook_time>Cook Time: <%=cookTime%></div>
 		    	<br></br>
+	
 		    	<div id=ingredients_unordered>Ingredients: 
 		    	
+			<!-- Printing out ingredients in unordered list using java -->
 		    	<% for(int i = 0; i < stuff_ingredients.size(); i+=1) { %> 
 			            <ul>
 			            	<li><%=stuff_ingredients.get(i)%></li>
@@ -128,6 +138,7 @@
 			    <% } %>
 			    
 		    	</div>
+			<!-- Printing out instructions in ordered list using java -->
 		    	<div id=instructions_for_food>Instructions:
 		    		<% for(int i = 0; i < stuff_instructions.size(); i+=1) { %> 
 			            	<ul><%=i+1 + ". " + stuff_instructions.get(i)%></ul>
@@ -140,7 +151,7 @@
 			    		/* var div = document.getElementById('button_stuff');
 			    	    div.style.display = 'none'; */
 			        }
-			   	</script>
+			</script>
 			   	<style type="text/css">
 					@media print {
 					    .btn-group-vertical {
