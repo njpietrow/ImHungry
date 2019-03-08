@@ -33,7 +33,7 @@
 			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
 			    
-		    	</div>
+		    </div>
 			<div class = "text-center"> 
 				<!-- This is the header for the result page -->
 				<h1>Results for <%= session.getAttribute("query") %></h1>
