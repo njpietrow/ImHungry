@@ -30,13 +30,23 @@ html body {
     border-radius:10px !important;
 }
 
+.restaurant_results h2 {
+	text-align:center;
+}
+
+.recipe_results h2 {
+	text-align:center;
+}
+
 .restaurant_results{
+	padding-top:10px;
 	background-color: lightblue;
 	width: 45%;
 	float: left;
 }
 
 .recipe_results{
+	padding-top:10px;
 	background-color: lightblue;
 	width: 45%;
 	float: right;
