@@ -123,13 +123,12 @@
 	</div>
   	<!-- End Container Class -->	
 	<script>
-	//Print preview function allowing user to go to print preview screen-> does not show the buttons
+	//Print preview function for users
     	function PrintPreview() {
     		window.print();
-    		/* var div = document.getElementById('button_stuff');
-    	    div.style.display = 'none'; */
         }
    	</script>
+	<!-- Hides buttons on print preview call -->
    	<style type="text/css">
 		@media print {
 		    .btn-group-vertical {
