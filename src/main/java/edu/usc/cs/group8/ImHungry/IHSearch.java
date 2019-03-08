@@ -106,11 +106,11 @@ public class IHSearch extends HttpServlet {
 			JSONObject mainObj= new JSONObject(json_string);
 			JSONArray jsonArray = (JSONArray) mainObj.get("results");
 
-			int check = Integer.parseInt(number);
+			int check = Integer.parseInt(number) + 3;
 			if (jsonArray.length()<check)
 				check = jsonArray.length();
 			
-			for (int i = 0; i < check; i++) {
+			for (int i = 0; restaurants.size() < Integer.parseInt(number); i++) {
 				JSONObject iterate_obj = (JSONObject) jsonArray.get(i);
 				String id = (String) iterate_obj.get("place_id");
 				String name = (String) iterate_obj.get("name");
