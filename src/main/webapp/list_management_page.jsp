@@ -150,7 +150,7 @@
 			      							System.out.println("list name: " + list_name);
 			      						}
 			      						String redirect_link = "http://localhost:8080/ImHungry/IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %>, </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
+			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %> </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
 			      						
 			      						<!-- The following radio button will allow the user to choose one of the items 
 			      						from the current list, and conduct the MOVE or DELETE function -->
@@ -171,7 +171,7 @@
 			      						}
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 
-			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %>, </th> <th>Drive Time: <%=driveTime %> min, </th> <th><%=address %>, </th> <th><%
+			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %> </th> <th>Drive Time: <%=driveTime %> min </th> <th><%=address %> </th> <th><%
 											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
 												$
 											<% } %></th></a>  
