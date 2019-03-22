@@ -10,7 +10,7 @@ import org.json.JSONObject;
 /*
  * RestaurantGetter.java
  * This class gets additional information from Google place restaurants
- * Author: Nick Pietrow
+ * Author: Nick Pietrow 
  * USC ID: 5425773820
  * Email: pietrow@usc.edu
  */
@@ -26,6 +26,7 @@ public class RestaurantGetter {
 				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
 
 			String json_string = readWebsite(url);
+
 			if (json_string == null) return null; 
 
 			//Parse the JSON object to retrieve necessary Restaurant info
@@ -36,19 +37,19 @@ public class RestaurantGetter {
 			int price_level = -1;
 			double rating = -1;
 			
-			if (result.has("formatted_address") && !result.isNull("formatted_address")) {
+			if (result.has("formatted_address")) {
 				address = result.getString("formatted_address");
 		     }
-			if (result.has("formatted_phone_number") && !result.isNull("formatted_phone_number")) {
+			if (result.has("formatted_phone_number")) {
 				phoneNum = result.getString("formatted_phone_number");
 		     }
-			if (result.has("website") && !result.isNull("website")) {
+			if (result.has("website")) {
 				website = result.getString("website");
 		     }
-			if (result.has("price_level") && !result.isNull("price_level")) {
+			if (result.has("price_level")) {
 				price_level = result.getInt("price_level");
 			}
-			if (result.has("rating") && !result.isNull("rating")) {
+			if (result.has("rating")) {
 				rating = result.getDouble("rating");
 			}
 			

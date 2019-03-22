@@ -39,6 +39,18 @@
 	    <version>1.9.5</version>
 	    <scope>test</scope>
 	</dependency>
+	<dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>
+   <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-easymock</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>  
   </dependencies>
   <build>
     <finalName>ImHungry</finalName>
@@ -54,4 +66,7 @@
         </plugin>
     </plugins>
   </build>
+  <properties>
+    <powermock.version>1.7.1</powermock.version>
+</properties>
 </project>
