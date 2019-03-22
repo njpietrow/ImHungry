@@ -1,3 +1,5 @@
+Sprint Backlog
+
 1. Web application must be secure and protect confidentiality of a user’s ImHungry data 
 2. Maintain information beyond just a single session
 4. View results of prior searches by clicking on a quick access list that shows prior search terms.
@@ -22,27 +24,3 @@ Modern, attractive:
 Restaurant radius:
 -Backend: Nick, Tong
 -Frontend: Aahad, Tong
-
-Kevin, Chris:
-Generate test cases
--SQL Password stuff:
---Password incorrect
---Password correct
---New account
---Username already exists 
--Data persistence
---Results store over session
---Lists store over session
---Quick access stores over session
--Quick access
---When clicked, perform search again
--SQL implementation
---Entity-relationship schema development
---Username
---Password
---Predefined lists
---Previous searches
--Integration with backend code
---Backend refactoring
---Manage List singleton becomes SQL read
---Searches add search terms to SQL backlog
