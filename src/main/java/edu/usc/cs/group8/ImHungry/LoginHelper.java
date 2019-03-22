@@ -14,6 +14,7 @@ public class LoginHelper {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
+    public void connect() {
     try {
         conn =
            DriverManager.getConnection("jdbc:mysql://localhost/test?" +
@@ -27,6 +28,6 @@ public class LoginHelper {
         System.out.println("SQLState: " + ex.getSQLState());
         System.out.println("VendorError: " + ex.getErrorCode());
     }
-    
+    }
 
   }
