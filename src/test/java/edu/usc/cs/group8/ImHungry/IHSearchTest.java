@@ -150,34 +150,29 @@ public class IHSearchTest {
 	@Test
     public void testRestaurantSearchSorted() throws Exception {
        IHSearch IHS = new IHSearch();
-       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("spaghetti", "10");
+       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33");
        IHS.sortRestaurants(restaurants);
-       assertEquals(restaurants.size(),10);
+       assertEquals(restaurants.size(),20);
        for(int i =0;i<restaurants.size()-1; i++ ) {
     	   assertTrue(restaurants.get(i).getDriveTime()<=restaurants.get(i+1).getDriveTime());
        }
 
     }
 	
-//	@Test
-//    public void testRecipeSearchSorted() throws Exception {
-//       IHSearch search = new IHSearch();
-//       ArrayList<Recipe> recipes = search.doRecipeSearch("spaghetti", "10");
-//       search.sortRecipes(recipes);
-//       assertEquals(recipes.size(),10);
-//       for(int i =0;i<recipes.size()-1; i++ ) {
-//    	   assertTrue(recipes.get(i).getPrepTime() <= recipes.get(i+1).getPrepTime() || recipes.get(i+1).getPrepTime() == 0);
-//       }
-//    }
+	@Test
+    public void testRecipeSearchSorted() throws Exception {
+       IHSearch search = new IHSearch();
+       ArrayList<Recipe> recipes = search.doRecipeSearch("spaghetti", "10");
+       search.sortRecipes(recipes);
+       assertEquals(recipes.size(),10);
+       for(int i =0;i<recipes.size()-1; i++ ) {
+    	   assertTrue(recipes.get(i).getPrepTime() <= recipes.get(i+1).getPrepTime() || recipes.get(i+1).getPrepTime() == 0);
+       }
+    }
+	
+	
 	
 
 
-//	@Test
-//	public void ihstest() throws Exception {
-//		IHSearch search = new IHSearch();
-//		ArrayList<Restaurant> rests = search.doRestaurantSearch("burger", "20");
-//		for (int i = 0; i< rests.size();i++) {
-//			System.out.println(rests.get(i).getName() + ", "+ rests.get(i).getWebsiteURL());
-//		}
-//	}
+
 }

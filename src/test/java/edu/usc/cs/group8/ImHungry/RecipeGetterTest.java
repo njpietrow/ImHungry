@@ -3,11 +3,15 @@ package edu.usc.cs.group8.ImHungry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 import org.junit.Test;
 
 import junit.framework.Assert;
+import static org.mockito.Mockito.*;
 
 public class RecipeGetterTest {
 
@@ -42,7 +46,16 @@ public class RecipeGetterTest {
 	public void recipeGetterTestConstruct() {
 		RecipeGetter RG = new RecipeGetter();
 		assertEquals("achieve coverage","achieve coverage");
-
 	}
 	
+	@Test
+	public void recipeGetterTestScannerException() {
+		Scanner scan = mock(Scanner.class);
+			when(scan.next())
+			  .thenThrow(new NullPointerException("Error occurred"));
+	    RecipeGetter.readRecipe("word");
+	}
+
+	
 }
+

@@ -37,4 +37,8 @@ public class RestaurantGetterTest {
 		assertEquals("(213) 747-6888",r.getPhoneNum());
 	}
 	
+
+
+	
+	
 }
