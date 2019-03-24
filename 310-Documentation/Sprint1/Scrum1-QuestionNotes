@@ -1,0 +1,6 @@
+What have we accomplished since the last meeting?:
+	Since the first sprint planning meeting, we have completed the design of a SQL schema to store login information and user data beyond a single browser session.
+Are there any obstacles in the way of meeting our goals?:
+	Time management will be a significant obstacle due to the other class work each team member has. Additionally, finding time for meetings to work on code will be difficult since pair programming is required. 
+What will you accomplish before the next meeting?:
+	We will generate sql, data persistence, and quick access test cases. We will also begin to implement SQL functionality. For the front end, we will begin to generate test cases for the user interface and implement front-end login UI. Lastly, we will also re-evaluate options for restaurant APIs based on the code bases that the group has available.
