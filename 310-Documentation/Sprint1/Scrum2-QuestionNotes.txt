@@ -1,0 +1,6 @@
+What have we accomplished since the last meeting?:
+	Since the first scrum meeting, we have worked built the Sql schema and created a login helper class for signing users into the system. We have researched options for APIs to implement the Restaurant search system and wrote some tests for the front end UI.
+Are there any obstacles in the way of meeting our goals?:
+	Time management will be a significant obstacle due to the other class work each team member has. Additionally, finding time for meetings to work on code will be difficult since pair programming is required. Some group members have midterms and assignments before the next midterm.
+What will you accomplish before the next meeting?:
+	Before the next scrum, we will finish writing test cases for the Restaurant radius each limit and also begin working on designing the front-end login UI.
