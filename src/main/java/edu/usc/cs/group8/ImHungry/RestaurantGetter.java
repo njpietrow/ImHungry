@@ -15,7 +15,7 @@ import org.json.JSONObject;
  * Email: pietrow@usc.edu
  */
 public class RestaurantGetter {
-	
+	private static final String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
 	/* 
 	 * this method gets all parameters except for driving time from Google Place Detail Search
 	 */
@@ -23,7 +23,8 @@ public class RestaurantGetter {
 		String url = "https://maps.googleapis.com/maps/api/place/details/json?"
 				+ "placeid=" + r.getId()
 				+ "&fields=name,rating,formatted_phone_number,formatted_address,website,price_level"
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+				+ "&key=" + MAPS_API_KEY
+				+ "\n";
 
 			String json_string = readWebsite(url);
 
@@ -59,6 +60,7 @@ public class RestaurantGetter {
 			r.setWebsiteURL(website);
 			r.setPriceRange(price_level);
 			r.setRating(rating);
+			
 			String name = r.getName();
 			name = name.replaceAll(" ", "+");
 			name = name.replaceAll(",", "");
@@ -88,7 +90,8 @@ public class RestaurantGetter {
 				+ "units=imperial"
 				+ "&origins=801+Childs+Way+Los+Angeles"
 				+ "&destinations=" + address
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+				+ "&key=" + MAPS_API_KEY
+				+ "\n";
 		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;

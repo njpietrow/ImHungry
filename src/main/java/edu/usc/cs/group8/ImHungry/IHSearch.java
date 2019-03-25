@@ -32,6 +32,9 @@ public class IHSearch extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static final String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static final String TOMMY_TROJAN_LOC = "34.020593,-118.285447";
+	
 	public IHSearch() {
         super();
         // TODO Auto-generated constructor stub
@@ -93,11 +96,12 @@ public class IHSearch extends HttpServlet {
 		
 		//set url for Google Nearby Search API request
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-				+ "location=34.020593,-118.285447"
+				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
-				+ "&rankby=distance"
+				+ "&radius=" + 5000
 				+ "&keyword=" + keyword
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+				+ "&key=" + MAPS_API_KEY
+				+ "\n";
 		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;
