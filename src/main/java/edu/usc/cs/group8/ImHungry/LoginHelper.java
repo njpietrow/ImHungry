@@ -5,29 +5,168 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeMap;
 
-import com.mysql.cj.xdevapi.Statement;
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 public class LoginHelper {
-    private Connection conn = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+	Connection conn = null;
+	PreparedStatement st = null;
+	ResultSet rs = null;
 
-    public void connect() {
-    try {
-        conn =
-           DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                                       "user=minty&password=greatsqldb");
 
-        // Do something with the Connection
+	public boolean login(String username, String password, User currUser) {
+	    try {
+	        conn =
+	           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                                       "user=root&password=root&useSSL=false");
+	        st = conn.prepareStatement("SELECT * FROM User WHERE username = ? AND password = ?");
+	        st.setString(1, username);
+	        st.setString(2, password);
+	        rs = st.executeQuery();
+	        if (rs.next()) {
+	        	String user = rs.getString("username"); 
+	        	currUser.setName(user);
+	        }
+	        rs.close();
+	        if (currUser.getName().equals(""))
+	        	return false; 
+	        TreeMap<Integer, Restaurant> favoriteRestaurants = new TreeMap<Integer, Restaurant>();
+	        TreeMap<Integer, Recipe>  favoriteRecipes = new TreeMap<Integer, Recipe> ();
+	        TreeMap<Integer, Restaurant> toExploreRestaurants = new TreeMap<Integer, Restaurant>();
+	        TreeMap<Integer, Recipe>  toExploreRecipes = new TreeMap<Integer, Recipe> ();
+	        TreeMap<Integer, Restaurant> doNotShowRestaurants = new TreeMap<Integer, Restaurant>();
+	        TreeMap<Integer, Recipe>  doNotShowRecipes = new  TreeMap<Integer, Recipe> ();
+	        ArrayList<Query> quickAccess = new ArrayList<Query>();
+	        
+	        st = conn.prepareStatement("SELECT * FROM ListRestaurants l1, Restaurant r where username=? AND l1.restaurant_id = r.restaurant_id");
+	        st.setString(1, username);
+	        rs = st.executeQuery(); 
+	        while(rs.next())
+	        {
+	        	String resName = rs.getString("restaurant_name");
+	        	String resID = rs.getString("restaurant_id"); 
+	        	Restaurant temp = new Restaurant(resName,resID);
+	        	temp = RestaurantGetter.getContactInfo(temp); 
+	        	temp = RestaurantGetter.getDriveTime(temp); 
+	        	int listID = rs.getInt("list_id"); 
+	        	int listNum = rs.getInt("list_no");
+	        	switch(listID)
+	        	{
+	        	case 0: 
+	        		favoriteRestaurants.put(listNum, temp);
+	        	case 1: 
+	        		toExploreRestaurants.put(listNum, temp);
+	        	case 2:
+	        		doNotShowRestaurants.put(listNum, temp);
+	        	}
+	        	
+	        }
+	        rs.close();
+	        st = conn.prepareStatement("SELECT * FROM ListRecipes l2, Recipe r where username=? AND l2.recipe_url = r.recipe_url");
+	        st.setString(1, username);
+	        rs = st.executeQuery();
+	        while(rs.next())
+	        {
+	        	String recURL = rs.getString("recipe_url");
+	        	Recipe temp = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(recURL)); 
+	        	int listID = rs.getInt("list_id"); 
+	        	int listNum = rs.getInt("list_no");
+	        	switch(listID)
+	        	{
+	        	case 0: 
+	        		favoriteRecipes.put(listNum, temp);
+	        	case 1: 
+	        		toExploreRecipes.put(listNum, temp);
+	        	case 2:
+	        		doNotShowRecipes.put(listNum, temp);
+	        	}
+	        	
+	        }
+	        
+	        st = conn.prepareStatement("SELECT * FROM Query where username=?");
+	        st.setString(1, username);
+	        rs = st.executeQuery();
+	        while(rs.next())
+	        {
+	        	String keyword = rs.getString("keyword");
+	        	int numResults = rs.getInt("num_results");
+	        	Query temp = new Query(keyword,"" + numResults); 
+	        	quickAccess.add(temp);
+	        	
+	        }
+	        
+	        TreeMap<Integer,Result> favorites = new TreeMap<Integer,Result>();
+	        favorites.putAll(favoriteRecipes);
+	        favorites.putAll(favoriteRestaurants);
+	        currUser.getLists().setFavorites(new ArrayList<Result>(favorites.values()));
+	        
+	        TreeMap<Integer,Result> toExplore = new TreeMap<Integer,Result>();
+	        toExplore.putAll(toExploreRecipes);
+	        toExplore.putAll(toExploreRestaurants);
+	        currUser.getLists().setToExplore(new ArrayList<Result>(toExplore.values()));
+	        
+	        TreeMap<Integer,Result> doNotShow = new TreeMap<Integer,Result>();
+	        doNotShow.putAll(favoriteRecipes);
+	        doNotShow.putAll(favoriteRestaurants);
+	        currUser.getLists().setDoNotShow(new ArrayList<Result>(doNotShow.values()));
+	        
+	        currUser.getLists().setQuickAccess(quickAccess);
+	        
+	        return true;
+	        // Do something with the Connection
+	
+	    } catch (SQLException ex) {
+	        // handle any errors
+	        System.out.println("SQLException: " + ex.getMessage());
+	        System.out.println("SQLState: " + ex.getSQLState());
+	        System.out.println("VendorError: " + ex.getErrorCode());
+	    }
+		return false; 
+	}
 
-    } catch (SQLException ex) {
-        // handle any errors
-        System.out.println("SQLException: " + ex.getMessage());
-        System.out.println("SQLState: " + ex.getSQLState());
-        System.out.println("VendorError: " + ex.getErrorCode());
-    }
-    }
+	public boolean logout(User currUser) {
+		if (currUser.getName().equals("")) {
+			return false;
+		}
+		currUser.setName("");
+		currUser.setLists(new ListManager());
+		return true;
+		
+	}
+
+	public boolean createAccount(String username, String password) {
+		 try {
+		        conn =
+		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+		                                       "user=root&password=root&useSSL=false");
+		        st = conn.prepareStatement("SELECT * FROM User WHERE username=?");
+		        st.setString(1, username);
+		        rs = st.executeQuery();
+		        if (rs.next()) {
+		        	return false; 
+		        }
+		        rs.close();
+		        
+		        st = conn.prepareStatement("INSERT INTO User(?,?)");
+		        st.setString(1, username);
+		        st.setString(2,  password);
+		        st.execute();
+
+		        
+        
+		        return true;
+		        // Do something with the Connection
+		
+		    } catch (SQLException ex) {
+		        // handle any errors
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
+			return false; 
+	}
 
   }

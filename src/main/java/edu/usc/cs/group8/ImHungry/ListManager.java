@@ -14,13 +14,15 @@ public class ListManager {
 	private ArrayList<Result> favorites;
 	private ArrayList<Result> toExplore;
 	private ArrayList<Result> doNotShow;
+	private ArrayList<Query> quickAccess;
 	
 	private static ListManager singleton;
 	
-	private ListManager() {
+	public ListManager() {
 		favorites = new ArrayList<Result>();
 		toExplore = new ArrayList<Result>();
 		doNotShow = new ArrayList<Result>();
+		quickAccess = new ArrayList<Query>();
 	}
 	
 	/*
@@ -107,4 +109,39 @@ public class ListManager {
 		doNotShow.clear();
 	}
 
+	public boolean quickAccessContains(Query query) {
+		return quickAccess.contains(query);
+	}
+
+	public ArrayList<Query> getQuickAccess() {
+		return quickAccess;
+	}
+	
+	public void addToQuickAccess(Query q) {
+		quickAccess.add(q);
+	}
+	
+	public void removeFromQuickAccess(Query q) {
+		quickAccess.remove(q);
+	}
+	
+	public void removeFromQuickAccess(int index) {
+		quickAccess.remove(index);
+	}
+
+	public void setFavorites(ArrayList<Result> favorites) {
+		this.favorites = favorites;
+	}
+	
+	public void setToExplore(ArrayList<Result> toExplore) {
+		this.toExplore = toExplore;
+	}
+	
+	public void setDoNotShow(ArrayList<Result> doNotShow) {
+		this.doNotShow = doNotShow;
+	}
+	
+	public void setQuickAccess(ArrayList<Query> quickAccess) {
+		this.quickAccess = quickAccess;
+	}
 }

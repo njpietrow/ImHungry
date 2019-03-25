@@ -13,10 +13,10 @@ public class DataPersistenceTest {
 		LoginHelper helper = new LoginHelper();
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
-		currUser.getLists.addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
+		currUser.getLists().addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
-		assertTrue(currUser.getLists.favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
+		assertTrue(currUser.getLists().favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
 		
 		
 	}
@@ -42,7 +42,7 @@ public class DataPersistenceTest {
 		searchy.doRestaurantSearch("Curry", "3"); 
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
-		assertTrue(currUser.getLists.quickAccessContains(new Query("Curry","3")));
+		assertTrue(currUser.getLists().quickAccessContains(new Query("Curry","3")));
 	}
 	
 	@Test
@@ -50,10 +50,10 @@ public class DataPersistenceTest {
 		LoginHelper helper = new LoginHelper();
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
-		currUser.getLists.addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
+		currUser.getLists().addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
 		helper.logout(currUser);
 		helper.login("KevinCalaway","Doopadoop",currUser);
-		assertFalse(currUser.getLists.favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
+		assertFalse(currUser.getLists().favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
 	}
 	
 	@Test
@@ -77,6 +77,6 @@ public class DataPersistenceTest {
 		searchy.doRestaurantSearch("Curry", "3"); 
 		helper.logout(currUser);
 		helper.login("KevinCalaway","Doopadoop",currUser);
-		assertFalse(currUser.getLists.quickAccessContains(new Query("Curry","3")));
+		assertFalse(currUser.getLists().quickAccessContains(new Query("Curry","3")));
 	}
 }
