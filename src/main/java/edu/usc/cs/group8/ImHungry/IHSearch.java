@@ -37,7 +37,6 @@ public class IHSearch extends HttpServlet {
 	
 	public IHSearch() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	/*
@@ -52,6 +51,8 @@ public class IHSearch extends HttpServlet {
 		
 		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number);
+		// TODO
+		//need to pass in radius parameter taken from the form
 		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
 		
 		if (images != null && recipes != null && restaurants != null) {
@@ -95,6 +96,8 @@ public class IHSearch extends HttpServlet {
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		
 		//set url for Google Nearby Search API request
+		// TODO
+		//need to pass in radius parameter taken from the form
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
