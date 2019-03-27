@@ -176,6 +176,11 @@ public class Recipe extends Result implements Serializable{
 			return false;
 		return true;
 	}
+
+	public String getURL() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

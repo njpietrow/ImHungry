@@ -1,6 +1,11 @@
 package edu.usc.cs.group8.ImHungry;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -125,20 +130,107 @@ public class IHManageList extends HttpServlet {
 		}
 	}
 	
+	
+	
+	
+	
+	
 	/*
 	 * Based on the provided source and destination lists, this function moves the specified item.
 	 */
 	public void moveToList(User currUser, String listID, String destinationID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
+			Connection conn = null;
+			PreparedStatement st = null;
+			ResultSet rs = null;
 			if (listID.equals("FAVORITES") && !destinationID.equals("FAVORITES")) {
 				Result r = currUser.getLists().getFavorites().get(index);
 				currUser.getLists().removeFromFavorites(r);
 				if (destinationID.equals("TO_EXPLORE")) {
 					currUser.getLists().addToToExplore(r);
+					
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+							                                       "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 1 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 1 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					
 				}
 				if (destinationID.equals("DO_NOT_SHOW")) {
 					currUser.getLists().addToDoNotShow(r);
+					
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close();							
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
 				}
 			}
 			if (listID.equals("TO_EXPLORE") && !destinationID.equals("TO_EXPLORE")) {
@@ -146,9 +238,85 @@ public class IHManageList extends HttpServlet {
 				currUser.getLists().removeFromToExplore(r);
 				if (destinationID.equals("FAVORITES")) {
 					currUser.getLists().addToFavorites(r);
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 0 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 0 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close();							
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
 				}
 				if (destinationID.equals("DO_NOT_SHOW")) {
 					currUser.getLists().addToDoNotShow(r);
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close();							
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
 				}
 			}
 			if (listID.equals("DO_NOT_SHOW") && !destinationID.equals("DO_NOT_SHOW")) {
@@ -156,9 +324,85 @@ public class IHManageList extends HttpServlet {
 				currUser.getLists().removeFromDoNotShow(r);
 				if (destinationID.equals("FAVORITES")) {
 					currUser.getLists().addToFavorites(r);
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 0 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 0 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close();							
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
 				}
 				if (destinationID.equals("TO_EXPLORE")) {
 					currUser.getLists().addToToExplore(r);
+					if (r instanceof Restaurant)
+					{
+						String id = ((Restaurant)r).getId(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close(); 
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
+					else
+					{
+						String id = ((Recipe)r).getURL(); 
+						try
+						{
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                                    "user=root&password=root&useSSL=false");
+							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
+							st.setString(1, id);
+							st.execute();
+							rs.close();							
+						}
+						catch (SQLException ex) {
+					        // handle any errors
+					        System.out.println("SQLException: " + ex.getMessage());
+					        System.out.println("SQLState: " + ex.getSQLState());
+					        System.out.println("VendorError: " + ex.getErrorCode());
+					    }
+					}
 				}
 			}
 		}

@@ -3,6 +3,11 @@ package edu.usc.cs.group8.ImHungry;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -81,7 +86,28 @@ public class IHSearch extends HttpServlet {
 	
 	private void addToQuickAccess(User currUser, String keyword, String number) {
 		if (currUser == null) return;
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		currUser.getLists().addToQuickAccess(new Query(keyword,number));
+		 try {
+		        conn =
+		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+		                                       "user=root&password=root&useSSL=false");
+		        st = conn.prepareStatement("INSERT INTO QuickAccess(?,?,?)");
+		        st.setString(1,  currUser.getName());
+		        st.setString(2,  keyword);
+		        st.setString(3, number);
+		        st.execute();
+		        rs.close();
+		        // Do something with the Connection
+		
+		    } catch (SQLException ex) {
+		        // handle any errors
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
 	}
 
 	/*
