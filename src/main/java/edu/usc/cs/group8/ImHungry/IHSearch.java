@@ -103,7 +103,7 @@ public class IHSearch extends HttpServlet {
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
-				+ "&radius= 5000"				
+				+ "&radius=5000"				
 //				+ "&radius=" + radius
 				+ "&keyword=" + keyword
 				+ "&key=" + MAPS_API_KEY
