@@ -32,9 +32,11 @@ public class IHSearch extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private static final String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static final String TOMMY_TROJAN_LOC = "34.020593,-118.285447";
+	
 	public IHSearch() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	
 	/*
@@ -45,11 +47,14 @@ public class IHSearch extends HttpServlet {
 		setAccessControlHeaders(response);
 		String keyword = request.getParameter("search_query");
 		String number = request.getParameter("num_results");
-		// No session required for Search
+//		String radius = request.getParameter("radius");
+//		TODO need to create radius parameter from input box
 		
+		// No session required for Search
 		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number);
 		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
+//		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 		
 		if (images != null && recipes != null && restaurants != null) {
 			sortRecipes(recipes);
@@ -86,18 +91,23 @@ public class IHSearch extends HttpServlet {
 	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
+//	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		
 		//set url for Google Nearby Search API request
+		// TODO
+		//need to pass in radius parameter taken from the form
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-				+ "location=34.020593,-118.285447"
+				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
-				+ "&rankby=distance"
+				+ "&radius= 5000"				
+//				+ "&radius=" + radius
 				+ "&keyword=" + keyword
-				+ "&key=AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA\n";
+				+ "&key=" + MAPS_API_KEY
+				+ "\n";
 		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;

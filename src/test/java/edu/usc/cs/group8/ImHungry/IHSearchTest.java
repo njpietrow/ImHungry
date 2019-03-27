@@ -170,6 +170,12 @@ public class IHSearchTest {
        }
     }
 	
+	@Test
+	public void testRadiusLimitsSearch() throws Exception {
+		//TODO
+	
+	}
+	
 	
 	
 

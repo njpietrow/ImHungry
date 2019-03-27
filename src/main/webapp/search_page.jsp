@@ -6,16 +6,16 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   	<link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="search_page.css" />
-    
 	  <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<!-- Title -->
     <title>Search Page</title>
   </head>
   <body>
-    	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<div class = "div_for_entire_content">
 		<!-- I'm Hungry Title -->
@@ -24,22 +24,34 @@
 		<!-- Container class-->
 		<div class="container">
 	    	<br/>
-		<!-- Using bootstrap for the search form -->
-		<div class="row justify-content-center">
-			<form id="feed_me_form" class="form-inline" action="IHSearch" name="only_form">
-				 <div class="input_group"> 
-					<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Enter Food" name="search_query" required />
-					<span></span>
-					<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
-					<!-- <span class="tooltiptext">Number of items to show in results</span> -->
-				 </div>
-	          	</form> 
-	        </div>
-        	<br>
-        <!-- Submit button -->
-        	<div class="form-actions"> 
+			<!-- Using bootstrap for the search form -->
+			<div class="row justify-content-center">
+				<form id="feed_me_form" class="form-inline" action="IHSearch" name="only_form">
+					 <div class="input_group"> 
+						<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Enter Food" name="search_query" required style="height: 38px;" />
+						<span></span>
+						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
+						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Search Radius in Miles" data-placement="right" type="number" min="1" value="1" name="num_miles" > 
+					 </div>
+				</form> 
+			</div>
+	       	<br>
+	        <!-- Submit button -->
+	       	<div class="form-actions"> 
+			<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button>  -->
+			<!-- <button id="login_button" class="btn btn-lg btn-success" type="submit" data-toggle="modal" data-target="#loginModal">Login</button>  -->
 			<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
-
+	            	<a href="#loginModal" role="button" class="btn btn-lg btn-success" data-toggle="modal">Login</a>
+	            	<a href="#signupModal" role="button" class="btn btn-lg btn-success" data-toggle="modal">Sign Up</a>
+			<div class="container">
+			    <div class="row">
+				<div class="col-12 text-center py-2">
+					<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
+				    <a href="#loginModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Login</a>
+				    <a href="#signupModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Sign Up</a> -->
+				</div>
+			    </div>
+			</div>
 			<!-- Onclick function for the submit button -->
 			<script type="text/javascript">
 			    document.getElementById("submit_button").onclick = function () {
@@ -51,9 +63,9 @@
 				//location.href = "results_page.jsp";
 			    };
 			</script>
-        	</div>
+	       	</div>
 		<!-- Function for the hovertext -->
-        	<script>
+	       	<script>
 			$(document).ready(function(){
 			  $('[data-toggle="tooltip"]').tooltip(); 
 			});
@@ -61,9 +73,92 @@
 		</div>
 	</div>
 	
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<!-- register modal	  -->
+	<div id="signupModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h3>Sign Up</h3>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	            </div>
+	            <div class="modal-body">
+	                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+	                    <div class="form-group">
+	                        <!-- <a href="" class="float-right">New user?</a> -->
+	                        <label for="uname1">Username</label>
+	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+	                        <div class="invalid-feedback">Oops, you missed this one.</div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="uname1">Email</label>
+	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+	                        <div class="invalid-feedback">Oops, you missed this one.</div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label>Password</label>
+	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <div class="invalid-feedback">Enter your password too!</div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label>Verify Password</label>
+	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <div class="invalid-feedback">Enter your password again!</div>
+	                    </div>
+	                    <div class="custom-control custom-checkbox">
+	                      <input type="checkbox" class="custom-control-input" id="rememberMe">
+	                      <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
+	                    </div>
+	                    <div class="form-group py-4">
+	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Sign Up</button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+<!-- end register modal -->
+		  
+<!-- login modal -->
+	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h3>Login</h3>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	            </div>
+	            <div class="modal-body">
+	                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+	                    <div class="form-group">
+	                        <!-- <a href="" class="float-right">New user?</a> -->
+	                        <label for="uname1">Username</label>
+	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+	                        <div class="invalid-feedback">Oops, you missed this one.</div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label>Password</label>
+	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <div class="invalid-feedback">Enter your password too!</div>
+	                    </div>
+	                    <div class="custom-control custom-checkbox">
+	                      <input type="checkbox" class="custom-control-input" id="rememberMe">
+	                      <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
+	                    </div>
+	                    <div class="form-group py-4">
+	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!-- end login modal -->
+			
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 	 <script> 
 		//Restricts input for the given textbox 
