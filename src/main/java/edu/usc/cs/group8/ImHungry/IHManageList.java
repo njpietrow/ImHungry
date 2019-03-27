@@ -37,10 +37,21 @@ public class IHManageList extends HttpServlet {
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 		ArrayList<Recipe> recipes;
 		ArrayList<Restaurant> restaurants;
+		User currUser = new User();
+		try {
+			currUser = (User)request.getSession().getAttribute("user");
+		}
+		catch (Exception e){
+			currUser = null;
+		}
+		if (currUser == null) {
+			response.setStatus(response.SC_BAD_GATEWAY);
+			response.getWriter().println("Please log in to use the list management feature!");
+			response.getWriter().flush();
+			return;
+		}
 		try{
 			recipes = (ArrayList<Recipe>)(request.getSession().getAttribute("recipes"));
 			restaurants = (ArrayList<Restaurant>)(request.getSession().getAttribute("restaurants"));
@@ -57,7 +68,7 @@ public class IHManageList extends HttpServlet {
 		if (action.equals("ADD")) {
 			String recipeID = request.getParameter("recipe_id");
 			String restaurantID = request.getParameter("restaurant_id");
-			addToList(listID,recipeID,restaurantID,recipes,restaurants);
+			addToList(currUser,listID,recipeID,restaurantID,recipes,restaurants);
 			if (recipeID != "") {
 				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipeID).forward(request, response);
 			} else {
@@ -67,14 +78,14 @@ public class IHManageList extends HttpServlet {
 		
 		if (action.equals("REMOVE")) {
 			String itemID = request.getParameter("item_id");
-			removeFromList(listID,itemID);
+			removeFromList(currUser,listID,itemID);
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
 		else if (action.equals("MOVE")) {
 			String itemID = request.getParameter("item_id");
 			String destinationID = request.getParameter("destination_id");
-			moveToList(listID,destinationID,itemID);
+			moveToList(currUser,listID,destinationID,itemID);
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
@@ -87,26 +98,26 @@ public class IHManageList extends HttpServlet {
 			if (itemID != null && !itemID.equals("")) {
 				int index = Integer.parseInt(itemID);
 				if (listID.equals("FAVORITES")) {
-					if (ListManager.getInstance().getFavorites().get(index) instanceof Recipe) {
+					if (currUser.getLists().getFavorites().get(index) instanceof Recipe) {
 						request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=" + index).forward(request, response);
 					}
-					else if (ListManager.getInstance().getFavorites().get(index) instanceof Restaurant) {
+					else if (currUser.getLists().getFavorites().get(index) instanceof Restaurant) {
 						request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=" + index).forward(request, response);
 					}
 				}
 				if (listID.equals("TO_EXPLORE")) {
-					if (ListManager.getInstance().getToExplore().get(index) instanceof Recipe) {
+					if (currUser.getLists().getToExplore().get(index) instanceof Recipe) {
 						request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=" + index).forward(request, response);
 					}
-					else if (ListManager.getInstance().getToExplore().get(index) instanceof Restaurant) {
+					else if (currUser.getLists().getToExplore().get(index) instanceof Restaurant) {
 						request.getRequestDispatcher("restaurant_page.jsp?list_id=TO_EXPLORE&item_id=" + index).forward(request, response);
 					}
 				}
 				if (listID.equals("DO_NOT_SHOW")) {
-					if (ListManager.getInstance().getDoNotShow().get(index) instanceof Recipe) {
+					if (currUser.getLists().getDoNotShow().get(index) instanceof Recipe) {
 						request.getRequestDispatcher("recipe_page.jsp?list_id=DO_NOT_SHOW&item_id=" + index).forward(request, response);
 					}
-					else if (ListManager.getInstance().getDoNotShow().get(index) instanceof Restaurant) {
+					else if (currUser.getLists().getDoNotShow().get(index) instanceof Restaurant) {
 						request.getRequestDispatcher("restaurant_page.jsp?list_id=DO_NOT_SHOW&item_id=" + index).forward(request, response);
 					}
 				}
@@ -117,37 +128,37 @@ public class IHManageList extends HttpServlet {
 	/*
 	 * Based on the provided source and destination lists, this function moves the specified item.
 	 */
-	public void moveToList(String listID, String destinationID, String itemID) {
+	public void moveToList(User currUser, String listID, String destinationID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
 			if (listID.equals("FAVORITES") && !destinationID.equals("FAVORITES")) {
-				Result r = ListManager.getInstance().getFavorites().get(index);
-				ListManager.getInstance().removeFromFavorites(r);
+				Result r = currUser.getLists().getFavorites().get(index);
+				currUser.getLists().removeFromFavorites(r);
 				if (destinationID.equals("TO_EXPLORE")) {
-					ListManager.getInstance().addToToExplore(r);
+					currUser.getLists().addToToExplore(r);
 				}
 				if (destinationID.equals("DO_NOT_SHOW")) {
-					ListManager.getInstance().addToDoNotShow(r);
+					currUser.getLists().addToDoNotShow(r);
 				}
 			}
 			if (listID.equals("TO_EXPLORE") && !destinationID.equals("TO_EXPLORE")) {
-				Result r = ListManager.getInstance().getToExplore().get(index);
-				ListManager.getInstance().removeFromToExplore(r);
+				Result r = currUser.getLists().getToExplore().get(index);
+				currUser.getLists().removeFromToExplore(r);
 				if (destinationID.equals("FAVORITES")) {
-					ListManager.getInstance().addToFavorites(r);
+					currUser.getLists().addToFavorites(r);
 				}
 				if (destinationID.equals("DO_NOT_SHOW")) {
-					ListManager.getInstance().addToDoNotShow(r);
+					currUser.getLists().addToDoNotShow(r);
 				}
 			}
 			if (listID.equals("DO_NOT_SHOW") && !destinationID.equals("DO_NOT_SHOW")) {
-				Result r = ListManager.getInstance().getDoNotShow().get(index);
-				ListManager.getInstance().removeFromDoNotShow(r);
+				Result r = currUser.getLists().getDoNotShow().get(index);
+				currUser.getLists().removeFromDoNotShow(r);
 				if (destinationID.equals("FAVORITES")) {
-					ListManager.getInstance().addToFavorites(r);
+					currUser.getLists().addToFavorites(r);
 				}
 				if (destinationID.equals("TO_EXPLORE")) {
-					ListManager.getInstance().addToToExplore(r);
+					currUser.getLists().addToToExplore(r);
 				}
 			}
 		}
@@ -157,17 +168,17 @@ public class IHManageList extends HttpServlet {
 	/*
 	 * Based on the specified list and item number, it removes it from the list.
 	 */
-	public void removeFromList(String listID, String itemID) {
+	public void removeFromList(User currUser, String listID, String itemID) {
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
 			if (listID.equals("FAVORITES")) {
-				ListManager.getInstance().removeFromFavorites(index);
+				currUser.getLists().removeFromFavorites(index);
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				ListManager.getInstance().removeFromToExplore(index);
+				currUser.getLists().removeFromToExplore(index);
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				ListManager.getInstance().removeFromDoNotShow(index);
+				currUser.getLists().removeFromDoNotShow(index);
 			}
 		}
 		
@@ -177,28 +188,28 @@ public class IHManageList extends HttpServlet {
 	 * Based on the specified list and item number (gathered from the "recipeID" or "restaurantID" parameters)
 	 * it adds an item to a list.
 	 */
-	public void addToList(String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
+	public void addToList(User currUser, String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
 		if (recipeID != null && !recipeID.equals("")) {
 			int index = Integer.parseInt(recipeID);
 			if (listID.equals("FAVORITES")) {
-				ListManager.getInstance().addToFavorites(recipes.get(index));
+				currUser.getLists().addToFavorites(recipes.get(index));
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				ListManager.getInstance().addToToExplore(recipes.get(index));
+				currUser.getLists().addToToExplore(recipes.get(index));
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				ListManager.getInstance().addToDoNotShow(recipes.get(index));
+				currUser.getLists().addToDoNotShow(recipes.get(index));
 			}
 		} if (restaurantID != null && !restaurantID.equals("")) {
 			int index = Integer.parseInt(restaurantID);
 			if (listID.equals("FAVORITES")) {
-				ListManager.getInstance().addToFavorites(restaurants.get(index));
+				currUser.getLists().addToFavorites(restaurants.get(index));
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				ListManager.getInstance().addToToExplore(restaurants.get(index));
+				currUser.getLists().addToToExplore(restaurants.get(index));
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				ListManager.getInstance().addToDoNotShow(restaurants.get(index));
+				currUser.getLists().addToDoNotShow(restaurants.get(index));
 			}
 		}
 		return;

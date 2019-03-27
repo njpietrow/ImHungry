@@ -47,6 +47,13 @@ public class IHSearch extends HttpServlet {
 		setAccessControlHeaders(response);
 		String keyword = request.getParameter("search_query");
 		String number = request.getParameter("num_results");
+		User currUser = new User();
+		try {
+			currUser = (User)request.getSession().getAttribute("user");
+		}
+		catch (Exception e){
+			currUser = null;
+		}
 //		String radius = request.getParameter("radius");
 //		TODO need to create radius parameter from input box
 		
@@ -57,6 +64,7 @@ public class IHSearch extends HttpServlet {
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 		
 		if (images != null && recipes != null && restaurants != null) {
+			addToQuickAccess(currUser,keyword,number);
 			sortRecipes(recipes);
 			sortRestaurants(restaurants);
 			request.getSession().setAttribute("images", images);
@@ -71,6 +79,11 @@ public class IHSearch extends HttpServlet {
 		response.getWriter().flush();
 	}
 	
+	private void addToQuickAccess(User currUser, String keyword, String number) {
+		if (currUser == null) return;
+		currUser.getLists().addToQuickAccess(new Query(keyword,number));
+	}
+
 	/*
 	 * Sorts restaurants according to the comparator RestaurantComparator below
 	 */
