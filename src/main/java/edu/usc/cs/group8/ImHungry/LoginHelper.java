@@ -71,7 +71,8 @@ public class LoginHelper {
 	        while(rs.next())
 	        {
 	        	String recURL = rs.getString("recipe_url");
-	        	Recipe temp = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(recURL)); 
+	        	Recipe temp = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(recURL));
+				temp.setURL(recURL); 
 	        	int listID = rs.getInt("list_id"); 
 	        	int listNum = rs.getInt("list_no");
 	        	switch(listID)

@@ -30,6 +30,7 @@ public class Recipe extends Result implements Serializable{
 	 */
 	private int prepTimeInt;
 	private int cookTimeInt;
+	private String url;
 	
 	/*
 	 * It is assumed that the Json provides all information
@@ -178,9 +179,11 @@ public class Recipe extends Result implements Serializable{
 	}
 
 	public String getURL() {
-		// TODO Auto-generated method stub
-		return null;
+		return url;
 	}
 	
+	public void setURL(String url) {
+		this.url = url;
+	}
 	
 }

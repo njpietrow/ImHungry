@@ -207,6 +207,7 @@ public class IHSearch extends HttpServlet {
 							continue;
 						}
 						else {
+							recipe.setURL(results.substring(j,i));
 							recipes.add(recipe);
 							break;
 						}
