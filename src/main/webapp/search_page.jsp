@@ -6,9 +6,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   	<link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="search_page.css" />
-	  <!-- Bootstrap CSS -->
+	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<!-- Title -->
     <title>Search Page</title>
@@ -36,7 +36,7 @@
 				</form> 
 			</div>
 	       	<br>
-	        <!-- Submit button -->
+	        <!-- Submit/Login/Sign-up buttons -->
 	       	<div class="form-actions"> 
 			<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button>  -->
 			<!-- <button id="login_button" class="btn btn-lg btn-success" type="submit" data-toggle="modal" data-target="#loginModal">Login</button>  -->
@@ -58,7 +58,7 @@
 				if(document.forms['only_form'].search_query.value === "") {
 						alert("Please enter a search term.");
 						return false;
-					}
+				}
 				document.getElementById("feed_me_form").submit();
 				//location.href = "results_page.jsp";
 			    };
@@ -154,8 +154,7 @@
 	        </div>
 	    </div>
 	</div>
-<!-- end login modal -->
-			
+<!-- end login modal -->		
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
