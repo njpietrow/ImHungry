@@ -5,6 +5,7 @@
 html body {
 	background-color: #ffa07a;
 }
+
 .div_for_entire_content {
 	position: relative; 
 	top:150px;
@@ -12,7 +13,7 @@ html body {
 .text-center {
 	font-family: 'Playfair Display', serif;
 	text-align: center;
-	font-size: 60px;
+	font-size: 80px;
 }
 .form-control-borderless {
     border: none;
