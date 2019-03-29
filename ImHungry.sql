@@ -15,7 +15,8 @@ DROP TABLE IF EXISTS QuickAccess;
 
 CREATE TABLE User(
    username varchar(100) primary key not null,
-   password varchar(100) not null
+   password varchar(100) not null,
+   list_size int(10) not null
    );
    
 CREATE TABLE QuickAccess(
@@ -62,18 +63,9 @@ CREATE TABLE ListRecipes(
 
 	);
     
-INSERT into User(username,password) values ("GJHalfond","Scrum");
-INSERT into User(username,password) values ("KCalaway","Boopadoop");
+INSERT into User(username,password,list_size) values ("GJHalfond","Scrum",0);
+INSERT into User(username,password,list_size) values ("KCalaway","Boopadoop",0);
 Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");
 Insert into List(list_id,list_name) values (2,"Do Not Show");
 Insert into List(list_id,list_name) values (3,"Quick Access");
-INSERT into Restaurant(restaurant_id,restaurant_name) values ("Easter Island","Food Ranch");
-INSERT into Restaurant(restaurant_id,restaurant_name) values ("Christmas Island","Food Barn");
-INSERT into Restaurant(restaurant_id,restaurant_name) values ("Pentacosta","Food Town");
-INSERT into Recipe(recipe_url,recipe_name) values ("www.yourmom.com","Your mom's spaghetti");
-INSERT into Recipe(recipe_url,recipe_name) values ("www.yourdad.cad","Your dad's spaghetti");
-INSERT into Recipe(recipe_url,recipe_name) values ("www.yoursis.biz","Your sis's spaghetti");
-Insert into ListRestaurants(restaurant_id,username,list_id,list_no) values ("Pentacosta","KCalaway",0,0);
-Insert into ListRecipes(recipe_url,username,list_id,list_no) values ("www.yourmom.com","KCalaway",0,1);
-Insert into ListRestaurants(restaurant_id,username,list_id,list_no) values ("Christmas Island","GJHalfond",0,0);

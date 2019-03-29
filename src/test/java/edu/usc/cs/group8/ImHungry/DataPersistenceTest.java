@@ -27,7 +27,7 @@ public class DataPersistenceTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3"); 
+		searchy.doRestaurantSearch("Curry", "3", currUser); 
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
 		assertEquals(currUser.getLastSearch(),new Query("Curry","3"));
@@ -39,7 +39,7 @@ public class DataPersistenceTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3"); 
+		searchy.doRestaurantSearch("Curry", "3", currUser); 
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
 		assertTrue(currUser.getLists().quickAccessContains(new Query("Curry","3")));
@@ -62,9 +62,9 @@ public class DataPersistenceTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3"); 
+		searchy.doRestaurantSearch("Curry", "3", currUser); 
 		helper.logout(currUser);
-		helper.login("KevinCalaway","Doopadoop",currUser);
+		helper.login("KevinCalaway","Boopadoop",currUser);
 		assertNotEquals(currUser.getLastSearch(),new Query("Curry","3"));
 	}
 
@@ -74,9 +74,9 @@ public class DataPersistenceTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3"); 
+		searchy.doRestaurantSearch("Curry", "3", currUser); 
 		helper.logout(currUser);
-		helper.login("KevinCalaway","Doopadoop",currUser);
+		helper.login("KevinCalaway","Boopadoop",currUser);
 		assertFalse(currUser.getLists().quickAccessContains(new Query("Curry","3")));
 	}
 }

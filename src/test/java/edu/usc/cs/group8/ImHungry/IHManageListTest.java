@@ -20,10 +20,11 @@ public class IHManageListTest {
 	
 	@Test
 	public void testDoGet() throws Exception {
-		ListManager.getInstance().reset();
+		
 		
 		IHSearch search = new IHSearch();
-		
+		User currUser = new User("GJHalfond", new ListManager());
+		currUser.getLists().reset();
 		HttpServletRequest request = mock(HttpServletRequest.class);       
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -36,8 +37,8 @@ public class IHManageListTest {
         when(request.getParameter("restaurant_id")).thenReturn("");
         
         when(request.getSession()).thenReturn(session);
-        when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5"));
-        when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5"));
+        when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5",currUser));
+        when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5", currUser));
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
         when(request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=1")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
@@ -49,8 +50,8 @@ public class IHManageListTest {
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=FAVORITES")).thenReturn(RD);
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=TO_EXPLORE")).thenReturn(RD);
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=DO_NOT_SHOW")).thenReturn(RD);
-        
         IHManageList manager = new IHManageList();
+        when(request.getSession().getAttribute("user")).thenReturn(new User("GJHalfond",new ListManager()));
         manager.doGet(request, response);
         
         when(request.getParameter("action")).thenReturn("MOVE");
@@ -66,7 +67,7 @@ public class IHManageListTest {
         
         manager.doGet(request, response);
         
-        ListManager.getInstance().reset();
+        currUser.getLists().reset();
         
         when(request.getParameter("action")).thenReturn("ADD");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
@@ -149,26 +150,26 @@ public class IHManageListTest {
 
 	@Test
 	public void testAddToList() {
-		ListManager.getInstance().reset();
-
+		User currUser = new User("GJHalfond", new ListManager());
+		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
-		ArrayList<Recipe> testRecipes = search.doRecipeSearch("falafel", "3");
-		ArrayList<Restaurant> testRestaurants = search.doRestaurantSearch("ramen", "3");
-		search.sortRecipes(testRecipes);
-		search.sortRestaurants(testRestaurants);
+		ArrayList<Recipe> testRecipes = search.doRecipeSearch("falafel", "3",currUser);
+		ArrayList<Restaurant> testRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		search.sortRecipes(testRecipes,currUser);
+		search.sortRestaurants(testRestaurants,currUser);
 		
 		IHManageList manager = new IHManageList();
-		manager.addToList(new User(),"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
-		manager.addToList(new User(),"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
-		manager.addToList(new User(),"FAVORITES", "2", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"FAVORITES", "", "2", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "", "2", testRecipes, testRestaurants);
 		
-		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3");
-		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3");
-		search.sortRecipes(newRecipes);
-		search.sortRestaurants(newRestaurants);
+		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3",currUser);
+		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		search.sortRecipes(newRecipes,currUser);
+		search.sortRestaurants(newRestaurants,currUser);
 		
 		assertEquals(newRecipes.get(0), testRecipes.get(2));
 		assertFalse(newRecipes.contains(testRecipes.get(0)));
@@ -178,32 +179,33 @@ public class IHManageListTest {
 	
 	@Test
 	public void testRemoveFromList() {
-		ListManager.getInstance().reset();
+		User currUser = new User("GJHalfond", new ListManager());
+		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
-		ArrayList<Recipe> oldRecipes = search.doRecipeSearch("falafel", "3");
-		ArrayList<Restaurant> oldRestaurants = search.doRestaurantSearch("ramen", "3");
+		ArrayList<Recipe> oldRecipes = search.doRecipeSearch("falafel", "3",currUser);
+		ArrayList<Restaurant> oldRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
 
 		ArrayList<Recipe> testRecipes = oldRecipes;
 		ArrayList<Restaurant> testRestaurants = oldRestaurants;
-		search.sortRecipes(testRecipes);
-		search.sortRestaurants(testRestaurants);
+		search.sortRecipes(testRecipes,currUser);
+		search.sortRestaurants(testRestaurants,currUser);
 		
 		IHManageList manager = new IHManageList();
-		manager.addToList(new User(),"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
-		manager.addToList(new User(),"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
-		manager.addToList(new User(),"FAVORITES", "2", "", testRecipes, testRestaurants);
-		manager.addToList(new User(),"FAVORITES", "", "2", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "", "2", testRecipes, testRestaurants);
 		
-		manager.removeFromList(new User(),"FAVORITES", "1");
-		manager.removeFromList(new User(),"TO_EXPLORE", "1");
-		manager.removeFromList(new User(),"DO_NOT_SHOW", "1");
+		manager.removeFromList(currUser,"FAVORITES", "1");
+		manager.removeFromList(currUser,"TO_EXPLORE", "1");
+		manager.removeFromList(currUser,"DO_NOT_SHOW", "1");
 		
-		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3");
-		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3");
-		search.sortRecipes(newRecipes);
-		search.sortRestaurants(newRestaurants);
+		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3",currUser);
+		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		search.sortRecipes(newRecipes,currUser);
+		search.sortRestaurants(newRestaurants,currUser);
 		
 		assertEquals(newRecipes.get(0), testRecipes.get(2));
 		assertFalse(newRecipes.contains(testRecipes.get(0)));
@@ -214,44 +216,46 @@ public class IHManageListTest {
 	
 	@Test
 	public void testMoveToList() {
-		ListManager.getInstance().reset();
 		
 		IHManageList manager = new IHManageList();
 		IHSearch search = new IHSearch();
-		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1");
-		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1");
+		User currUser = new User("GJHalfond", new ListManager());
+
+		currUser.getLists().reset();
+		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1",currUser);
+		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1", currUser);
 		
-		manager.addToList(new User(),"DO_NOT_SHOW", "0", "", recipe, restaurant);
-		manager.addToList(new User(),"DO_NOT_SHOW", "", "0", recipe, restaurant);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", recipe, restaurant);
 		
-		manager.moveToList(new User(),"DO_NOT_SHOW", "FAVORITES", "1");
-		manager.moveToList(new User(),"DO_NOT_SHOW", "TO_EXPLORE", "0");
+		manager.moveToList(currUser,"DO_NOT_SHOW", "FAVORITES", "1");
+		manager.moveToList(currUser,"DO_NOT_SHOW", "TO_EXPLORE", "0");
 		
-		assertEquals(ListManager.getInstance().getDoNotShow().size(),0);
-		assertEquals(ListManager.getInstance().getToExplore().get(0),recipe.get(0));
-		assertEquals(ListManager.getInstance().getFavorites().get(0),restaurant.get(0));
+		assertEquals(currUser.getLists().getDoNotShow().size(),0);
+		assertEquals(currUser.getLists().getToExplore().get(0),recipe.get(0));
+		assertEquals(currUser.getLists().getFavorites().get(0),restaurant.get(0));
 		
-		manager.removeFromList(new User(),"FAVORITES", "0");
-		manager.removeFromList(new User(),"TO_EXPLORE", "0");
-		manager.addToList(new User(),"FAVORITES", "0", "", recipe, restaurant);
-		manager.addToList(new User(),"FAVORITES", "", "0", recipe, restaurant);
-		manager.moveToList(new User(),"FAVORITES", "DO_NOT_SHOW", "1");
-		manager.moveToList(new User(),"FAVORITES", "TO_EXPLORE", "0");
+		manager.removeFromList(currUser,"FAVORITES", "0");
+		manager.removeFromList(currUser,"TO_EXPLORE", "0");
+		manager.addToList(currUser,"FAVORITES", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"FAVORITES", "", "0", recipe, restaurant);
+		manager.moveToList(currUser,"FAVORITES", "DO_NOT_SHOW", "1");
+		manager.moveToList(currUser,"FAVORITES", "TO_EXPLORE", "0");
 		
-		assertEquals(ListManager.getInstance().getFavorites().size(),0);
-		assertEquals(ListManager.getInstance().getToExplore().get(0),recipe.get(0));
-		assertEquals(ListManager.getInstance().getDoNotShow().get(0),restaurant.get(0));
+		assertEquals(currUser.getLists().getFavorites().size(),0);
+		assertEquals(currUser.getLists().getToExplore().get(0),recipe.get(0));
+		assertEquals(currUser.getLists().getDoNotShow().get(0),restaurant.get(0));
 		
-		manager.removeFromList(new User(),"DO_NOT_SHOW", "0");
-		manager.removeFromList(new User(),"TO_EXPLORE", "0");
-		manager.addToList(new User(),"TO_EXPLORE", "0", "", recipe, restaurant);
-		manager.addToList(new User(),"TO_EXPLORE", "", "0", recipe, restaurant);
-		manager.moveToList(new User(),"TO_EXPLORE", "DO_NOT_SHOW", "1");
-		manager.moveToList(new User(),"TO_EXPLORE", "FAVORITES", "0");
+		manager.removeFromList(currUser,"DO_NOT_SHOW", "0");
+		manager.removeFromList(currUser,"TO_EXPLORE", "0");
+		manager.addToList(currUser,"TO_EXPLORE", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"TO_EXPLORE", "", "0", recipe, restaurant);
+		manager.moveToList(currUser,"TO_EXPLORE", "DO_NOT_SHOW", "1");
+		manager.moveToList(currUser,"TO_EXPLORE", "FAVORITES", "0");
 		
-		assertEquals(ListManager.getInstance().getToExplore().size(),0);
-		assertEquals(ListManager.getInstance().getFavorites().get(0),recipe.get(0));
-		assertEquals(ListManager.getInstance().getDoNotShow().get(0),restaurant.get(0));
+		assertEquals(currUser.getLists().getToExplore().size(),0);
+		assertEquals(currUser.getLists().getFavorites().get(0),recipe.get(0));
+		assertEquals(currUser.getLists().getDoNotShow().get(0),restaurant.get(0));
 		
 		
 	}

@@ -31,7 +31,7 @@ public class LoginHelper {
 	        	currUser.setName(user);
 	        }
 	        rs.close();
-	        if (currUser.getName().equals(""))
+	        if (currUser.getName() == null)
 	        	return false; 
 	        TreeMap<Integer, Restaurant> favoriteRestaurants = new TreeMap<Integer, Restaurant>();
 	        TreeMap<Integer, Recipe>  favoriteRecipes = new TreeMap<Integer, Recipe> ();
@@ -87,7 +87,7 @@ public class LoginHelper {
 	        	
 	        }
 	        
-	        st = conn.prepareStatement("SELECT * FROM Query where username=?");
+	        st = conn.prepareStatement("SELECT * FROM QuickAccess where username=?");
 	        st.setString(1, username);
 	        rs = st.executeQuery();
 	        while(rs.next())
@@ -151,7 +151,7 @@ public class LoginHelper {
 		        }
 		        rs.close();
 		        
-		        st = conn.prepareStatement("INSERT INTO User(?,?)");
+		        st = conn.prepareStatement("INSERT INTO User(username,password,list_size) values(?,?,0)");
 		        st.setString(1, username);
 		        st.setString(2,  password);
 		        st.execute();

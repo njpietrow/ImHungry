@@ -11,8 +11,8 @@ public class UserLoginTest {
 	public void createNewAccount()
 	{
 		LoginHelper helper = new LoginHelper();
-		assertTrue(helper.createAccount("KevinCalaway","Doopadoop"));
-		assertFalse(helper.createAccount("KevinCalaway","Boopadoop"));
+		assertTrue(helper.createAccount("ChrisHailey","ImN0tTellingY0uMyPassw0rd"));
+		assertFalse(helper.createAccount("ChrisHailey","Boopadoop"));
 	}
 		
 	@Test

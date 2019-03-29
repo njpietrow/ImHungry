@@ -10,8 +10,9 @@ public class ListManagerTest {
 	public void testFavorites() {
 		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
+		User currUser = new User("GJHalfond", new ListManager());
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
-		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1").get(0);
+		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1", currUser).get(0);
 		ListManager.getInstance().addToFavorites(myRecipe);
 		ListManager.getInstance().addToFavorites(myRestaurant);
 		assertEquals(ListManager.getInstance().getFavorites().size(),2);
@@ -32,8 +33,9 @@ public class ListManagerTest {
 	public void testToExplore() {
 		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
+		User currUser = new User("GJHalfond", new ListManager());
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
-		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1").get(0);
+		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1", currUser).get(0);
 		ListManager.getInstance().addToToExplore(myRecipe);
 		ListManager.getInstance().addToToExplore(myRestaurant);
 		assertEquals(ListManager.getInstance().getToExplore().size(),2);
@@ -54,8 +56,9 @@ public class ListManagerTest {
 	public void testDoNotShow() {
 		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
+		User currUser = new User("GJHalfond", new ListManager());
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
-		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1").get(0);
+		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1", currUser).get(0);
 		ListManager.getInstance().addToDoNotShow(myRecipe);
 		ListManager.getInstance().addToDoNotShow(myRestaurant);
 		assertEquals(ListManager.getInstance().getDoNotShow().size(),2);

@@ -64,14 +64,14 @@ public class IHSearch extends HttpServlet {
 		
 		// No session required for Search
 		ArrayList<String> images = doImageSearch(keyword);
-		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number);
-		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
+		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number,currUser);
+		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number, currUser);
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 		
 		if (images != null && recipes != null && restaurants != null) {
 			addToQuickAccess(currUser,keyword,number);
-			sortRecipes(recipes);
-			sortRestaurants(restaurants);
+			sortRecipes(recipes,currUser);
+			sortRestaurants(restaurants,currUser);
 			request.getSession().setAttribute("images", images);
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
@@ -88,18 +88,16 @@ public class IHSearch extends HttpServlet {
 		if (currUser == null) return;
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		currUser.getLists().addToQuickAccess(new Query(keyword,number));
 		 try {
 		        conn =
 		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 		                                       "user=root&password=root&useSSL=false");
-		        st = conn.prepareStatement("INSERT INTO QuickAccess(?,?,?)");
+		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results) values (?,?,?)");
 		        st.setString(1,  currUser.getName());
 		        st.setString(2,  keyword);
 		        st.setString(3, number);
 		        st.execute();
-		        rs.close();
 		        // Do something with the Connection
 		
 		    } catch (SQLException ex) {
@@ -113,26 +111,45 @@ public class IHSearch extends HttpServlet {
 	/*
 	 * Sorts restaurants according to the comparator RestaurantComparator below
 	 */
-	public void sortRestaurants(ArrayList<Restaurant> restaurants) {
-		restaurants.sort(new RestaurantComparator());
+	public void sortRestaurants(ArrayList<Restaurant> restaurants, User currUser) {
+		restaurants.sort((r1,r2) -> {
+			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+			return Integer.MIN_VALUE;
+		} else if (currUser.getLists().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MAX_VALUE;
+		}
+		else return r1.getDriveTime() - r2.getDriveTime();});
 		
 	}
 
 	/*
 	 * Sorts recipes according to the comparator RecipeComparator below
 	 */
-	public void sortRecipes(ArrayList<Recipe> recipes) {
-		recipes.sort(new RecipeComparator());
+	public void sortRecipes(ArrayList<Recipe> recipes, User currUser) {
+		recipes.sort((r1,r2) -> {
+			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+				return Integer.MIN_VALUE;
+		} else if (currUser.getLists().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+			return Integer.MAX_VALUE;
+		}
+		if (r1.getPrepTime() == 0) {
+			return Integer.MAX_VALUE;
+		}
+		if (r2.getPrepTime() == 0) {
+			return Integer.MIN_VALUE;
+		}
+		else return r1.getPrepTime() - r2.getPrepTime();
+		});
 	}
 
 	/*
 	 * Restaurant search makes a nearby search request for restaurants related to the keyword
 	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
-	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
+	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, User currUser) {
 //	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
-		
+		addToQuickAccess(currUser,keyword,number);
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		
@@ -166,7 +183,7 @@ public class IHSearch extends HttpServlet {
 				String id = (String) iterate_obj.get("place_id");
 				String name = (String) iterate_obj.get("name");
 				Restaurant temp = new Restaurant(name,id);
-				if (temp != null && !ListManager.getInstance().doNotShowContains(temp) && !restaurants.contains(temp)) {
+				if (temp != null && !currUser.getLists().doNotShowContains(temp) && !restaurants.contains(temp)) {
 					restaurants.add(temp);
 				}
 			}
@@ -187,7 +204,7 @@ public class IHSearch extends HttpServlet {
 	 * calls the RecipeGetter functions to get recipes from each of the web results.
 	 * See: RecipeGetter.java
 	 */
-	public ArrayList<Recipe> doRecipeSearch(String keyword, String number) {
+	public ArrayList<Recipe> doRecipeSearch(String keyword, String number, User currUser) {
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
 		if (results == null) return null;
@@ -203,7 +220,7 @@ public class IHSearch extends HttpServlet {
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
 						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
-						if (recipe == null || ListManager.getInstance().doNotShowContains(recipe) || recipes.contains(recipe)) {
+						if (recipe == null || currUser.getLists().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;
 						}
 						else {

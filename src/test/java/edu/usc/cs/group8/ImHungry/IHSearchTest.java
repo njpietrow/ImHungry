@@ -47,11 +47,11 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        
+        User currUser = new User("GJHalfond", new ListManager());
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
-        Mockito.when(IHS.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
-        Mockito.when(IHS.doRecipeSearch("spaghetti","10")).thenReturn(new ArrayList<Recipe>());
+        Mockito.when(IHS.doRestaurantSearch("spaghetti","10", currUser)).thenReturn(new ArrayList<Restaurant>());
+        Mockito.when(IHS.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
@@ -68,11 +68,11 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        
+        User currUser = new User("GJHalfond", new ListManager());
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
-        Mockito.when(IHS.doRestaurantSearch("spaghetti","10")).thenReturn(null);
-        Mockito.when(IHS.doRecipeSearch("spaghetti","10")).thenReturn(null);
+        Mockito.when(IHS.doRestaurantSearch("spaghetti","10", currUser)).thenReturn(null);
+        Mockito.when(IHS.doRecipeSearch("spaghetti","10",currUser)).thenReturn(null);
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
@@ -89,11 +89,11 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        
+        User currUser = new User("GJHalfond", new ListManager());
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
-        when(MockSearch.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
-        when(MockSearch.doRecipeSearch("spaghetti","10")).thenReturn(new ArrayList<Recipe>());
+        when(MockSearch.doRestaurantSearch("spaghetti","10", currUser)).thenReturn(new ArrayList<Restaurant>());
+        when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
@@ -110,11 +110,11 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        
+        User currUser = new User("GJHalfond", new ListManager());
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
-        when(MockSearch.doRestaurantSearch("spaghetti","10")).thenReturn(null);
-        when(MockSearch.doRecipeSearch("spaghetti","10")).thenReturn(new ArrayList<Recipe>());
+        when(MockSearch.doRestaurantSearch("spaghetti","10", currUser)).thenReturn(null);
+        when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
@@ -131,11 +131,11 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        
+        User currUser = new User("GJHalfond", new ListManager());
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
-        when(MockSearch.doRestaurantSearch("spaghetti","10")).thenReturn(new ArrayList<Restaurant>());
-        when(MockSearch.doRecipeSearch("spaghetti","10")).thenReturn(null);
+        when(MockSearch.doRestaurantSearch("spaghetti","10", currUser)).thenReturn(new ArrayList<Restaurant>());
+        when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(null);
          
         when(response.getWriter()).thenReturn(pw);
         when(request.getSession()).thenReturn(session);
@@ -150,8 +150,9 @@ public class IHSearchTest {
 	@Test
     public void testRestaurantSearchSorted() throws Exception {
        IHSearch IHS = new IHSearch();
-       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33");
-       IHS.sortRestaurants(restaurants);
+       User currUser = new User("GJHalfond", new ListManager());
+       ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", currUser);
+       IHS.sortRestaurants(restaurants,currUser);
        assertEquals(restaurants.size(),20);
        for(int i =0;i<restaurants.size()-1; i++ ) {
     	   assertTrue(restaurants.get(i).getDriveTime()<=restaurants.get(i+1).getDriveTime());
@@ -162,8 +163,9 @@ public class IHSearchTest {
 	@Test
     public void testRecipeSearchSorted() throws Exception {
        IHSearch search = new IHSearch();
-       ArrayList<Recipe> recipes = search.doRecipeSearch("spaghetti", "10");
-       search.sortRecipes(recipes);
+       User currUser = new User("GJHalfond",new ListManager());
+       ArrayList<Recipe> recipes = search.doRecipeSearch("spaghetti", "10",currUser);
+       search.sortRecipes(recipes,currUser);
        assertEquals(recipes.size(),10);
        for(int i =0;i<recipes.size()-1; i++ ) {
     	   assertTrue(recipes.get(i).getPrepTime() <= recipes.get(i+1).getPrepTime() || recipes.get(i+1).getPrepTime() == 0);

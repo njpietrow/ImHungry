@@ -30,6 +30,9 @@ public class User {
 		this.mg = mg; 
 	}
 	public Query getLastSearch() {
+		if (mg.getQuickAccess().isEmpty()) {
+			return null;
+		}
 		return mg.getQuickAccess().get(mg.getQuickAccess().size()-1);
 	}
 	

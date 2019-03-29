@@ -160,7 +160,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 1 WHERE restaurant_id=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -168,6 +167,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -179,7 +187,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 1 WHERE recipe_url=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -187,6 +194,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					
 				}
@@ -203,7 +219,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -211,6 +226,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -221,8 +245,7 @@ public class IHManageList extends HttpServlet {
                                     "user=root&password=root&useSSL=false");
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
 							st.setString(1, id);
-							st.execute();
-							rs.close();							
+							st.execute();	
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -230,6 +253,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 				}
 			}
@@ -256,6 +288,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -266,8 +307,7 @@ public class IHManageList extends HttpServlet {
                                     "user=root&password=root&useSSL=false");
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 0 WHERE recipe_url=?");
 							st.setString(1, id);
-							st.execute();
-							rs.close();							
+							st.execute();				
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -275,6 +315,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 				}
 				if (destinationID.equals("DO_NOT_SHOW")) {
@@ -289,7 +338,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -297,6 +345,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -308,7 +365,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close();							
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -316,6 +372,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 				}
 			}
@@ -334,7 +399,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 0 WHERE restaurant_id=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -342,6 +406,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -352,8 +425,7 @@ public class IHManageList extends HttpServlet {
                                     "user=root&password=root&useSSL=false");
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 0 WHERE recipe_url=?");
 							st.setString(1, id);
-							st.execute();
-							rs.close();							
+							st.execute();						
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -361,6 +433,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 				}
 				if (destinationID.equals("TO_EXPLORE")) {
@@ -375,7 +456,6 @@ public class IHManageList extends HttpServlet {
 							st = conn.prepareStatement("UPDATE ListRestaurants SET list_id = 2 WHERE restaurant_id=?");
 							st.setString(1, id);
 							st.execute();
-							rs.close(); 
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -383,6 +463,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 					else
 					{
@@ -393,8 +482,7 @@ public class IHManageList extends HttpServlet {
                                     "user=root&password=root&useSSL=false");
 							st = conn.prepareStatement("UPDATE ListRecipes SET list_id = 2 WHERE recipe_url=?");
 							st.setString(1, id);
-							st.execute();
-							rs.close();							
+							st.execute();			
 						}
 						catch (SQLException ex) {
 					        // handle any errors
@@ -402,6 +490,15 @@ public class IHManageList extends HttpServlet {
 					        System.out.println("SQLState: " + ex.getSQLState());
 					        System.out.println("VendorError: " + ex.getErrorCode());
 					    }
+						finally {
+							try {
+								conn.close();
+								st.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					}
 				}
 			}
@@ -413,15 +510,186 @@ public class IHManageList extends HttpServlet {
 	 * Based on the specified list and item number, it removes it from the list.
 	 */
 	public void removeFromList(User currUser, String listID, String itemID) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		if (itemID != null && !itemID.equals("")) {
 			int index = Integer.parseInt(itemID);
 			if (listID.equals("FAVORITES")) {
+				Result toRemove = currUser.getLists().getFavorites().get(index);
+				String username = currUser.getName();
+				
+				if (toRemove instanceof Recipe) {
+					try
+					{
+						String url = ((Recipe) toRemove).getURL();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRecipes WHERE username = ? and list_id = 0 and recipe_url = ?");
+						st.setString(1, username);
+						st.setString(2, url);
+						st.execute();					
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				} else {
+					try
+					{
+						String id = ((Restaurant) toRemove).getId();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE username = ? and list_id = 0 and restaurant_id = ?");
+						st.setString(1, username);
+						st.setString(2, id);
+						st.execute();						
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}
 				currUser.getLists().removeFromFavorites(index);
 			}
 			if (listID.equals("TO_EXPLORE")) {
+				Result toRemove = currUser.getLists().getToExplore().get(index);
+				String username = currUser.getName();
+				
+				if (toRemove instanceof Recipe) {
+					try
+					{
+						String url = ((Recipe) toRemove).getURL();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRecipes WHERE username = ? and list_id = 1 and recipe_url = ?");
+						st.setString(1, username);
+						st.setString(2, url);
+						st.execute();				
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				} else {
+					try
+					{
+						String id = ((Restaurant) toRemove).getId();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE username = ? and list_id = 1 and restaurant_id = ?");
+						st.setString(1, username);
+						st.setString(2, id);
+						st.execute();					
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}
 				currUser.getLists().removeFromToExplore(index);
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
+				Result toRemove = currUser.getLists().getDoNotShow().get(index);
+				String username = currUser.getName();
+				
+				if (toRemove instanceof Recipe) {
+					try
+					{
+						String url = ((Recipe) toRemove).getURL();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRecipes WHERE username = ? and list_id = 2 and recipe_url = ?");
+						st.setString(1, username);
+						st.setString(2, url);
+						st.execute();					
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				} else {
+					try
+					{
+						String id = ((Restaurant) toRemove).getId();
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                            "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE username = ? and list_id = 2 and restaurant_id = ?");
+						st.setString(1, username);
+						st.setString(2, id);
+						st.execute();					
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}
 				currUser.getLists().removeFromDoNotShow(index);
 			}
 		}
@@ -433,27 +701,268 @@ public class IHManageList extends HttpServlet {
 	 * it adds an item to a list.
 	 */
 	public void addToList(User currUser, String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		if (recipeID != null && !recipeID.equals("")) {
 			int index = Integer.parseInt(recipeID);
 			if (listID.equals("FAVORITES")) {
-				currUser.getLists().addToFavorites(recipes.get(index));
+				Recipe r = recipes.get(index); 
+				currUser.getLists().addToFavorites(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,0,?)");
+				
+					st.setString(1, r.getURL());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				currUser.getLists().addToToExplore(recipes.get(index));
+				Recipe r = recipes.get(index); 
+				currUser.getLists().addToToExplore(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,1,?)");
+				
+					st.setString(1, r.getURL());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				currUser.getLists().addToDoNotShow(recipes.get(index));
+				Recipe r = recipes.get(index); 
+				currUser.getLists().addToDoNotShow(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,2,?)");
+				
+					st.setString(1, r.getURL());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
 			}
 		} if (restaurantID != null && !restaurantID.equals("")) {
 			int index = Integer.parseInt(restaurantID);
 			if (listID.equals("FAVORITES")) {
-				currUser.getLists().addToFavorites(restaurants.get(index));
+				Restaurant r = restaurants.get(index);
+				currUser.getLists().addToFavorites(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,0,?)");
+				
+					st.setString(1, r.getId());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				currUser.getLists().addToToExplore(restaurants.get(index));
+				Restaurant r = restaurants.get(index);
+				currUser.getLists().addToToExplore(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,1,?)");
+				
+					st.setString(1, r.getId());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				currUser.getLists().addToDoNotShow(restaurants.get(index));
+				Restaurant r = restaurants.get(index);
+				currUser.getLists().addToDoNotShow(r);
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                            "user=root&password=root&useSSL=false");
+					
+					st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
+					st.setString(1, currUser.getName());
+					rs = st.executeQuery();
+					int list_size = -1; 
+					if (rs != null)
+					{
+						list_size = rs.getInt("list_size"); 
+					}
+					st.close();
+					list_size = list_size+1; 
+					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
+				
+					st.setString(1, r.getId());
+					st.setString(2, currUser.getName());
+					st.setInt(3, list_size);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				
 			}
 		}
 		return;
