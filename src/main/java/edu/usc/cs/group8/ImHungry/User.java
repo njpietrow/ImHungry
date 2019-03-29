@@ -30,8 +30,7 @@ public class User {
 		this.mg = mg; 
 	}
 	public Query getLastSearch() {
-		// TODO Auto-generated method stub
-		return null;
+		return mg.getQuickAccess().get(mg.getQuickAccess().size()-1);
 	}
 	
 }

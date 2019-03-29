@@ -43,12 +43,12 @@ class IHLoginTest {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("LogIn");
-		LG.doGet(request,response);
+		LG.doPost(request,response);
 		
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Waterfall");
 		when(request.getParameter("action")).thenReturn("LogIn");
-		LG.doGet(request,response);
+		LG.doPost(request,response);
 	}
 	
 	@Test
@@ -56,18 +56,18 @@ class IHLoginTest {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("SignUp");
-		LG.doGet(request,response);
+		LG.doPost(request,response);
 		
 		when(request.getParameter("username")).thenReturn("CHailey");
 		when(request.getParameter("password")).thenReturn("imn0ttellingy0umypassw0rd");
 		when(request.getParameter("action")).thenReturn("SignUp");
-		LG.doGet(request,response);
+		LG.doPost(request,response);
 	}
 	
 	@Test
 	void testLogOut() throws ServletException, IOException {
 		when(request.getParameter("action")).thenReturn("LogOut");
-		LG.doGet(request,response);
+		LG.doPost(request,response);
 	}
 
 }
