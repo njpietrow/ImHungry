@@ -130,6 +130,15 @@
 	
 		    	<div id=ingredients_unordered>Ingredients: 
 		    	
+			<div id=ingredients_unordered>Ingredients: 
+		    	<% 
+		    		if(stuff_ingredients.size() == 0) {
+		    			%> 
+		    			<script type="text/javascript">
+			    			document.getElementById('ingredients_unordered').style.display = 'none';
+		    			</script>
+	    			<% } %> 
+		    	
 			<!-- Printing out ingredients in unordered list using java -->
 		    	<% for(int i = 0; i < stuff_ingredients.size(); i+=1) { %> 
 			            <ul>
@@ -140,7 +149,14 @@
 		    	</div>
 			<!-- Printing out instructions in ordered list using java -->
 		    	<div id=instructions_for_food>Instructions:
-		    		<% for(int i = 0; i < stuff_instructions.size(); i+=1) { %> 
+		    		<% 
+		    		if(stuff_instructions.size() == 0) {
+		    			%> 
+		    			<script type="text/javascript">
+			    			document.getElementById('instructions_for_food').style.display = 'none';
+		    			</script>
+		    	<% } %>
+		    	<% for(int i = 0; i < stuff_instructions.size(); i+=1) { %> 
 			            	<ul><%=i+1 + ". " + stuff_instructions.get(i)%></ul>
 			    <% } %>
 		    	</div>
