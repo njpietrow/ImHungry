@@ -82,7 +82,7 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body">
-	                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+	                <form class="form" role="form" autocomplete="off" id="formSignUp" novalidate="" method="POST">
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>
@@ -110,15 +110,20 @@
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Sign Up</button>
+	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnSignUp">Sign Up</button>
 	                    </div>
 	                </form>
 	            </div>
 	        </div>
 	    </div>
 	</div>
-
 <!-- end register modal -->
+	  
+<script type="text/javascript">
+    	document.getElementById("btnSignUp").onclick = function () {
+	document.getElementById("formSignUp").submit();
+    };
+</script>
 		  
 <!-- login modal -->
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
