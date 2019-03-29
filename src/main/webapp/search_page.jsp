@@ -31,7 +31,7 @@
 						<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Enter Food" name="search_query" required style="height: 38px;" />
 						<span></span>
 						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
-						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Search radius in meters" data-placement="right" type="number" min="1" value="1" name="num_miles" > 
+						<input class="form-control form-control-borderless" id="ex3" data-toggle="tooltip" title="Search radius in meters" data-placement="right" type="number" min="1" value="1" name="num_miles" > 
 					 </div>
 				</form> 
 			</div>
