@@ -38,6 +38,7 @@ public class IHLogin extends HttpServlet {
 				return;
 			}
 			l.logout(currUser);
+			request.getRequestDispatcher("search_page.jsp").forward(request, response);
 		}
 		if (action.equals("LogIn")) {
 			String username = request.getParameter("username");
@@ -45,6 +46,7 @@ public class IHLogin extends HttpServlet {
 			User currUser = new User();
 			if (l.login(username, password, currUser)) {
 				request.setAttribute("user", currUser);
+				request.getRequestDispatcher("search_page.jsp").forward(request, response);
 			} else {
 				response.setStatus(response.SC_BAD_GATEWAY);
 				response.getWriter().println("Incorrect password.");
@@ -64,6 +66,7 @@ public class IHLogin extends HttpServlet {
 				User currUser = new User();
 				if (l.login(username, password, currUser)) {
 					request.setAttribute("user", currUser);
+					request.getRequestDispatcher("search_page.jsp").forward(request, response);
 				} else {
 					response.setStatus(response.SC_BAD_GATEWAY);
 					response.getWriter().println("Account with that name already exists.");
