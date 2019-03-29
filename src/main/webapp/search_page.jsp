@@ -41,16 +41,13 @@
 			<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button>  -->
 			<!-- <button id="login_button" class="btn btn-lg btn-success" type="submit" data-toggle="modal" data-target="#loginModal">Login</button>  -->
 			<button id="submit_button" class="btn btn-lg btn-dark" type="submit">Feed Me!</button> 
-	            	<a href="#loginModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Login</a>
-	            	<a href="#signupModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Sign Up</a>
-			<div class="container">
-			    <div class="row">
+			<div class="row">
 				<div class="col-12 text-center py-2">
-					<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
-				    <a href="#loginModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Login</a>
-				    <a href="#signupModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Sign Up</a> -->
+				    	<a href="#loginModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Login</a>
+           				<a href="#signupModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Sign Up</a>
 				</div>
-			    </div>
+		    	</div>
+			<div class="container">
 			</div>
 			<!-- Onclick function for the submit button -->
 			<script type="text/javascript">
