@@ -87,11 +87,6 @@
 	                        <div class="invalid-feedback">Oops, you missed this one.</div>
 	                    </div>
 	                    <div class="form-group">
-	                        <label for="uname1">Email</label>
-	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
-	                        <div class="invalid-feedback">Oops, you missed this one.</div>
-	                    </div>
-	                    <div class="form-group">
 	                        <label>Password</label>
 	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password too!</div>
@@ -107,7 +102,7 @@
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnSignUp">Sign Up</button>
+	                        <button type="submit" class="btn btn-dark btn-lg float-right" id="btnSignUp">Sign Up</button>
 	                    </div>
 	                </form>
 	            </div>
@@ -150,7 +145,7 @@
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+	                        <button type="submit" class="btn btn-dark btn-lg float-right" id="btnLogin">Login</button>
 	                    </div>
 	                </form>
 	            </div>
