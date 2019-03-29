@@ -52,6 +52,7 @@ public class IHSearch extends HttpServlet {
 		setAccessControlHeaders(response);
 		String keyword = request.getParameter("search_query");
 		String number = request.getParameter("num_results");
+		String radius = request.getParameter("num_miles");
 		User currUser = new User();
 		try {
 			currUser = (User)request.getSession().getAttribute("user");
@@ -65,8 +66,8 @@ public class IHSearch extends HttpServlet {
 		// No session required for Search
 		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number);
-		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
-//		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
+//		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number);
+		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 		
 		if (images != null && recipes != null && restaurants != null) {
 			addToQuickAccess(currUser,keyword,number);
@@ -129,7 +130,7 @@ public class IHSearch extends HttpServlet {
 	 * Restaurant search makes a nearby search request for restaurants related to the keyword
 	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
-	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number) {
+	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 //	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		
@@ -142,8 +143,8 @@ public class IHSearch extends HttpServlet {
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
-				+ "&radius=5000"				
-//				+ "&radius=" + radius
+//				+ "&radius=5000"				
+				+ "&radius=" + radius
 				+ "&keyword=" + keyword
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
