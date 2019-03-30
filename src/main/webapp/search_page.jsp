@@ -183,5 +183,8 @@
 		 setInputFilter(document.getElementById("ex2"), function(value) {
 		   return /^\d*$/.test(value) && (value === "" || parseInt(value) >= 1);
 		 });
+		 setInputFilter(document.getElementById("ex3"), function(value) {
+			   return /^\d*$/.test(value) && (value === "" || parseInt(value) >= 1);
+		 });
 	 </script> 
 </html>
