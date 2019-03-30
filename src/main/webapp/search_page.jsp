@@ -31,7 +31,7 @@
 						<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Enter Food" name="search_query" required style="height: 38px;" />
 						<span></span>
 						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Number of items to show in results" data-placement="right" type="number" min="1" value="5" name="num_results" >
-						<input class="form-control form-control-borderless" id="ex2" data-toggle="tooltip" title="Search radius in meters" data-placement="right" type="number" min="1" value="1" name="num_miles" > 
+						<input class="form-control form-control-borderless" id="ex3" data-toggle="tooltip" title="Search radius in meters" data-placement="right" type="number" min="1" value="1" name="num_miles" > 
 					 </div>
 				</form> 
 			</div>
@@ -40,17 +40,14 @@
 	       	<div class="form-actions"> 
 			<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button>  -->
 			<!-- <button id="login_button" class="btn btn-lg btn-success" type="submit" data-toggle="modal" data-target="#loginModal">Login</button>  -->
-			<button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
-	            	<a href="#loginModal" role="button" class="btn btn-lg btn-success" data-toggle="modal">Login</a>
-	            	<a href="#signupModal" role="button" class="btn btn-lg btn-success" data-toggle="modal">Sign Up</a>
-			<div class="container">
-			    <div class="row">
+			<button id="submit_button" class="btn btn-lg btn-dark" type="submit">Feed Me!</button> 
+			<div class="row">
 				<div class="col-12 text-center py-2">
-					<!-- <button id="submit_button" class="btn btn-lg btn-success" type="submit">Feed Me!</button> 
-				    <a href="#loginModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Login</a>
-				    <a href="#signupModal" role="button" class="btn btn-primary btn-lg" data-toggle="modal">Sign Up</a> -->
+				    	<a href="#loginModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Login</a>
+           				<a href="#signupModal" role="button" class="btn btn-lg btn-dark" data-toggle="modal">Sign Up</a>
 				</div>
-			    </div>
+		    	</div>
+			<div class="container">
 			</div>
 			<!-- Onclick function for the submit button -->
 			<script type="text/javascript">
@@ -82,15 +79,10 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body">
-	                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
+	                <form class="form" role="form" autocomplete="off" id="formSignUp" novalidate="" method="POST">
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>
-	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
-	                        <div class="invalid-feedback">Oops, you missed this one.</div>
-	                    </div>
-	                    <div class="form-group">
-	                        <label for="uname1">Email</label>
 	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
 	                        <div class="invalid-feedback">Oops, you missed this one.</div>
 	                    </div>
@@ -110,15 +102,20 @@
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Sign Up</button>
+	                        <button type="submit" class="btn btn-dark btn-lg float-right" id="btnSignUp">Sign Up</button>
 	                    </div>
 	                </form>
 	            </div>
 	        </div>
 	    </div>
 	</div>
-
 <!-- end register modal -->
+	  
+<script type="text/javascript">
+    	document.getElementById("btnSignUp").onclick = function () {
+	document.getElementById("formSignUp").submit();
+    };
+</script>
 		  
 <!-- login modal -->
 	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -148,7 +145,7 @@
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
-	                        <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+	                        <button type="submit" class="btn btn-dark btn-lg float-right" id="btnLogin">Login</button>
 	                    </div>
 	                </form>
 	            </div>
@@ -185,6 +182,9 @@
 		// Restrict input to integer>=1
 		 setInputFilter(document.getElementById("ex2"), function(value) {
 		   return /^\d*$/.test(value) && (value === "" || parseInt(value) >= 1);
+		 });
+		 setInputFilter(document.getElementById("ex3"), function(value) {
+			   return /^\d*$/.test(value) && (value === "" || parseInt(value) >= 1);
 		 });
 	 </script> 
 </html>

@@ -31,8 +31,8 @@
 	    <!-- Button Group for Printable Version, Back to Results, Dropdown for Predefined Lists, and Add to list -->
 	    <div class="overall_information">
 	    	<div class="btn-group-vertical" id="button_stuff">
-	        	<button class="btn btn-success" onclick="PrintPreview()">Printable Version</button> 
-	        	<button id="back_to_results_button" class="btn btn-success">Back to Results</button> 
+	        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
+	        	<button id="back_to_results_button" class="btn btn-dark">Back to Results</button> 
 	        	<!-- Back to Results -->
 	        	<script type="text/javascript">
 				    document.getElementById("back_to_results_button").onclick = function () {
@@ -40,7 +40,7 @@
 				    };
 				</script>
 			<!-- Dropdown list elements, Favorites, To Explore, and Do Not Show -->
-	        	<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+	        	<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 			      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 			        <a class="dropdown-item" href="#">Favorites</a>
 			        <a class="dropdown-item" href="#">To Explore</a>
@@ -55,7 +55,7 @@
 					   });
 					});
 			      </script>
-	        	<button class="btn btn-success" id="add_to_list_button">Add to list</button> 
+	        	<button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
 	        	<script>
 				//function to set list id to the appropriate list if selected
 		        	 document.getElementById("add_to_list_button").onclick = function () {
@@ -130,6 +130,15 @@
 	
 		    	<div id=ingredients_unordered>Ingredients: 
 		    	
+			<div id=ingredients_unordered>Ingredients: 
+		    	<% 
+		    		if(stuff_ingredients.size() == 0) {
+		    			%> 
+		    			<script type="text/javascript">
+			    			document.getElementById('ingredients_unordered').style.display = 'none';
+		    			</script>
+	    			<% } %> 
+		    	
 			<!-- Printing out ingredients in unordered list using java -->
 		    	<% for(int i = 0; i < stuff_ingredients.size(); i+=1) { %> 
 			            <ul>
@@ -140,7 +149,14 @@
 		    	</div>
 			<!-- Printing out instructions in ordered list using java -->
 		    	<div id=instructions_for_food>Instructions:
-		    		<% for(int i = 0; i < stuff_instructions.size(); i+=1) { %> 
+		    		<% 
+		    		if(stuff_instructions.size() == 0) {
+		    			%> 
+		    			<script type="text/javascript">
+			    			document.getElementById('instructions_for_food').style.display = 'none';
+		    			</script>
+		    	<% } %>
+		    	<% for(int i = 0; i < stuff_instructions.size(); i+=1) { %> 
 			            	<ul><%=i+1 + ". " + stuff_instructions.get(i)%></ul>
 			    <% } %>
 		    	</div>

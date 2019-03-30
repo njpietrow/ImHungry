@@ -15,86 +15,83 @@
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
-	
 		<title>Results for <%= session.getAttribute("query") %></title>
 	</head>
-	
 	<body>
+		<!-- import links -->
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<div class = "div_for_entire_content">
-		
 			<!-- The following div will display the collage with random rotation angle -->
 			<div id=collage>
 		    	<% Random r = new Random(); %>
 		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
 			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
-			    
+			    <!-- buttons + dropdown menu -->
 			    <div class="btn-group-vertical" id="button_stuff">
-						<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-							<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
-			        			<a class="dropdown-item" href="#">Favorites</a>
-			        			<a class="dropdown-item" href="#">To Explore</a>
-			        			<a class="dropdown-item" href="#">Do Not Show</a>
-			      			</div>
-			      			<script>
-			      				//This is a helper fuction that will help to make the dropdown menu look nicer
-			      				//Specifically, the name of the list will be displayed on the button after selected
-			      				var list_has_been_chosen = false;
-			      				var chosen_list = "";
-							     $(function(){
-								    $(".dropdown-item").click(function(){					
-								      $("#btnGroupVerticalDrop2").text($(this).text());
-								      $("#btnGroupVerticalDrop2").val($(this).text());
-								      list_has_been_chosen = true;
-								      chosen_list = $(this).text();
-								   });
-								    
-								});
-							</script>
-							
-							<!-- Manage List Button is the button to be clicked after user has selected a list from the dropdown menu
-							 And by clicking the manage list button, user will be redirected to the page that s/he selected-->
-							<button class="btn btn-success" id="manage_list_button">Manage List</button>
-								<!-- Redirect to the List Management Page -->
-								<script type="text/javascript">
-									document.getElementById("manage_list_button").onclick = function(){
-										if (list_has_been_chosen) {
-											var list_name = "";
-											if (chosen_list == "Favorites"){
-												list_name = "FAVORITES";
-											}
-											else if (chosen_list == "To Explore"){
-												list_name = "TO_EXPLORE";
-											}
-											else if (chosen_list == "Do Not Show"){
-												list_name = "DO_NOT_SHOW";
-											}
-											
-											//Redirect the user to the chosen list
-											location.href = "list_management_page.jsp?list_id=" + list_name;
-										}
-									};
-								</script>
-							
-							<!-- Back to Search button, when clicked, will take the user back to the search page -->
-							<button id="back_to_search_button" class="btn btn-success">Back to Search</button>
-								<!-- Back to Search -->
-								<script type="text/javascript">
-									document.getElementById("back_to_search_button").onclick = function(){
-										location.href = "search_page.jsp";
-									};
-								</script>
+					<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+						<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
+						<a class="dropdown-item" href="#">Favorites</a>
+						<a class="dropdown-item" href="#">To Explore</a>
+						<a class="dropdown-item" href="#">Do Not Show</a>
 					</div>
+					<script>
+						//This is a helper fuction that will help to make the dropdown menu look nicer
+						//Specifically, the name of the list will be displayed on the button after selected
+						var list_has_been_chosen = false;
+						var chosen_list = "";
+						     $(function(){
+							    $(".dropdown-item").click(function(){					
+							      $("#btnGroupVerticalDrop2").text($(this).text());
+							      $("#btnGroupVerticalDrop2").val($(this).text());
+							      list_has_been_chosen = true;
+							      chosen_list = $(this).text();
+							   });
+
+							});
+					</script>
+
+						<!-- Manage List Button is the button to be clicked after user has selected a list from the dropdown menu
+						 And by clicking the manage list button, user will be redirected to the page that s/he selected-->
+						<button class="btn btn-dark" id="manage_list_button">Manage List</button>
+							<!-- Redirect to the List Management Page -->
+							<script type="text/javascript">
+								document.getElementById("manage_list_button").onclick = function(){
+									if (list_has_been_chosen) {
+										var list_name = "";
+										if (chosen_list == "Favorites"){
+											list_name = "FAVORITES";
+										}
+										else if (chosen_list == "To Explore"){
+											list_name = "TO_EXPLORE";
+										}
+										else if (chosen_list == "Do Not Show"){
+											list_name = "DO_NOT_SHOW";
+										}
+
+										//Redirect the user to the chosen list
+										location.href = "list_management_page.jsp?list_id=" + list_name;
+									}
+								};
+							</script>
+
+						<!-- Back to Search button, when clicked, will take the user back to the search page -->
+						<button id="back_to_search_button" class="btn btn-dark">Back to Search</button>
+							<!-- Back to Search -->
+							<script type="text/javascript">
+								document.getElementById("back_to_search_button").onclick = function(){
+									location.href = "search_page.jsp";
+								};
+							</script>
+				</div>
 			    
 	    	</div>
-			<div class = "text-center"> 
+			<%-- <div class = "text-center"> 
 				<!-- This is the header for the result page -->
 				<h1>Results for <%= session.getAttribute("query") %></h1>
-			</div>
+			</div> --%>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
 			<div class="container">
@@ -107,9 +104,14 @@
 					<div class="recipe_and_restaurant_results">
 					
 						<!-- The following div is the container for the restaurant results table-->
+						
+						<div class = "text-center"> 
+							<!-- This is the header for the result page -->
+							<h1>Results for <%= session.getAttribute("query") %></h1>
+						</div>
 						<div class="restaurant_results">
 							<h2>Restaurant Results</h2>
-							<table id="restaurant_results_table">
+							<table id="restaurant_results_table" class="table table-striped">
 								<%
 								//Getting restaurant results array list from session
 								if (session.getAttribute("restaurants") == null){
@@ -135,7 +137,7 @@
 						<!-- The following div is the container for the recipe results table -->
 						<div class="recipe_results">
 							<h2>Recipe Results</h2>
-							<table id="recipe_results_table">
+							<table id="recipe_results_table" class="table table-striped">
 								<%
 								//Getting recipe results array list from session
 								if (session.getAttribute("recipes") == null){
@@ -166,9 +168,8 @@
 	        </div>
 	    </div>
 	    
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	
+	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</body>
 </html>
