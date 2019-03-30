@@ -66,7 +66,7 @@ public class IHSearch extends HttpServlet {
 		// No session required for Search
 		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number,currUser);
-		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number, currUser);
+		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius,currUser);
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 		
 		if (images != null && recipes != null && restaurants != null) {
@@ -147,11 +147,7 @@ public class IHSearch extends HttpServlet {
 	 * Restaurant search makes a nearby search request for restaurants related to the keyword
 	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
-<<<<<<< HEAD
-	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, User currUser) {
-=======
-	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
->>>>>>> f4425f6f928dbbe68cd808b851164d6700d4648a
+	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius, User currUser) {
 //	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		addToQuickAccess(currUser,keyword,number);
