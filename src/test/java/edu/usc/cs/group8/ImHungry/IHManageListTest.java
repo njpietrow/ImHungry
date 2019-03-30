@@ -38,7 +38,7 @@ public class IHManageListTest {
         
         when(request.getSession()).thenReturn(session);
         when(request.getSession().getAttribute("recipes")).thenReturn(search.doRecipeSearch("spaghetti", "5",currUser));
-        when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5", currUser));
+        when(request.getSession().getAttribute("restaurants")).thenReturn(search.doRestaurantSearch("spaghetti", "5", "5000", currUser));
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=FAVORITES&item_id=0")).thenReturn(RD);
         when(request.getRequestDispatcher("restaurant_page.jsp?list_id=FAVORITES&item_id=1")).thenReturn(RD);
         when(request.getRequestDispatcher("recipe_page.jsp?list_id=TO_EXPLORE&item_id=0")).thenReturn(RD);
@@ -154,7 +154,7 @@ public class IHManageListTest {
 		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> testRecipes = search.doRecipeSearch("falafel", "3",currUser);
-		ArrayList<Restaurant> testRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		ArrayList<Restaurant> testRestaurants = search.doRestaurantSearch("ramen", "3", "5000", currUser);
 		search.sortRecipes(testRecipes,currUser);
 		search.sortRestaurants(testRestaurants,currUser);
 		
@@ -167,7 +167,7 @@ public class IHManageListTest {
 		manager.addToList(currUser,"FAVORITES", "", "2", testRecipes, testRestaurants);
 		
 		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3",currUser);
-		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", "5000", currUser);
 		search.sortRecipes(newRecipes,currUser);
 		search.sortRestaurants(newRestaurants,currUser);
 		
@@ -183,7 +183,7 @@ public class IHManageListTest {
 		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> oldRecipes = search.doRecipeSearch("falafel", "3",currUser);
-		ArrayList<Restaurant> oldRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		ArrayList<Restaurant> oldRestaurants = search.doRestaurantSearch("ramen", "3", "5000", currUser);
 
 		ArrayList<Recipe> testRecipes = oldRecipes;
 		ArrayList<Restaurant> testRestaurants = oldRestaurants;
@@ -203,7 +203,7 @@ public class IHManageListTest {
 		manager.removeFromList(currUser,"DO_NOT_SHOW", "1");
 		
 		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3",currUser);
-		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", currUser);
+		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", "5000", currUser);
 		search.sortRecipes(newRecipes,currUser);
 		search.sortRestaurants(newRestaurants,currUser);
 		
@@ -223,7 +223,7 @@ public class IHManageListTest {
 
 		currUser.getLists().reset();
 		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1",currUser);
-		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1", currUser);
+		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1", "5000", currUser);
 		
 		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", recipe, restaurant);
 		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", recipe, restaurant);
