@@ -83,22 +83,18 @@
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>
-	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+	                        <input type="text" class="form-control form-control-lg" name="uname_signup" id="uname1" required="">
 	                        <div class="invalid-feedback">Oops, you missed this one.</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Password</label>
-	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="password_signup" id="pwd1" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password too!</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Verify Password</label>
-	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="verify_uname_signup" id="pwd1" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password again!</div>
-	                    </div>
-	                    <div class="custom-control custom-checkbox">
-	                      <input type="checkbox" class="custom-control-input" id="rememberMe">
-	                      <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
@@ -131,17 +127,13 @@
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>
-	                        <input type="text" class="form-control form-control-lg" name="uname1" id="uname1" required="">
+	                        <input type="text" class="form-control form-control-lg" name="uname_login" id="uname2" required="">
 	                        <div class="invalid-feedback">Oops, you missed this one.</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Password</label>
-	                        <input type="password" class="form-control form-control-lg" id="pwd1" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="password_login" id="pwd2" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password too!</div>
-	                    </div>
-	                    <div class="custom-control custom-checkbox">
-	                      <input type="checkbox" class="custom-control-input" id="rememberMe">
-	                      <label class="custom-control-label" for="rememberMe">Remember me on this computer</label>
 	                    </div>
 	                    <div class="form-group py-4">
 	                        <button class="btn btn-outline-secondary btn-lg" data-dismiss="modal" aria-hidden="true">Cancel</button>
