@@ -71,6 +71,7 @@ public class IHSearch extends HttpServlet {
 		
 		if (images != null && recipes != null && restaurants != null) {
 			addToQuickAccess(currUser,keyword,number);
+			if (currUser == null) currUser = new User();
 			sortRecipes(recipes,currUser);
 			sortRestaurants(restaurants,currUser);
 			request.getSession().setAttribute("images", images);
@@ -113,6 +114,7 @@ public class IHSearch extends HttpServlet {
 	 * Sorts restaurants according to the comparator RestaurantComparator below
 	 */
 	public void sortRestaurants(ArrayList<Restaurant> restaurants, User currUser) {
+		
 		restaurants.sort((r1,r2) -> {
 			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
 			return Integer.MIN_VALUE;
@@ -184,6 +186,7 @@ public class IHSearch extends HttpServlet {
 				String id = (String) iterate_obj.get("place_id");
 				String name = (String) iterate_obj.get("name");
 				Restaurant temp = new Restaurant(name,id);
+				if (currUser == null) currUser = new User();
 				if (temp != null && !currUser.getLists().doNotShowContains(temp) && !restaurants.contains(temp)) {
 					restaurants.add(temp);
 				}
@@ -221,6 +224,8 @@ public class IHSearch extends HttpServlet {
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
 						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
+
+						if (currUser == null) currUser = new User();
 						if (recipe == null || currUser.getLists().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;
 						}
