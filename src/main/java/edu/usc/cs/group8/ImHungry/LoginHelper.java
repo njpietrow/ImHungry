@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 public class LoginHelper {
+	
 	Connection conn = null;
 	PreparedStatement st = null;
 	ResultSet rs = null;
@@ -19,6 +20,7 @@ public class LoginHelper {
 
 	public boolean login(String username, String password, User currUser) {
 	    try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
 	        conn =
 	           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 	                                       "user=root&password=root&useSSL=false");
@@ -124,7 +126,10 @@ public class LoginHelper {
 	        System.out.println("SQLException: " + ex.getMessage());
 	        System.out.println("SQLState: " + ex.getSQLState());
 	        System.out.println("VendorError: " + ex.getErrorCode());
-	    }
+	    } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false; 
 	}
 

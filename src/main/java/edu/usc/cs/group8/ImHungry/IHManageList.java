@@ -42,6 +42,13 @@ public class IHManageList extends HttpServlet {
 	 */
 	@SuppressWarnings({ "unchecked", "static-access" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		ArrayList<Recipe> recipes;
 		ArrayList<Restaurant> restaurants;
 		User currUser = new User();

@@ -79,7 +79,8 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body">
-	                <form class="form" role="form" autocomplete="off" id="formSignUp" novalidate="" method="POST">
+	                <form class="form" role="form" autocomplete="off" id="formSignUp" novalidate="" method="POST" action="IHLogin">
+	                	<input type="hidden" name="action" value="SignUp" />
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>

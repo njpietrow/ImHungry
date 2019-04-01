@@ -9,7 +9,8 @@
     <%@ page import="javax.servlet.http.HttpServlet" %>
     <%@ page import="javax.servlet.http.HttpServletRequest" %>
     <%@ page import="javax.servlet.http.HttpServletResponse" %>    
-    <%@ page import="java.util.*" %>
+    <%@ page import="java.util.*" %> 
+    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
@@ -120,13 +121,13 @@
 			      				//The following will get the corresponding singleton list object based on the current list user is at
 			      				ArrayList list = null;
 			      				if (list_name.equals("FAVORITES")){
-			      					list = ListManager.getInstance().getFavorites();
+			      					list = ((User)(session.getAttribute("user"))).getLists().getFavorites();
 			      				}
 			      				else if (list_name.equals("TO_EXPLORE")){
-			      					list = ListManager.getInstance().getToExplore();
+			      					list = ((User)(session.getAttribute("user"))).getLists().getToExplore();
 			      				}
 			      				else if (list_name.equals("DO_NOT_SHOW")){
-			      					list = ListManager.getInstance().getDoNotShow();
+			      					list = ((User)(session.getAttribute("user"))).getLists().getDoNotShow();
 			      				}
 			      				else return;
 			      				
