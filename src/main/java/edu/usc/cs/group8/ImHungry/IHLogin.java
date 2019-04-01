@@ -27,7 +27,6 @@ public class IHLogin extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getParameter("action");
-		System.out.println(action);
 		LoginHelper l = new LoginHelper();
 		if (action.equals("LogOut")) {
 			User currUser = new User();
@@ -53,7 +52,6 @@ public class IHLogin extends HttpServlet {
 			}
 		}
 		if (action.equals("SignUp")) {
-			System.out.println("Made it this far!");
 			String username = request.getParameter("uname_signup");
 			String password = request.getParameter("password_signup");
 			String password2 = request.getParameter("verify_uname_signup");
@@ -63,7 +61,6 @@ public class IHLogin extends HttpServlet {
 				response.getWriter().flush();
 			}
 			else {
-				System.out.println("Made it this far!");
 				User currUser = new User();
 				if (!l.login(username, password, currUser)) {
 					LoginHelper lh = new LoginHelper();
@@ -73,7 +70,6 @@ public class IHLogin extends HttpServlet {
 					request.getRequestDispatcher("search_page.jsp").forward(request, response);
 				} else {
 
-					System.out.println("Made it this far!");
 					response.setStatus(response.SC_BAD_GATEWAY);
 					response.getWriter().println("Account with that name already exists.");
 					response.getWriter().flush();

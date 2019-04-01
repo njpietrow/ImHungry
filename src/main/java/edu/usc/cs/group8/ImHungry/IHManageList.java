@@ -725,14 +725,19 @@ public class IHManageList extends HttpServlet {
 					st.setString(1, currUser.getName());
 					rs = st.executeQuery();
 					int list_size = -1; 
-					if (rs != null)
+					if (rs.next())
 					{
 						list_size = rs.getInt("list_size"); 
 					}
 					st.close();
 					list_size = list_size+1; 
+
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, r.getURL());
+					st.setString(2, r.getName());
+					st.execute();
+					
 					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,0,?)");
-				
 					st.setString(1, r.getURL());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);
@@ -740,6 +745,7 @@ public class IHManageList extends HttpServlet {
 				}
 				catch (SQLException ex) {
 			        // handle any errors
+					ex.printStackTrace();
 			        System.out.println("SQLException: " + ex.getMessage());
 			        System.out.println("SQLState: " + ex.getSQLState());
 			        System.out.println("VendorError: " + ex.getErrorCode());
@@ -774,8 +780,13 @@ public class IHManageList extends HttpServlet {
 					}
 					st.close();
 					list_size = list_size+1; 
+					
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, r.getURL());
+					st.setString(2, r.getName());
+					st.execute();
+					
 					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,1,?)");
-				
 					st.setString(1, r.getURL());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);
@@ -816,8 +827,13 @@ public class IHManageList extends HttpServlet {
 					}
 					st.close();
 					list_size = list_size+1; 
+					
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, r.getURL());
+					st.setString(2, r.getName());
+					st.execute();
+					
 					st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,2,?)");
-				
 					st.setString(1, r.getURL());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);
@@ -859,9 +875,14 @@ public class IHManageList extends HttpServlet {
 						list_size = rs.getInt("list_size"); 
 					}
 					st.close();
-					list_size = list_size+1; 
+					list_size = list_size+1;
+
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
+					st.setString(1, r.getId());
+					st.setString(2, r.getName());
+					st.execute();
+					
 					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,0,?)");
-				
 					st.setString(1, r.getId());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);
@@ -901,10 +922,15 @@ public class IHManageList extends HttpServlet {
 					{
 						list_size = rs.getInt("list_size"); 
 					}
+					
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
+					st.setString(1, r.getId());
+					st.setString(2, r.getName());
+					st.execute();
+					
 					st.close();
 					list_size = list_size+1; 
 					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,1,?)");
-				
 					st.setString(1, r.getId());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);
@@ -946,8 +972,13 @@ public class IHManageList extends HttpServlet {
 					}
 					st.close();
 					list_size = list_size+1; 
-					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
+					
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
+					st.setString(1, r.getId());
+					st.setString(2, r.getName());
+					st.execute();
 				
+					st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
 					st.setString(1, r.getId());
 					st.setString(2, currUser.getName());
 					st.setInt(3, list_size);

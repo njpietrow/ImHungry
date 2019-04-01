@@ -44,12 +44,12 @@ public class IHLoginTest {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("LogIn");
-		LG.doPost(request,response);
+		LG.service(request,response);
 		
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Waterfall");
 		when(request.getParameter("action")).thenReturn("LogIn");
-		LG.doPost(request,response);
+		LG.service(request,response);
 	}
 	
 	@Test
@@ -57,18 +57,18 @@ public class IHLoginTest {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("SignUp");
-		LG.doPost(request,response);
+		LG.service(request,response);
 		
 		when(request.getParameter("username")).thenReturn("CHailey");
 		when(request.getParameter("password")).thenReturn("imn0ttellingy0umypassw0rd");
 		when(request.getParameter("action")).thenReturn("SignUp");
-		LG.doPost(request,response);
+		LG.service(request,response);
 	}
 	
 	@Test
 	public void testLogOut() throws ServletException, IOException {
 		when(request.getParameter("action")).thenReturn("LogOut");
-		LG.doPost(request,response);
+		LG.service(request,response);
 	}
 
 }
