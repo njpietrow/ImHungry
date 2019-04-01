@@ -88,12 +88,12 @@
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Password</label>
-	                        <input type="password" class="form-control form-control-lg" name="password_signup" id="pwd1" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="password_signup" id="pwd_register" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password too!</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Verify Password</label>
-	                        <input type="password" class="form-control form-control-lg" name="verify_uname_signup" id="pwd1" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="verify_uname_signup" id="pwd_verify_register" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password again!</div>
 	                    </div>
 	                    <div class="form-group py-4">
@@ -127,12 +127,12 @@
 	                    <div class="form-group">
 	                        <!-- <a href="" class="float-right">New user?</a> -->
 	                        <label for="uname1">Username</label>
-	                        <input type="text" class="form-control form-control-lg" name="uname_login" id="uname2" required="">
+	                        <input type="text" class="form-control form-control-lg" name="uname_login" id="uname_login_id" required="">
 	                        <div class="invalid-feedback">Oops, you missed this one.</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>Password</label>
-	                        <input type="password" class="form-control form-control-lg" name="password_login" id="pwd2" required="" autocomplete="new-password">
+	                        <input type="password" class="form-control form-control-lg" name="password_login" id="password_login_id" required="" autocomplete="new-password">
 	                        <div class="invalid-feedback">Enter your password too!</div>
 	                    </div>
 	                    <div class="form-group py-4">
