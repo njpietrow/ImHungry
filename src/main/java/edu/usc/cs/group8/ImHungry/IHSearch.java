@@ -130,6 +130,7 @@ public class IHSearch extends HttpServlet {
 	 */
 	public void sortRecipes(ArrayList<Recipe> recipes, User currUser) {
 		recipes.sort((r1,r2) -> {
+			
 			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
 				return Integer.MIN_VALUE;
 		} else if (currUser.getLists().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
@@ -224,7 +225,7 @@ public class IHSearch extends HttpServlet {
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
 						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
-
+						
 						if (currUser == null) currUser = new User();
 						if (recipe == null || currUser.getLists().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;
@@ -305,6 +306,7 @@ public class IHSearch extends HttpServlet {
  */
 class RestaurantComparator implements Comparator<Restaurant>{
 	public int compare(edu.usc.cs.group8.ImHungry.Restaurant r1, edu.usc.cs.group8.ImHungry.Restaurant r2) {
+		
 		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
 			return Integer.MIN_VALUE;
 		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {

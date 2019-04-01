@@ -1,6 +1,6 @@
 package edu.usc.cs.group8.ImHungry;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+//import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-class IHLoginTest {
+public class IHLoginTest {
 	
 	@Mock
 	HttpServletRequest request;
@@ -39,7 +40,7 @@ class IHLoginTest {
     }
 
 	@Test
-	void testLogIn() throws ServletException, IOException {
+	public void testLogIn() throws ServletException, IOException {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("LogIn");
@@ -52,7 +53,7 @@ class IHLoginTest {
 	}
 	
 	@Test
-	void testSignUp() throws ServletException, IOException {
+	public void testSignUp() throws ServletException, IOException {
 		when(request.getParameter("username")).thenReturn("GJHalfond");
 		when(request.getParameter("password")).thenReturn("Scrum");
 		when(request.getParameter("action")).thenReturn("SignUp");
@@ -65,7 +66,7 @@ class IHLoginTest {
 	}
 	
 	@Test
-	void testLogOut() throws ServletException, IOException {
+	public void testLogOut() throws ServletException, IOException {
 		when(request.getParameter("action")).thenReturn("LogOut");
 		LG.doPost(request,response);
 	}
