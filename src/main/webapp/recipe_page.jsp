@@ -4,6 +4,7 @@
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Recipe" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.ListManager" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
     <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -92,13 +93,13 @@
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
 		    			int index = Integer.parseInt(request.getParameter("item_id"));
 		    			if (request.getParameter("list_id").equals("FAVORITES")){
-		    				recipe = (Recipe)ListManager.getInstance().getFavorites().get(index);
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
 		    			}
 		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
-		    				recipe = (Recipe)ListManager.getInstance().getToExplore().get(index);
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
 		    			}
 		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
-		    				recipe = (Recipe)ListManager.getInstance().getDoNotShow().get(index);
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
 		    			}
 		    		}
 		    		

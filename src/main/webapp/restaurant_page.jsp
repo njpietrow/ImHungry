@@ -4,6 +4,7 @@
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.ListManager" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
     <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -89,13 +90,13 @@
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
 		    			int index = Integer.parseInt(request.getParameter("item_id"));
 		    			if (request.getParameter("list_id").equals("FAVORITES")){
-		    				restaurant = (Restaurant)ListManager.getInstance().getFavorites().get(index);
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
 		    			}
 		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
-		    				restaurant = (Restaurant)ListManager.getInstance().getToExplore().get(index);
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
 		    			}
 		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
-		    				restaurant = (Restaurant)ListManager.getInstance().getDoNotShow().get(index);
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
 		    			}
 		    		}
 				//get all required information from the restaurant object
