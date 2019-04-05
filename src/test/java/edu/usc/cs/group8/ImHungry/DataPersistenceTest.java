@@ -13,8 +13,10 @@ public class DataPersistenceTest {
 		LoginHelper helper = new LoginHelper();
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
-		Recipe r = new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
-		currUser.getLists().addToFavorites(r);
+		Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		System.out.println(r);
+		r.setURL("http://localhost:8080/ImHungry/testrecipe.html");
+		currUser.addToFavorites(r);
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
 		System.out.println("curr: " + currUser.getLists().getFavorites());

@@ -39,6 +39,7 @@ public class RecipeGetter {
 		  content = scanner.next();
 		  scanner.close();
 		}catch ( Exception ex ) {
+			System.out.println(ex.getMessage());
 		    return null;
 		}
 		
@@ -50,7 +51,7 @@ public class RecipeGetter {
 		int jsonEnd = 0;
 		boolean jsonFlag = false;
 		String recipeJson = "";
-		
+		System.out.println(content);
 		/*
 		 * Every recipe json is of "@type":"Recipe" and runs until the closing HTML tag that begins <\
 		 * So we look for that chunk of text in a website
@@ -75,6 +76,8 @@ public class RecipeGetter {
 				break;
 			}
 		}
+		System.out.println(jsonStart + " " + jsonEnd + " " + content.length());
+		System.out.println(content.substring(jsonStart,jsonEnd));
 		return content.substring(jsonStart,jsonEnd);
 	}
 
@@ -93,6 +96,7 @@ public class RecipeGetter {
 		try{
 			bigRecipe = parser.parse(recipe).getAsJsonObject();
 		} catch (Exception e) {
+			System.out.println(recipe);
 			return null;
 		}
 		String name, prepTime, cookTime, img;

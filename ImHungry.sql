@@ -63,8 +63,6 @@ CREATE TABLE ListRecipes(
 
 	);
 	
-INSERT into Recipe(recipe_url, recipe_name) values (?,?);
-INSERT into ListRecipes(recipe_url, username, )
     
 INSERT into User(username,password,list_size) values ("GJHalfond","Scrum",0);
 INSERT into User(username,password,list_size) values ("KCalaway","Boopadoop",0);
