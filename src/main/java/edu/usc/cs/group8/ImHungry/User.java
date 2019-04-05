@@ -18,6 +18,11 @@ public class User {
 		// TODO Auto-generated method stub
 		 return mg; 
 	}
+	public void addRecipeToFavorites(Recipe r) {
+		mg.addToFavorites(r);
+		
+	}
+
 	public String getName() {
 		return name;
 	}
