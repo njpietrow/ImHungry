@@ -13,10 +13,13 @@ public class DataPersistenceTest {
 		LoginHelper helper = new LoginHelper();
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
-		currUser.getLists().addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
+		Recipe r = new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5));
+		currUser.getLists().addToFavorites(r);
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
-		assertTrue(currUser.getLists().favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
+		System.out.println("curr: " + currUser.getLists().getFavorites());
+		assertTrue(currUser.getLists().favoritesContains(r));
+
 		
 		
 	}
