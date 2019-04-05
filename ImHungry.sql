@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS ListRecipes;
 DROP TABLE IF EXISTS Restaurant;
 DROP TABLE IF EXISTS Recipe;
 DROP TABLE IF EXISTS QuickAccess;
+DROP TABLE IF EXISTS Groceries;
 
 CREATE TABLE User(
    username varchar(100) primary key not null,
@@ -60,9 +61,16 @@ CREATE TABLE ListRecipes(
      foreign key (list_id) references List(list_id) 
 
 	);
+    
+CREATE TABLE Groceries(
+   groceryID int (10) primary key auto_increment not null,
+   username varchar(100) not null,
+   ingredient varchar(10000) not null,
+   foreign key (username) references User(username)
+   );
+   
 	
 INSERT into Recipe(recipe_url, recipe_name) values (?,?);
-INSERT into ListRecipes(recipe_url, username, )
     
 INSERT into User(username,password,list_size) values ("GJHalfond","Scrum",0);
 INSERT into User(username,password,list_size) values ("KCalaway","Boopadoop",0);
@@ -70,6 +78,7 @@ Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");
 Insert into List(list_id,list_name) values (2,"Do Not Show");
 Insert into List(list_id,list_name) values (3,"Quick Access");
+
 
 
 Select * from User;
