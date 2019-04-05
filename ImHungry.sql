@@ -11,8 +11,6 @@ DROP TABLE IF EXISTS Restaurant;
 DROP TABLE IF EXISTS Recipe;
 DROP TABLE IF EXISTS QuickAccess;
 
-
-
 CREATE TABLE User(
    username varchar(100) primary key not null,
    password varchar(100) not null,
@@ -72,4 +70,3 @@ Insert into List(list_id,list_name) values (3,"Quick Access");
 
 Select * from User;
 SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
-SELECT list_size from User WHERE username='Bob';
