@@ -712,9 +712,44 @@ public class IHManageList extends HttpServlet {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		if (recipeID != null && !recipeID.equals("")) {
-			int index = Integer.parseInt(recipeID);
+			Recipe r = null;
+			for (int i = 0; i < recipes.size(); i++) {
+				if (recipes.get(i).getURL().equals(recipeID)) {
+					r = recipes.get(i);
+					break;
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getFavorites().size(); i++) {
+					if (currUser.getLists().getFavorites().get(i) instanceof Recipe) {
+						if (((Recipe)(currUser.getLists().getFavorites().get(i))).getURL().equals(recipeID)) {
+							r = (Recipe) currUser.getLists().getFavorites().get(i);
+							break;
+						}
+					}
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getToExplore().size(); i++) {
+					if (currUser.getLists().getToExplore().get(i) instanceof Recipe) {
+						if (((Recipe)(currUser.getLists().getToExplore().get(i))).getURL().equals(recipeID)) {
+							r = (Recipe) currUser.getLists().getToExplore().get(i);
+							break;
+						}
+					}
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getDoNotShow().size(); i++) {
+					if (currUser.getLists().getDoNotShow().get(i) instanceof Recipe) {
+						if (((Recipe)(currUser.getLists().getDoNotShow().get(i))).getURL().equals(recipeID)) {
+							r = (Recipe) currUser.getLists().getToExplore().get(i);
+							break;
+						}
+					}
+				}
+			}
 			if (listID.equals("FAVORITES")) {
-				Recipe r = recipes.get(index); 
 				currUser.getLists().addToFavorites(r);
 				try
 				{
@@ -763,7 +798,6 @@ public class IHManageList extends HttpServlet {
 				
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				Recipe r = recipes.get(index); 
 				currUser.getLists().addToToExplore(r);
 				try
 				{
@@ -810,7 +844,6 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				Recipe r = recipes.get(index); 
 				currUser.getLists().addToDoNotShow(r);
 				try
 				{
@@ -857,9 +890,44 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 		} if (restaurantID != null && !restaurantID.equals("")) {
-			int index = Integer.parseInt(restaurantID);
+			Restaurant r = null;
+			for (int i = 0; i < restaurants.size(); i++) {
+				if (restaurants.get(i).getId().equals(restaurantID)) {
+					r = restaurants.get(i);
+					break;
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getFavorites().size(); i++) {
+					if (currUser.getLists().getFavorites().get(i) instanceof Restaurant) {
+						if (((Restaurant)(currUser.getLists().getFavorites().get(i))).getId().equals(restaurantID)) {
+							r = (Restaurant) currUser.getLists().getFavorites().get(i);
+							break;
+						}
+					}
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getToExplore().size(); i++) {
+					if (currUser.getLists().getToExplore().get(i) instanceof Restaurant) {
+						if (((Restaurant)(currUser.getLists().getToExplore().get(i))).getId().equals(restaurantID)) {
+							r = (Restaurant) currUser.getLists().getFavorites().get(i);
+							break;
+						}
+					}
+				}
+			}
+			if (r == null) {
+				for (int i = 0; i < currUser.getLists().getDoNotShow().size(); i++) {
+					if (currUser.getLists().getDoNotShow().get(i) instanceof Restaurant) {
+						if (((Restaurant)(currUser.getLists().getDoNotShow().get(i))).getId().equals(restaurantID)) {
+							r = (Restaurant) currUser.getLists().getFavorites().get(i);
+							break;
+						}
+					}
+				}
+			}
 			if (listID.equals("FAVORITES")) {
-				Restaurant r = restaurants.get(index);
 				currUser.getLists().addToFavorites(r);
 				try
 				{
@@ -907,7 +975,6 @@ public class IHManageList extends HttpServlet {
 				
 			}
 			if (listID.equals("TO_EXPLORE")) {
-				Restaurant r = restaurants.get(index);
 				currUser.getLists().addToToExplore(r);
 				try
 				{
@@ -955,7 +1022,6 @@ public class IHManageList extends HttpServlet {
 				
 			}
 			if (listID.equals("DO_NOT_SHOW")) {
-				Restaurant r = restaurants.get(index);
 				currUser.getLists().addToDoNotShow(r);
 				try
 				{

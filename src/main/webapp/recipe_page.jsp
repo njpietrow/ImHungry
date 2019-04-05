@@ -20,6 +20,7 @@
     <title>Recipe Page</title>
   </head>
   <body id="print_preview">
+  <% Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>()); %>
 	 <!-- Required Links -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -71,7 +72,7 @@
 				        	list_id = "DO_NOT_SHOW"; 
 				        }
 					 //send to servlet
-				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id="+<%=request.getParameter("recipe_id")%>+"&restaurant_id=";	
+				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id="+<%=recipe.getURL()%>+"&restaurant_id=";	
 				    };
 	        	</script>
 	        </div> 
@@ -79,7 +80,7 @@
         	<div class="recipe_information" id="all_stuff_on_page">	
 		    	<%
 		    	//Creating a new recipe object
-		    		Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>());
+		    		
 		    		
 				//grab the recipe id
 		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){

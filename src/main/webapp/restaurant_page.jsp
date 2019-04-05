@@ -19,6 +19,7 @@
     <title>Restaurant Page</title>
   </head>
   <body>
+  <% Restaurant restaurant = new Restaurant("",""); %>
 	 <!-- Required Links -->
     	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -69,14 +70,14 @@
 						else {
 							list_id = "DO_NOT_SHOW"; 
 						}
-						location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=request.getParameter("restaurant_id") %>;	
+						location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=restaurant.getId() %>;	
 					    };
 				</script>
 	        </div> 
         	<div class="restaurant_information">
 		    	<%
 		    	//Creating a new recipe object
-			        Restaurant restaurant = new Restaurant("","");
+			        
 		    		
 				//get the appropriate restaurant id
 		    		if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
