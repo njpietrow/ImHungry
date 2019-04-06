@@ -101,7 +101,7 @@ public class IHSearchTest {
  
         IHS.doGet(request, response);
         String result = sw.getBuffer().toString().trim();
-        //assertEquals(result, new String("Full Name: Vinod Kashyap"));
+        
     }
 	
 	@Test
@@ -174,8 +174,12 @@ public class IHSearchTest {
 	
 	@Test
 	public void testRadiusLimitsSearch() throws Exception {
-		//TODO
-	
+		IHSearch IHS = new IHSearch();
+		User currUser = new User("GJHalfond", new ListManager());
+		ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", "1",currUser);
+		IHS.sortRestaurants(restaurants,currUser);
+		assertEquals(restaurants.size(),0);
+
 	}
 	
 	
