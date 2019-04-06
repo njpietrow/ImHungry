@@ -153,6 +153,9 @@ public class IHSearchTest {
        User currUser = new User("GJHalfond", new ListManager());
        ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", "5000",currUser);
        IHS.sortRestaurants(restaurants,currUser);
+       System.out.println(restaurants);
+       for (int i = 0; i < restaurants.size(); i++)
+    	   System.out.print(restaurants.get(i) + " " );
        assertEquals(restaurants.size(),20);
        for(int i =0;i<restaurants.size()-1; i++ ) {
     	   assertTrue(restaurants.get(i).getDriveTime()<=restaurants.get(i+1).getDriveTime());

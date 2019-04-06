@@ -81,5 +81,5 @@ Insert into List(list_id,list_name) values (3,"Quick Access");
 
 
 
-Select * from User;
-SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
+#Select * from User;
+#SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";

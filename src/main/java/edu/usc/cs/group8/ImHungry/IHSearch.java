@@ -168,6 +168,8 @@ public class IHSearch extends HttpServlet {
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
 		
+			System.out.println(url);
+		
 			String json_string = readWebsite(url);
 			if (json_string == null) return null;
 
