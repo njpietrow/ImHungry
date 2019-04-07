@@ -15,6 +15,7 @@ public class ListManager {
 	private ArrayList<Result> toExplore;
 	private ArrayList<Result> doNotShow;
 	private ArrayList<Query> quickAccess;
+	private ArrayList<String> groceryList; 
 	
 	private static ListManager singleton;
 	
@@ -23,6 +24,7 @@ public class ListManager {
 		toExplore = new ArrayList<Result>();
 		doNotShow = new ArrayList<Result>();
 		quickAccess = new ArrayList<Query>();
+		groceryList = new ArrayList<String>();
 	}
 	
 	/*
@@ -143,5 +145,79 @@ public class ListManager {
 	
 	public void setQuickAccess(ArrayList<Query> quickAccess) {
 		this.quickAccess = quickAccess;
+	}
+
+	
+	public void addToGroceryList(String r) {
+		// TODO Auto-generated method stub
+		groceryList.add(r);
+	}
+	public void addToGroceryList(Recipe r) {
+		ArrayList<String> ingreds = r.getIngredients();
+		for (int i = 0; i < ingreds.size(); i++)
+			groceryList.add(ingreds.get(i));
+	}
+
+	public boolean groceryListContains(String res) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < groceryList.size(); i++)
+		{
+			if (groceryList.get(i).equals(res))
+				return true; 
+		}
+		return false; 
+	}
+
+	public boolean removeFromGroceryList(Recipe r) {
+		if (groceryList.size() < 1)
+			return false; 
+		
+		ArrayList<String> ingreds = r.getIngredients();
+		if (groceryList.size() < ingreds.size())
+			return false; 
+		if (ingreds.size() == 0)
+			return true; 
+		for (int i = groceryList.size()-1; i >= 0; i--)
+		{
+			for (int j = ingreds.size()-1; j >= 0; j--)
+			{
+				if (groceryList.get(i).equals(ingreds.get(j)))
+				{
+					groceryList.remove(i);
+					ingreds.remove(j);
+					if (ingreds.size() == 0)
+						return true; 
+					break; 
+				}
+			}
+		}
+		return false; 
+		
+	}
+
+	public boolean removeFromGroceryList(String res) {
+		if (groceryList.size() < 1)
+			return false; 
+		for (int i = 0; i < groceryList.size(); i++)
+		{
+			if (groceryList.get(i).equals(res))
+			{
+				groceryList.remove(i);
+				return true; 
+			}
+		}
+		return false; 
+		
+	}
+
+	public void clearGroceryList() {
+		while(groceryList.size() > 0)
+		{
+			groceryList.remove(0);
+		}
+	}
+
+	public ArrayList<String> getGroceries() {
+		return groceryList; 
 	}
 }

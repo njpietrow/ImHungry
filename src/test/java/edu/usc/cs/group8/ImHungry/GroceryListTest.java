@@ -1,7 +1,6 @@
 package edu.usc.cs.group8.ImHungry;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class GroceryListTest {
 		assertTrue(user.getLists().groceryListContains("Like 48 red hots"));
 		assertFalse(user.getLists().groceryListContains("Green beans"));
 		ArrayList<String> moreIngredients = new ArrayList<String>();
-		moreIngredients.add("Green beans"));
+		moreIngredients.add("Green beans");
 		Recipe greenBeans = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",moreIngredients,new ArrayList<String>());
 		assertFalse(user.getLists().groceryListContains("Green beans"));
 		user.getLists().addToGroceryList(greenBeans);
@@ -44,7 +43,7 @@ public class GroceryListTest {
 		Recipe gross = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",ingredients,new ArrayList<String>());
 		user.getLists().addToGroceryList(gross);
 		ArrayList<String> moreIngredients = new ArrayList<String>();
-		moreIngredients.add("Green beans"));
+		moreIngredients.add("Green beans");
 		moreIngredients.add("Like 48 red hots");
 		Recipe greenBeans = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",moreIngredients,new ArrayList<String>());
 		user.getLists().addToGroceryList(greenBeans);
@@ -60,6 +59,7 @@ public class GroceryListTest {
 		
 	}
 	
+	@Test
 	public void clearListTest() {
 		User user = new User("Buster",new ListManager());
 		ArrayList<String> ingredients = new ArrayList<String>();
@@ -71,7 +71,7 @@ public class GroceryListTest {
 		Recipe gross = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",ingredients,new ArrayList<String>());
 		user.getLists().addToGroceryList(gross);
 		ArrayList<String> moreIngredients = new ArrayList<String>();
-		moreIngredients.add("Green beans"));
+		moreIngredients.add("Green beans");
 		moreIngredients.add("Like 48 red hots");
 		Recipe greenBeans = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",moreIngredients,new ArrayList<String>());
 		user.getLists().addToGroceryList(greenBeans);
