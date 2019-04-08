@@ -1,5 +1,10 @@
 package edu.usc.cs.group8.ImHungry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /*
@@ -151,11 +156,71 @@ public class ListManager {
 	public void addToGroceryList(String r) {
 		// TODO Auto-generated method stub
 		groceryList.add(r);
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;	
+		try
+		{
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                    "user=root&password=root&useSSL=false");
+			st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
+			String username = "";
+			st.setString(1, username);
+			st.setString(2, r);
+			st.execute();
+		}
+		catch (SQLException ex) {
+	        // handle any errors
+	        System.out.println("SQLException: " + ex.getMessage());
+	        System.out.println("SQLState: " + ex.getSQLState());
+	        System.out.println("VendorError: " + ex.getErrorCode());
+	    }
+		finally {
+			try {
+				conn.close();
+				st.close();
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 	}
 	public void addToGroceryList(Recipe r) {
 		ArrayList<String> ingreds = r.getIngredients();
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		for (int i = 0; i < ingreds.size(); i++)
+		{
 			groceryList.add(ingreds.get(i));
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                    "user=root&password=root&useSSL=false");
+				st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
+				String username = "";
+				st.setString(1, username);
+				st.setString(2, ingreds.get(i));
+				st.execute();
+			}
+			catch (SQLException ex) {
+		        // handle any errors
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
+			finally {
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
+		}
 	}
 
 	public boolean groceryListContains(String res) {
@@ -169,6 +234,9 @@ public class ListManager {
 	}
 
 	public boolean removeFromGroceryList(Recipe r) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		if (groceryList.size() < 1)
 			return false; 
 		
@@ -183,6 +251,32 @@ public class ListManager {
 			{
 				if (groceryList.get(i).equals(ingreds.get(j)))
 				{
+					try
+					{
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+			                    "user=root&password=root&useSSL=false");
+						st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
+						String username = "";
+						st.setString(1, username);
+						st.setString(2, ingreds.get(i));
+						st.execute();
+					}
+					catch (SQLException ex) {
+				        // handle any errors
+				        System.out.println("SQLException: " + ex.getMessage());
+				        System.out.println("SQLState: " + ex.getSQLState());
+				        System.out.println("VendorError: " + ex.getErrorCode());
+				    }
+					finally {
+						try {
+							conn.close();
+							st.close();
+							rs.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
 					groceryList.remove(i);
 					ingreds.remove(j);
 					if (ingreds.size() == 0)
@@ -196,12 +290,41 @@ public class ListManager {
 	}
 
 	public boolean removeFromGroceryList(String res) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		if (groceryList.size() < 1)
 			return false; 
 		for (int i = 0; i < groceryList.size(); i++)
 		{
 			if (groceryList.get(i).equals(res))
 			{
+				try
+				{
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+		                    "user=root&password=root&useSSL=false");
+					st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
+					String username = "";
+					st.setString(1, username);
+					st.setString(2, res);
+					st.execute();
+				}
+				catch (SQLException ex) {
+			        // handle any errors
+			        System.out.println("SQLException: " + ex.getMessage());
+			        System.out.println("SQLState: " + ex.getSQLState());
+			        System.out.println("VendorError: " + ex.getErrorCode());
+			    }
+				finally {
+					try {
+						conn.close();
+						st.close();
+						rs.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
 				groceryList.remove(i);
 				return true; 
 			}

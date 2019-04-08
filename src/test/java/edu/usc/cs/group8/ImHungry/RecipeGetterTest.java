@@ -24,6 +24,7 @@ public class RecipeGetterTest {
 		assertEquals(RecipeGetter.parseRecipe(tsoJson).getName(),"General Tso's Chicken");
 		
 		String harissaJson = RecipeGetter.readRecipe("https://www.thespruceeats.com/classic-moroccan-harira-soup-2394920");
+		System.out.println(harissaJson);
 		assertEquals(harissaJson.charAt(0), '{');
 		assertEquals(harissaJson.charAt(harissaJson.length()-1), '}');
 		assertEquals(RecipeGetter.parseRecipe(harissaJson).getName(),"Classic Moroccan Harira: Tomato, Lentil, and Chickpea Soup");
