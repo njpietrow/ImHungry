@@ -42,6 +42,7 @@ public class LoginHelper {
 	        TreeMap<Integer, Restaurant> doNotShowRestaurants = new TreeMap<Integer, Restaurant>();
 	        TreeMap<Integer, Recipe>  doNotShowRecipes = new  TreeMap<Integer, Recipe> ();
 	        ArrayList<Query> quickAccess = new ArrayList<Query>();
+	        ArrayList<String> groceries = new ArrayList<String>();
 	        
 	        st = conn.prepareStatement("SELECT * FROM ListRestaurants l1, Restaurant r where username=? AND l1.restaurant_id = r.restaurant_id");
 	        st.setString(1, username);
@@ -101,6 +102,16 @@ public class LoginHelper {
 	        	
 	        }
 	        
+	        st = conn.prepareStatement("SELECT * FROM Groceries where username=?");
+	        st.setString(1, username);
+	        rs = st.executeQuery();
+	        while(rs.next())
+	        {
+	        	String ingredient = rs.getString("ingredient");
+	        	currUser.addToGroceryList(ingredient);
+	        	
+	        }
+	        
 	        TreeMap<Integer,Result> favorites = new TreeMap<Integer,Result>();
 	        favorites.putAll(favoriteRecipes);
 	        favorites.putAll(favoriteRestaurants);
@@ -117,6 +128,7 @@ public class LoginHelper {
 	        currUser.getLists().setDoNotShow(new ArrayList<Result>(doNotShow.values()));
 	        
 	        currUser.getLists().setQuickAccess(quickAccess);
+	        
 	        
 	        return true;
 	        // Do something with the Connection
