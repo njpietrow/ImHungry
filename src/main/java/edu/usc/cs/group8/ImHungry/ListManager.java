@@ -1,4 +1,4 @@
-package edu.usc.cs.group8.ImHungry;
+/** package edu.usc.cs.group8.ImHungry;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Author: Kevin Calaway
  * USC ID: 9724507315
  * Email: calaway@usc.edu
- */
+ 
 public class ListManager {
 	
 	private ArrayList<Result> favorites;
@@ -34,7 +34,7 @@ public class ListManager {
 	
 	/*
 	 * There is one list manager for the whole website.
-	 */
+	 
 	public static ListManager getInstance() {
 		if (singleton == null) {
 			singleton = new ListManager();
@@ -344,3 +344,5 @@ public class ListManager {
 		return groceryList; 
 	}
 }
+
+*/

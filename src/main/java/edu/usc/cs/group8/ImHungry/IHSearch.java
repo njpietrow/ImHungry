@@ -115,9 +115,9 @@ public class IHSearch extends HttpServlet {
 	public void sortRestaurants(ArrayList<Restaurant> restaurants, User currUser) {
 		
 		restaurants.sort((r1,r2) -> {
-			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+			if (currUser.getLists().favoritesContains(r1) && !currUser.getLists().favoritesContains(r2)) {
 			return Integer.MIN_VALUE;
-		} else if (currUser.getLists().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+		} else if (currUser.getLists().favoritesContains(r2) && !currUser.getLists().favoritesContains(r1)) {
 			return Integer.MAX_VALUE;
 		}
 		else return r1.getDriveTime() - r2.getDriveTime();});
@@ -130,9 +130,9 @@ public class IHSearch extends HttpServlet {
 	public void sortRecipes(ArrayList<Recipe> recipes, User currUser) {
 		recipes.sort((r1,r2) -> {
 			
-			if (currUser.getLists().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
+			if (currUser.getLists().favoritesContains(r1) && !currUser.getLists().favoritesContains(r2)) {
 				return Integer.MIN_VALUE;
-		} else if (currUser.getLists().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
+		} else if (currUser.getLists().favoritesContains(r2) && !currUser.getLists().favoritesContains(r1)) {
 			return Integer.MAX_VALUE;
 		}
 		if (r1.getPrepTime() == 0) {
@@ -300,45 +300,4 @@ public class IHSearch extends HttpServlet {
     }
 
 }
-
-/*
- * If a restaurant is in Favorites, it appears first;
- * Otherwise, the list is sorted by drive time, lowest first.
- */
-class RestaurantComparator implements Comparator<Restaurant>{
-	public int compare(edu.usc.cs.group8.ImHungry.Restaurant r1, edu.usc.cs.group8.ImHungry.Restaurant r2) {
-		
-		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
-			return Integer.MIN_VALUE;
-		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
-			return Integer.MAX_VALUE;
-		}
-		else return r1.getDriveTime() - r2.getDriveTime();
-	}
-}
-
-/*
- * If a recipe is in Favorites, it appears first;
- * Otherwise, the list is sorted by prep time, lowest first.
- * 0 was used as a flag to mean that the recipe had no listed prep time,
- * and Group 8 decided that no prep time should be sorted behind rather
- * than ahead of recipes with listed prep times.
- */
-class RecipeComparator implements Comparator<Recipe>{
-	public int compare(edu.usc.cs.group8.ImHungry.Recipe r1, edu.usc.cs.group8.ImHungry.Recipe r2) {
-		if (ListManager.getInstance().favoritesContains(r1) && !ListManager.getInstance().favoritesContains(r2)) {
-			return Integer.MIN_VALUE;
-		} else if (ListManager.getInstance().favoritesContains(r2) && !ListManager.getInstance().favoritesContains(r1)) {
-			return Integer.MAX_VALUE;
-		}
-		if (r1.getPrepTime() == 0) {
-			return Integer.MAX_VALUE;
-		}
-		if (r2.getPrepTime() == 0) {
-			return Integer.MIN_VALUE;
-		}
-		else return r1.getPrepTime() - r2.getPrepTime();
-	}
-}
-
 

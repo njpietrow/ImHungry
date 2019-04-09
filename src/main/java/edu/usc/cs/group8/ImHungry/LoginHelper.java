@@ -150,7 +150,8 @@ public class LoginHelper {
 			return false;
 		}
 		currUser.setName("");
-		currUser.setLists(new ListManager());
+		currUser.clearGroceryList();
+		currUser.reset();
 		return true;
 		
 	}

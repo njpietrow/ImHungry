@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class User {
 	public String name; 
-	public ListManager mg; 
 	
 	private ArrayList<Result> favorites;
 	private ArrayList<Result> toExplore;
@@ -17,14 +16,24 @@ public class User {
 	private ArrayList<Query> quickAccess;
 	private ArrayList<String> groceryList; 
 
-	public User(String name, ListManager manage)
+	public User(String name, ArrayList<Result> favorites, ArrayList<Result> toExplore, ArrayList<Result> doNotShow, ArrayList<Query> quickAccess, ArrayList<String> groceryList)
 	{
 		this.name = name;
-		favorites = manage.getFavorites();
-		toExplore = manage.getToExplore();
-		doNotShow = manage.getDoNotShow();
-		quickAccess = manage.getQuickAccess();
-		groceryList = manage.getGroceries();
+		this.favorites = favorites;
+		this.toExplore = toExplore;
+		this.doNotShow = doNotShow;
+		this.quickAccess = quickAccess;
+		this.groceryList = groceryList;
+	}
+	
+	public User(String name)
+	{
+		name = name;
+		favorites = new ArrayList<Result>();
+		toExplore = new ArrayList<Result>();
+		doNotShow = new ArrayList<Result>();
+		quickAccess = new ArrayList<Query>();
+		groceryList = new ArrayList<String>();
 	}
 	
 	public User()
@@ -363,10 +372,7 @@ public class User {
 	{
 		name = newname; 
 	}
-	public void setLists(ListManager mg)
-	{
-		this.mg = mg; 
-	}
+	
 	public Query getLastSearch() {
 		if (quickAccess.isEmpty()) {
 			return null;
