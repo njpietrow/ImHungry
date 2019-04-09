@@ -381,35 +381,186 @@ public class User {
 	}
 	
 	public void removeFromFavorites(Result r) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;	
 		if (favoritesContains(r))
+		{
+		
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                        "user=root&password=root&useSSL=false");
+				if (r instanceof Restaurant)
+				{
+					String id = ((Restaurant) r).getId();
+					
+					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
+							+ "and list_id=?");
+					st.setString(1, id);	
+					st.setString(2, name);
+					st.setString(3, "0");
+					st.execute();
+				}
+				else if (r instanceof Recipe)
+				{
+					String url = ((Recipe) r).getURL();
+					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
+							+ "and list_id= ?");
+					st.setString(1, url);
+					st.setString(2,  name);
+					st.setString(3, "0");
+					st.execute();
+				}				
+			}
+			catch (SQLException ex)
+			{
+				ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+			}
+			finally
+			{
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
 			favorites.remove(r);
+		}
 	}
 	
 	public void removeFromToExplore(Result r) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;	
 		if (toExploreContains(r)){
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                        "user=root&password=root&useSSL=false");
+				if (r instanceof Restaurant)
+				{
+					String id = ((Restaurant) r).getId();
+					
+					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
+							+ "and list_id=?");
+					st.setString(1, id);	
+					st.setString(2, name);
+					st.setString(3, "1");
+					st.execute();
+				}
+				else if (r instanceof Recipe)
+				{
+					String url = ((Recipe) r).getURL();
+					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
+							+ "and list_id= ?");
+					st.setString(1, url);
+					st.setString(2,  name);
+					st.setString(3, "1");
+					st.execute();
+				}				
+			}
+			catch (SQLException ex)
+			{
+				ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+			}
+			finally
+			{
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}				
 			toExplore.remove(r);
 		}
 	}
 	
 	public void removeFromDoNotShow(Result r) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;	
 		if (doNotShowContains(r)) {
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                        "user=root&password=root&useSSL=false");
+				if (r instanceof Restaurant)
+				{
+					String id = ((Restaurant) r).getId();
+					
+					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
+							+ "and list_id=?");
+					st.setString(1, id);	
+					st.setString(2, name);
+					st.setString(3, "2");
+					st.execute();
+				}
+				else if (r instanceof Recipe)
+				{
+					String url = ((Recipe) r).getURL();
+					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
+							+ "and list_id= ?");
+					st.setString(1, url);
+					st.setString(2,  name);
+					st.setString(3, "2");
+					st.execute();
+				}				
+			}
+			catch (SQLException ex)
+			{
+				ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+			}
+			finally
+			{
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}				
 			doNotShow.remove(r);
 		}
 	}
 	
 	public void removeFromFavorites(int index){
 		if (favorites.size() > index)
+		{
+			
 			favorites.remove(index);
+		}
 	}
 	
 	public void removeFromToExplore(int index){
 		if (toExplore.size() > index)
+		{
 			toExplore.remove(index);
+		}
 	}
 	
 	public void removeFromDoNotShow(int index){
 		if (doNotShow.size() > index)
+		{
 			doNotShow.remove(index);
+		}
 	}
 	
 	public boolean favoritesContains(Result r) {
@@ -660,6 +811,37 @@ public class User {
 	}
 
 	public void clearGroceryList() {
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try
+		{
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+                    "user=root&password=root&useSSL=false");
+			st = conn.prepareStatement("DELETE FROM Groceries WHERE username = ? "
+					+ "and list_id= ?");
+			st.setString(1,name);
+			st.execute();
+					
+		}
+		catch (SQLException ex)
+		{
+			ex.printStackTrace();
+	        System.out.println("SQLException: " + ex.getMessage());
+	        System.out.println("SQLState: " + ex.getSQLState());
+	        System.out.println("VendorError: " + ex.getErrorCode());
+		}
+		finally
+		{
+			try {
+				conn.close();
+				st.close();
+				rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
 		while(groceryList.size() > 0)
 		{
 			groceryList.remove(0);
