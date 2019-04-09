@@ -28,7 +28,7 @@ public class RestaurantGetter {
 
 		System.out.println(url);
 			String json_string = readWebsite(url);
-
+			System.out.println(json_string);
 			if (json_string == null) return null; 
 
 			//Parse the JSON object to retrieve necessary Restaurant info

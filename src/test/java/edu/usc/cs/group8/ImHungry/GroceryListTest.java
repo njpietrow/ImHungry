@@ -10,7 +10,7 @@ public class GroceryListTest {
 
 	@Test
 	public void addToListTest() {
-		User user = new User("Buster",new ListManager());
+		User user = new User("Buster");
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");
@@ -33,7 +33,7 @@ public class GroceryListTest {
 	
 	@Test
 	public void removeFromListTest() {
-		User user = new User("Buster",new ListManager());
+		User user = new User("Buster");
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");
@@ -61,7 +61,7 @@ public class GroceryListTest {
 	
 	@Test
 	public void clearListTest() {
-		User user = new User("Buster",new ListManager());
+		User user = new User("Buster");
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");

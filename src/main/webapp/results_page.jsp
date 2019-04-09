@@ -125,7 +125,7 @@
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
 									String address = restaurant.getAddress();
-									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= i%>"><%=restaurant_name%></a> </th> <th>Drive Time: <%=driveTime%> min </th> <th><%=address %> </th> <th><%
+									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= restaurant.getId()%>"><%=restaurant_name%></a> </th> <th>Drive Time: <%=driveTime%> min </th> <th><%=address %> </th> <th><%
 											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
 												$
 											<% } %></th></tr> <%
@@ -158,7 +158,7 @@
 										prepTime = "No prep time available.";
 									}
 									else prepTime = recipe.getPrepTime() + " min";
-									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= i%>"><%=recipe_name%></a></th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th> </tr> <%
+									%> <tr><th><a href="recipe_page.jsp?recipe_id=<%= recipe.getURL()%>"><%=recipe_name%></a></th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th> </tr> <%
 								}
 								%>
 							</table>

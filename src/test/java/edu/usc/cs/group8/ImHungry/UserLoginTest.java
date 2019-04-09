@@ -37,6 +37,11 @@ public class UserLoginTest {
 		assertTrue(helper.login(username,rightPassword,currUser));
 	}
 	
-	
+	@Test
+	public void getValues() {
+		LoginHelper helper = new LoginHelper();
+		System.out.println(helper.encrypt("Scrum"));
+		System.out.println(helper.encrypt("Boopadoop"));
+	}
 
 }
