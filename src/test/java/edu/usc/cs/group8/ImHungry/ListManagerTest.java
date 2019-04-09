@@ -8,71 +8,68 @@ public class ListManagerTest {
 
 	@Test
 	public void testFavorites() {
-		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1", "5000",currUser).get(0);
-		ListManager.getInstance().addToFavorites(myRecipe);
-		ListManager.getInstance().addToFavorites(myRestaurant);
-		assertEquals(ListManager.getInstance().getFavorites().size(),2);
-		assertEquals(ListManager.getInstance().getFavorites().get(0), myRecipe);
-		assertEquals(ListManager.getInstance().getFavorites().get(1), myRestaurant);
-		assertTrue(ListManager.getInstance().favoritesContains(myRecipe));
-		assertTrue(ListManager.getInstance().favoritesContains(myRestaurant));
-		ListManager.getInstance().removeFromFavorites(0);
-		ListManager.getInstance().removeFromFavorites(myRestaurant);
-		ListManager.getInstance().removeFromFavorites(20);
-		ListManager.getInstance().removeFromFavorites(myRecipe);
-		assertEquals(ListManager.getInstance().getFavorites().size(),0);
-		assertFalse(ListManager.getInstance().favoritesContains(myRecipe));
-		assertFalse(ListManager.getInstance().favoritesContains(myRestaurant));
+		currUser.addToFavorites(myRecipe);
+		currUser.addToFavorites(myRestaurant);
+		assertEquals(currUser.getFavorites().size(),2);
+		assertEquals(currUser.getFavorites().get(0), myRecipe);
+		assertEquals(currUser.getFavorites().get(1), myRestaurant);
+		assertTrue(currUser.favoritesContains(myRecipe));
+		assertTrue(currUser.favoritesContains(myRestaurant));
+		currUser.removeFromFavorites(0);
+		currUser.removeFromFavorites(myRestaurant);
+		currUser.removeFromFavorites(20);
+		currUser.removeFromFavorites(myRecipe);
+		assertEquals(currUser.getFavorites().size(),0);
+		assertFalse(currUser.favoritesContains(myRecipe));
+		assertFalse(currUser.favoritesContains(myRestaurant));
 	}
 	
 	@Test
 	public void testToExplore() {
-		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1","5000", currUser).get(0);
-		ListManager.getInstance().addToToExplore(myRecipe);
-		ListManager.getInstance().addToToExplore(myRestaurant);
-		assertEquals(ListManager.getInstance().getToExplore().size(),2);
-		assertEquals(ListManager.getInstance().getToExplore().get(0), myRecipe);
-		assertEquals(ListManager.getInstance().getToExplore().get(1), myRestaurant);
-		assertTrue(ListManager.getInstance().toExploreContains(myRecipe));
-		assertTrue(ListManager.getInstance().toExploreContains(myRestaurant));
-		ListManager.getInstance().removeFromToExplore(0);
-		ListManager.getInstance().removeFromToExplore(myRestaurant);
-		ListManager.getInstance().removeFromToExplore(20);
-		ListManager.getInstance().removeFromToExplore(myRecipe);
-		assertEquals(ListManager.getInstance().getToExplore().size(),0);
-		assertFalse(ListManager.getInstance().toExploreContains(myRecipe));
-		assertFalse(ListManager.getInstance().toExploreContains(myRestaurant));
+		currUser.addToToExplore(myRecipe);
+		currUser.addToToExplore(myRestaurant);
+		assertEquals(currUser.getToExplore().size(),2);
+		assertEquals(currUser.getToExplore().get(0), myRecipe);
+		assertEquals(currUser.getToExplore().get(1), myRestaurant);
+		assertTrue(currUser.toExploreContains(myRecipe));
+		assertTrue(currUser.toExploreContains(myRestaurant));
+		currUser.removeFromToExplore(0);
+		currUser.removeFromToExplore(myRestaurant);
+		currUser.removeFromToExplore(20);
+		currUser.removeFromToExplore(myRecipe);
+		assertEquals(currUser.getToExplore().size(),0);
+		assertFalse(currUser.toExploreContains(myRecipe));
+		assertFalse(currUser.toExploreContains(myRestaurant));
 	}
 	
 	@Test
 	public void testDoNotShow() {
-		ListManager.getInstance().reset();
 		IHSearch search = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1","5000", currUser).get(0);
-		ListManager.getInstance().addToDoNotShow(myRecipe);
-		ListManager.getInstance().addToDoNotShow(myRestaurant);
-		assertEquals(ListManager.getInstance().getDoNotShow().size(),2);
-		assertEquals(ListManager.getInstance().getDoNotShow().get(0), myRecipe);
-		assertEquals(ListManager.getInstance().getDoNotShow().get(1), myRestaurant);
-		assertTrue(ListManager.getInstance().doNotShowContains(myRecipe));
-		assertTrue(ListManager.getInstance().doNotShowContains(myRestaurant));
-		ListManager.getInstance().removeFromDoNotShow(0);
-		ListManager.getInstance().removeFromDoNotShow(myRestaurant);
-		ListManager.getInstance().removeFromDoNotShow(20);
-		ListManager.getInstance().removeFromDoNotShow(myRecipe);
-		assertEquals(ListManager.getInstance().getDoNotShow().size(),0);
-		assertFalse(ListManager.getInstance().doNotShowContains(myRecipe));
-		assertFalse(ListManager.getInstance().doNotShowContains(myRestaurant));
+		currUser.addToDoNotShow(myRecipe);
+		currUser.addToDoNotShow(myRestaurant);
+		assertEquals(currUser.getDoNotShow().size(),2);
+		assertEquals(currUser.getDoNotShow().get(0), myRecipe);
+		assertEquals(currUser.getDoNotShow().get(1), myRestaurant);
+		assertTrue(currUser.doNotShowContains(myRecipe));
+		assertTrue(currUser.doNotShowContains(myRestaurant));
+		currUser.removeFromDoNotShow(0);
+		currUser.removeFromDoNotShow(myRestaurant);
+		currUser.removeFromDoNotShow(20);
+		currUser.removeFromDoNotShow(myRecipe);
+		assertEquals(currUser.getDoNotShow().size(),0);
+		assertFalse(currUser.doNotShowContains(myRecipe));
+		assertFalse(currUser.doNotShowContains(myRestaurant));
 	}
 
 }

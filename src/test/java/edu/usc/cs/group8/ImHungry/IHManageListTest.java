@@ -21,7 +21,7 @@ public class IHManageListTest {
 		
 		
 		IHSearch search = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		currUser.getLists().reset();
 		HttpServletRequest request = mock(HttpServletRequest.class);       
         HttpServletResponse response = mock(HttpServletResponse.class);
@@ -49,7 +49,7 @@ public class IHManageListTest {
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=TO_EXPLORE")).thenReturn(RD);
 		when(request.getRequestDispatcher("list_management_page.jsp?list_id=DO_NOT_SHOW")).thenReturn(RD);
         IHManageList manager = new IHManageList();
-        when(request.getSession().getAttribute("user")).thenReturn(new User("GJHalfond",new ListManager()));
+        when(request.getSession().getAttribute("user")).thenReturn(new User("GJHalfond"));
         manager.doGet(request, response);
         
         when(request.getParameter("action")).thenReturn("MOVE");
@@ -148,7 +148,7 @@ public class IHManageListTest {
 
 	@Test
 	public void testAddToList() {
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> testRecipes = search.doRecipeSearch("falafel", "3",currUser);
@@ -177,7 +177,7 @@ public class IHManageListTest {
 	
 	@Test
 	public void testRemoveFromList() {
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		currUser.getLists().reset();
 		IHSearch search = new IHSearch();
 		ArrayList<Recipe> oldRecipes = search.doRecipeSearch("falafel", "3",currUser);
@@ -217,7 +217,7 @@ public class IHManageListTest {
 		
 		IHManageList manager = new IHManageList();
 		IHSearch search = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 
 		currUser.getLists().reset();
 		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1",currUser);

@@ -19,6 +19,7 @@ public class LoginHelper {
 
 
 	public boolean login(String username, String password, User currUser) {
+		long passvalue = encrypt(password);
 	    try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	        conn =
@@ -26,7 +27,7 @@ public class LoginHelper {
 	                                       "user=root&password=root&useSSL=false");
 	        st = conn.prepareStatement("SELECT * FROM User WHERE username = ? AND password = ?");
 	        st.setString(1, username);
-	        st.setString(2, password);
+	        st.setLong(2, passvalue);
 	        rs = st.executeQuery();
 	        if (rs.next()) {
 	        	String user = rs.getString("username"); 
@@ -157,6 +158,7 @@ public class LoginHelper {
 	}
 
 	public boolean createAccount(String username, String password) {
+		long passvalue = encrypt(password);
 		 try {
 		        conn =
 		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
@@ -171,7 +173,7 @@ public class LoginHelper {
 		        
 		        st = conn.prepareStatement("INSERT INTO User(username,password,list_size) values(?,?,0)");
 		        st.setString(1, username);
-		        st.setString(2,  password);
+		        st.setLong(2,passvalue);
 		        st.execute();
 
 		        
@@ -186,6 +188,14 @@ public class LoginHelper {
 		        System.out.println("VendorError: " + ex.getErrorCode());
 		    }
 			return false; 
+	}
+	
+	public long encrypt(String password) {
+		long encrypted = 0;
+		for (int i = 0; i < password.length(); i++) {
+			encrypted += ((int)password.charAt(i) * Math.pow(i, 2));
+		}
+		return encrypted;
 	}
 
   }

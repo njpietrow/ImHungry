@@ -4,7 +4,6 @@
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Recipe" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
-    <%@ page import="edu.usc.cs.group8.ImHungry.ListManager" %>
     <%@ page import="java.net.HttpURLConnection" %>
     <%@ page import="javax.servlet.http.HttpServlet" %>
     <%@ page import="javax.servlet.http.HttpServletRequest" %>

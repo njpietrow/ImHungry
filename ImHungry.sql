@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS Groceries;
 
 CREATE TABLE User(
    username varchar(100) primary key not null,
-   password varchar(100) not null,
+   password bigint(100) not null,
    list_size int(10) not null
    );
    
@@ -72,8 +72,8 @@ CREATE TABLE Groceries(
 	
 
     
-INSERT into User(username,password,list_size) values ("GJHalfond","Scrum",0);
-INSERT into User(username,password,list_size) values ("KCalaway","Boopadoop",0);
+INSERT into User(username,password,list_size) values ("GJHalfond",3352,0);
+INSERT into User(username,password,list_size) values ("KCalaway",22218,0);
 Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");
 Insert into List(list_id,list_name) values (2,"Do Not Show");

@@ -47,7 +47,7 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        User currUser = new User("GJHalfond", new ListManager());
+        User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         Mockito.when(IHS.doRestaurantSearch("spaghetti","10", "5000", currUser)).thenReturn(new ArrayList<Restaurant>());
@@ -68,7 +68,7 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        User currUser = new User("GJHalfond", new ListManager());
+        User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
         Mockito.when(IHS.doRestaurantSearch("spaghetti","10", "5000",currUser)).thenReturn(null);
@@ -89,7 +89,7 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        User currUser = new User("GJHalfond", new ListManager());
+        User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
         when(MockSearch.doRestaurantSearch("spaghetti","10", "5000",currUser)).thenReturn(new ArrayList<Restaurant>());
@@ -110,7 +110,7 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        User currUser = new User("GJHalfond", new ListManager());
+        User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         when(MockSearch.doRestaurantSearch("spaghetti","10","5000",currUser)).thenReturn(null);
@@ -131,7 +131,7 @@ public class IHSearchTest {
 		when(request.getParameter("num_results")).thenReturn("10");
 		StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
-        User currUser = new User("GJHalfond", new ListManager());
+        User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
         Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         when(MockSearch.doRestaurantSearch("spaghetti","10","5000", currUser)).thenReturn(new ArrayList<Restaurant>());
@@ -150,7 +150,7 @@ public class IHSearchTest {
 	@Test
     public void testRestaurantSearchSorted() throws Exception {
        IHSearch IHS = new IHSearch();
-       User currUser = new User("GJHalfond", new ListManager());
+       User currUser = new User("GJHalfond");
        ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", "5000",currUser);
        IHS.sortRestaurants(restaurants,currUser);
        System.out.println(restaurants);
@@ -166,7 +166,7 @@ public class IHSearchTest {
 	@Test
     public void testRecipeSearchSorted() throws Exception {
        IHSearch search = new IHSearch();
-       User currUser = new User("GJHalfond",new ListManager());
+       User currUser = new User("GJHalfond");
        ArrayList<Recipe> recipes = search.doRecipeSearch("spaghetti", "10",currUser);
        search.sortRecipes(recipes,currUser);
        assertEquals(recipes.size(),10);
@@ -178,7 +178,7 @@ public class IHSearchTest {
 	@Test
 	public void testRadiusLimitsSearch() throws Exception {
 		IHSearch IHS = new IHSearch();
-		User currUser = new User("GJHalfond", new ListManager());
+		User currUser = new User("GJHalfond");
 		ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", "1",currUser);
 		IHS.sortRestaurants(restaurants,currUser);
 		assertEquals(restaurants.size(),0);
