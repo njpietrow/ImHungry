@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 	public String name; 
@@ -15,6 +16,8 @@ public class User {
 	private ArrayList<Result> doNotShow;
 	private ArrayList<Query> quickAccess;
 	private ArrayList<String> groceryList; 
+	
+	private HashMap<String,Result> cache;
 
 	public User(String name, ArrayList<Result> favorites, ArrayList<Result> toExplore, ArrayList<Result> doNotShow, ArrayList<Query> quickAccess, ArrayList<String> groceryList)
 	{
@@ -24,6 +27,7 @@ public class User {
 		this.doNotShow = doNotShow;
 		this.quickAccess = quickAccess;
 		this.groceryList = groceryList;
+		cache = new HashMap<String,Result>();
 	}
 	
 	public User(String name)
@@ -34,6 +38,7 @@ public class User {
 		doNotShow = new ArrayList<Result>();
 		quickAccess = new ArrayList<Query>();
 		groceryList = new ArrayList<String>();
+		cache = new HashMap<String,Result>();
 	}
 	
 	public User()
@@ -44,6 +49,7 @@ public class User {
 		doNotShow = new ArrayList<Result>();
 		quickAccess = new ArrayList<Query>();
 		groceryList = new ArrayList<String>();
+		cache = new HashMap<String,Result>();
 	}
 	
 	public User getLists() {
@@ -383,7 +389,6 @@ public class User {
 	public void removeFromFavorites(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
 		if (favoritesContains(r))
 		{
 		
@@ -425,7 +430,6 @@ public class User {
 				try {
 					conn.close();
 					st.close();
-					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -438,7 +442,6 @@ public class User {
 	public void removeFromToExplore(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
 		if (toExploreContains(r)){
 			try
 			{
@@ -478,7 +481,6 @@ public class User {
 				try {
 					conn.close();
 					st.close();
-					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -491,7 +493,6 @@ public class User {
 	public void removeFromDoNotShow(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
 		if (doNotShowContains(r)) {
 			try
 			{
@@ -531,7 +532,6 @@ public class User {
 				try {
 					conn.close();
 					st.close();
-					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -635,7 +635,6 @@ public class User {
 		groceryList.add(r);
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
@@ -656,7 +655,6 @@ public class User {
 			try {
 				conn.close();
 				st.close();
-				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -667,7 +665,6 @@ public class User {
 		ArrayList<String> ingreds = r.getIngredients();
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		for (int i = 0; i < ingreds.size(); i++)
 		{
 			groceryList.add(ingreds.get(i));
@@ -691,7 +688,6 @@ public class User {
 				try {
 					conn.close();
 					st.close();
-					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -713,7 +709,6 @@ public class User {
 	public boolean removeFromGroceryList(Recipe r) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		if (groceryList.size() < 1)
 			return false; 
 		
@@ -748,7 +743,6 @@ public class User {
 						try {
 							conn.close();
 							st.close();
-							rs.close();
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -769,7 +763,6 @@ public class User {
 	public boolean removeFromGroceryList(String res) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		if (groceryList.size() < 1)
 			return false; 
 		for (int i = 0; i < groceryList.size(); i++)
@@ -796,7 +789,6 @@ public class User {
 					try {
 						conn.close();
 						st.close();
-						rs.close();
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -813,7 +805,6 @@ public class User {
 	public void clearGroceryList() {
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
@@ -836,7 +827,6 @@ public class User {
 			try {
 				conn.close();
 				st.close();
-				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -850,6 +840,32 @@ public class User {
 
 	public ArrayList<String> getGroceries() {
 		return groceryList; 
+	}
+	
+	public Result get(String token) {
+		if (token.charAt(0)=='\'') {
+			token = token.substring(1,token.length()-1);
+		}
+		System.out.println(token);
+		if (cache.containsKey(token)) {
+			return cache.get(token);
+		}
+		else {
+			if (token.substring(0,4).equals("http")) {
+				Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(token));
+				if (r == null) return null;
+				r.setURL(token);
+				cache.put(token, r);
+				return r;
+			} else {
+				//TODO: Get the real name of the restaurant
+				Restaurant r = new Restaurant ("Tasty Food",token);
+				r = RestaurantGetter.getContactInfo(r);
+				r = RestaurantGetter.getDriveTime(r);
+				cache.put(token,r);
+				return r;
+			}
+		}
 	}
 }
 

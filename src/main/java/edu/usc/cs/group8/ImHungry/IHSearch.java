@@ -150,6 +150,7 @@ public class IHSearch extends HttpServlet {
 	 * It then makes 2 other separate request to return Contact information for the restaurant and driving time
 	 */
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius, User currUser) {
+		if (currUser == null) currUser = new User();
 //	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
 		addToQuickAccess(currUser,keyword,number);
@@ -211,6 +212,7 @@ public class IHSearch extends HttpServlet {
 	 * See: RecipeGetter.java
 	 */
 	public ArrayList<Recipe> doRecipeSearch(String keyword, String number, User currUser) {
+		if (currUser == null) currUser = new User();
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
 		if (results == null) return null;
@@ -225,7 +227,8 @@ public class IHSearch extends HttpServlet {
 						j += 19;
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
-						Recipe recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
+						Recipe recipe = (Recipe)currUser.get(results.substring(j,i));
+						if (recipe == null) recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
 						
 						if (currUser == null) currUser = new User();
 						if (recipe == null || currUser.getLists().doNotShowContains(recipe) || recipes.contains(recipe)) {

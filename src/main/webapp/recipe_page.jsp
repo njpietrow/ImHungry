@@ -19,7 +19,66 @@
     <title>Recipe Page</title>
   </head>
   <body id="print_preview">
-  <% Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>()); %>
+  <% Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>()); 
+  
+		    	//Creating a new recipe object
+		    		
+		    		
+				//grab the recipe id
+		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){
+		    			String id = request.getParameter("recipe_id");
+			    		recipe = (Recipe)((User)(session.getAttribute("user"))).get(id);
+		    		}
+		    		//grab the item id
+		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("item_id"));
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
+		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
+		    			}
+		    		}
+		    		
+				//use the recipe name from the servlet
+		    		String recipe_name = recipe.getName();
+		    		String cookTime, prepTime;
+					if (recipe.getCookTime() == 0){
+						cookTime = "No cook time available.";
+					}
+					else cookTime = recipe.getCookTime() + " min";
+					if (recipe.getPrepTime() == 0){
+						prepTime = "No prep time available.";
+					}
+					else prepTime = recipe.getPrepTime() + " min";
+				//display image
+			        String imgURL = recipe.getImgURL();
+			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
+		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
+		    		
+		    		System.out.println(recipe.getURL());
+		    		
+		    		String token = "";
+		    		for (int i = 0; i < recipe.getURL().length(); i++){
+		    			if (recipe.getURL().charAt(i) == ' '){
+		    				token += "%20";
+		    			}
+		    			else if (recipe.getURL().charAt(i) == ':'){
+		    				token += "%3A";
+		    			}
+		    			else if (recipe.getURL().charAt(i) == '/'){
+		    				token += "%2F";
+		    			}
+		    			else if (recipe.getURL().charAt(i) == '-'){
+		    				token += "%2D";
+		    			}
+		    			else token += recipe.getURL().charAt(i);
+		    			
+		    		}
+			    %>
 	 <!-- Required Links -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -60,6 +119,7 @@
 	        	<script>
 				//function to set list id to the appropriate list if selected
 		        	 document.getElementById("add_to_list_button").onclick = function () {
+						console.log("I got clicked on!");
 	        		 	var list_id;
 				        if($("#btnGroupVerticalDrop2").text() =="Favorites") {
 				        	list_id = "FAVORITES";
@@ -70,55 +130,15 @@
 				        else {
 				        	list_id = "DO_NOT_SHOW"; 
 				        }
+				        var recipe_id = "<%=token%>";
 					 //send to servlet
-				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id="+<%=recipe.getURL()%>+"&restaurant_id=";	
+				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id='"+ recipe_id + "'&restaurant_id=";	
 				    };
 	        	</script>
 	        </div> 
 		<!-- Use the recipe servlet to use the relevant information -->
         	<div class="recipe_information" id="all_stuff_on_page">	
-		    	<%
-		    	//Creating a new recipe object
-		    		
-		    		
-				//grab the recipe id
-		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){
-		    			int index = Integer.parseInt(request.getParameter("recipe_id"));
-			    		if (session.getAttribute("recipes") == null){
-			    			return;
-			    		}
-			    		recipe = ((ArrayList<Recipe>)(session.getAttribute("recipes"))).get(index);
-		    		}
-		    		//grab the item id
-		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
-		    			int index = Integer.parseInt(request.getParameter("item_id"));
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
-		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
-		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
-		    				recipe = (Recipe)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
-		    			}
-		    		}
-		    		
-				//use the recipe name from the servlet
-		    		String recipe_name = recipe.getName();
-		    		String cookTime, prepTime;
-					if (recipe.getCookTime() == 0){
-						cookTime = "No cook time available.";
-					}
-					else cookTime = recipe.getCookTime() + " min";
-					if (recipe.getPrepTime() == 0){
-						prepTime = "No prep time available.";
-					}
-					else prepTime = recipe.getPrepTime() + " min";
-				//display image
-			        String imgURL = recipe.getImgURL();
-			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
-		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
-			    %>
+
 		    	<div id=recipe_title><%=recipe_name%></div>
 		    	<br></br>
 		   	<div id=image_url_div>

@@ -18,7 +18,32 @@
     <title>Restaurant Page</title>
   </head>
   <body>
-  <% Restaurant restaurant = new Restaurant("",""); %>
+  <% Restaurant restaurant = new Restaurant("",""); 
+  if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
+		    			String id = request.getParameter("restaurant_id");
+			    		restaurant = (Restaurant)((User)(session.getAttribute("user"))).get(id);
+		    		}
+		    		//get the appropriate list id
+		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
+		    			int index = Integer.parseInt(request.getParameter("item_id"));
+		    			if (request.getParameter("list_id").equals("FAVORITES")){
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
+		    			}
+		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
+		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
+		    			}
+		    		}
+				//get all required information from the restaurant object
+		    		String restaurant_name = restaurant.getName();
+			        int drive_time = restaurant.getDriveTime();
+			        String website_URL = restaurant.getWebsiteURL();
+			        String map_url = restaurant.getMapURL();
+			        String restaurant_address = restaurant.getAddress();
+			        String restaurant_phone_num = restaurant.getPhoneNum();
+			        int price_range = restaurant.getPriceRange();%>
 	 <!-- Required Links -->
     	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -79,34 +104,7 @@
 			        
 		    		
 				//get the appropriate restaurant id
-		    		if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
-		    			int index = Integer.parseInt(request.getParameter("restaurant_id"));
-			    		if (session.getAttribute("restaurants") == null){
-			    			return;
-			    		}
-			    		restaurant = ((ArrayList<Restaurant>)(session.getAttribute("restaurants"))).get(index);
-		    		}
-		    		//get the appropriate list id
-		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
-		    			int index = Integer.parseInt(request.getParameter("item_id"));
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
-		    			}
-		    		}
-				//get all required information from the restaurant object
-		    		String restaurant_name = restaurant.getName();
-			        int drive_time = restaurant.getDriveTime();
-			        String website_URL = restaurant.getWebsiteURL();
-			        String map_url = restaurant.getMapURL();
-			        String restaurant_address = restaurant.getAddress();
-			        String restaurant_phone_num = restaurant.getPhoneNum();
-			        int price_range = restaurant.getPriceRange();
+		    		
 			    %>
 		    	<div id=restaurant_name><%=restaurant_name%></div>
 		    	<br>

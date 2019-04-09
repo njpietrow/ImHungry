@@ -711,7 +711,31 @@ public class IHManageList extends HttpServlet {
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		System.out.println(recipeID);
 		if (recipeID != null && !recipeID.equals("")) {
+			String token = "";
+			recipeID = recipeID.substring(1,recipeID.length()-1);
+    		for (int i = 0; i < recipeID.length() - 3; i++){
+    			if (recipeID.substring(i,i+3).equals("%20")){
+    				token += ' ';
+    			}
+    			else if (recipeID.substring(i,i+3).equals("%3A")){
+    				token += ':';
+    			}
+    			else if (recipeID.substring(i,i+3).equals("%2F")){
+    				token += '/';
+    			}
+    			else if (recipeID.substring(i,i+3).equals("%2D")){
+    				token += '-';
+    			}
+    			else token += recipeID.charAt(i);
+    			
+    		}
+    		if (recipeID.charAt(recipeID.length()-3)!='%') {
+    			for (int i = recipeID.length() - 3; i < recipeID.length(); i++){
+    				token += recipeID.charAt(i);
+    			}
+    		}
 			Recipe r = null;
 			for (int i = 0; i < recipes.size(); i++) {
 				if (recipes.get(i).getURL().equals(recipeID)) {
@@ -749,6 +773,10 @@ public class IHManageList extends HttpServlet {
 					}
 				}
 			}
+			if (r == null) {
+				r = (Recipe)currUser.get(recipeID);
+			}
+			System.out.println(r);
 			if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);
 				try
@@ -926,6 +954,9 @@ public class IHManageList extends HttpServlet {
 						}
 					}
 				}
+			}
+			if (r == null) {
+				r = (Restaurant)currUser.get(restaurantID);
 			}
 			if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);

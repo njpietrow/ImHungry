@@ -79,7 +79,7 @@ Insert into List(list_id,list_name) values (1,"To Explore");
 Insert into List(list_id,list_name) values (2,"Do Not Show");
 Insert into List(list_id,list_name) values (3,"Quick Access");
 
-
+Select * from Recipe;
 
 #Select * from User;
 #SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
