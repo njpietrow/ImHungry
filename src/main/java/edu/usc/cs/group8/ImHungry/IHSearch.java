@@ -194,12 +194,11 @@ public class IHSearch extends HttpServlet {
 					restaurants.add(temp);
 				}
 			}
-
+			
 			//Populate the array of Restaurant objects with the rest of the required info
 			for (int i =0; i < restaurants.size();i++) {
 				Restaurant curr_restaurant = restaurants.get(i);
-				curr_restaurant = RestaurantGetter.getContactInfo(curr_restaurant); 
-				curr_restaurant = RestaurantGetter.getDriveTime(curr_restaurant);   
+				curr_restaurant = currUser.get(curr_restaurant.getId(),curr_restaurant.getName());
 				restaurants.set(i, curr_restaurant);                                
 			}
 		return restaurants;

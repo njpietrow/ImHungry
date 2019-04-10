@@ -842,30 +842,35 @@ public class User {
 		return groceryList; 
 	}
 	
-	public Result get(String token) {
+	public Restaurant get(String token, String name) {
 		if (token.charAt(0)=='\'') {
 			token = token.substring(1,token.length()-1);
 		}
-		System.out.println(token);
 		if (cache.containsKey(token)) {
-			return cache.get(token);
+			return (Restaurant)cache.get(token);
+		} else {
+			//TODO: Get the real name of the restaurant
+			Restaurant r = new Restaurant (name,token);
+			r = RestaurantGetter.getContactInfo(r);
+			r = RestaurantGetter.getDriveTime(r);
+			cache.put(token,r);
+			return r;
+		}
+	}
+	public Recipe get(String token) {
+		if (token.charAt(0)=='\'') {
+			token = token.substring(1,token.length()-1);
+		}
+		if (cache.containsKey(token)) {
+			return (Recipe)cache.get(token);
 		}
 		else {
-			if (token.substring(0,4).equals("http")) {
-				Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(token));
-				if (r == null) return null;
-				r.setURL(token);
-				cache.put(token, r);
-				return r;
-			} else {
-				//TODO: Get the real name of the restaurant
-				Restaurant r = new Restaurant ("Tasty Food",token);
-				r = RestaurantGetter.getContactInfo(r);
-				r = RestaurantGetter.getDriveTime(r);
-				cache.put(token,r);
-				return r;
-			}
-		}
+			Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(token));
+			if (r == null) return null;
+			r.setURL(token);
+			cache.put(token, r);
+			return r;
+		} 
 	}
 }
 
