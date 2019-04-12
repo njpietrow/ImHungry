@@ -35,10 +35,13 @@ public class RestaurantGetter {
 			JSONObject mainObj= new JSONObject(json_string);
 			JSONObject result = (JSONObject) mainObj.get("result");
 			
-			String address = "",phoneNum = "",website = "";
+			String address = "",phoneNum = "",website = "",name="";
 			int price_level = -1;
 			double rating = -1;
 			
+			if (result.has("name")) {
+				name = result.getString("name");
+		     }
 			if (result.has("formatted_address")) {
 				address = result.getString("formatted_address");
 		     }
@@ -56,13 +59,13 @@ public class RestaurantGetter {
 			}
 			
 			//set restaurant attributes taken from JSON file
+			r.setName(name);
 			r.setAddress(address);
 			r.setPhoneNum(phoneNum);
 			r.setWebsiteURL(website);
 			r.setPriceRange(price_level);
 			r.setRating(rating);
 			
-			String name = r.getName();
 			name = name.replaceAll(" ", "+");
 			name = name.replaceAll(",", "");
 			name = name.replaceAll("#", "");
