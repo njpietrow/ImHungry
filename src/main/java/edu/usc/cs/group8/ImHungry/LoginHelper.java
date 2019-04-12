@@ -33,8 +33,11 @@ public class LoginHelper {
 	        	String user = rs.getString("username"); 
 	        	currUser.setName(user);
 	        }
+	        else {
+	        	return false;
+	        }
 	        rs.close();
-	        if (currUser.getName() == null)
+	        if (currUser.getName().equals(""))
 	        	return false; 
 	        TreeMap<Integer, Restaurant> favoriteRestaurants = new TreeMap<Integer, Restaurant>();
 	        TreeMap<Integer, Recipe>  favoriteRecipes = new TreeMap<Integer, Recipe> ();
@@ -61,10 +64,13 @@ public class LoginHelper {
 	        	{
 	        	case 0: 
 	        		favoriteRestaurants.put(listNum, temp);
+	        		break;
 	        	case 1: 
 	        		toExploreRestaurants.put(listNum, temp);
+	        		break;
 	        	case 2:
 	        		doNotShowRestaurants.put(listNum, temp);
+	        		break;
 	        	}
 	        	
 	        }
@@ -83,10 +89,13 @@ public class LoginHelper {
 	        	{
 	        	case 0: 
 	        		favoriteRecipes.put(listNum, temp);
+	        		break;
 	        	case 1: 
 	        		toExploreRecipes.put(listNum, temp);
+	        		break;
 	        	case 2:
 	        		doNotShowRecipes.put(listNum, temp);
+	        		break;
 	        	}
 	        	
 	        }
@@ -124,12 +133,15 @@ public class LoginHelper {
 	        currUser.getLists().setToExplore(new ArrayList<Result>(toExplore.values()));
 	        
 	        TreeMap<Integer,Result> doNotShow = new TreeMap<Integer,Result>();
-	        doNotShow.putAll(favoriteRecipes);
-	        doNotShow.putAll(favoriteRestaurants);
+	        doNotShow.putAll(doNotShowRecipes);
+	        doNotShow.putAll(doNotShowRestaurants);
 	        currUser.getLists().setDoNotShow(new ArrayList<Result>(doNotShow.values()));
 	        
 	        currUser.getLists().setQuickAccess(quickAccess);
 	        
+	        System.out.println(favoriteRecipes);
+	        System.out.println(favoriteRestaurants);
+	        System.out.println(favorites);
 	        
 	        return true;
 	        // Do something with the Connection

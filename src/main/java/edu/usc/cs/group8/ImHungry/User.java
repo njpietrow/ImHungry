@@ -99,6 +99,11 @@ public class User {
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
+				st.execute();
 			}
 			catch (SQLException ex) {
 		        // handle any errors
@@ -153,6 +158,11 @@ public class User {
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
+				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
 				st.execute();
 			}
 			catch (SQLException ex) {
@@ -219,6 +229,11 @@ public class User {
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
+				st.execute();
 			}
 			catch (SQLException ex) {
 		        // handle any errors
@@ -271,6 +286,11 @@ public class User {
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
+				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
 				st.execute();
 			}
 			catch (SQLException ex) {
@@ -339,6 +359,11 @@ public class User {
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
+				st.execute();
 			}
 			catch (SQLException ex) {
 		        // handle any errors
@@ -392,6 +417,11 @@ public class User {
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
+				st.execute();
+				
+				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
+				st.setInt(1, list_size);
+				st.setString(2, name);
 				st.execute();
 			}
 			catch (SQLException ex) {

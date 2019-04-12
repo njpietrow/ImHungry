@@ -25,7 +25,7 @@ public class RestaurantGetter {
 	public static void getKey() {
 		 BufferedReader br = null;
 			try {
-				System.out.println(new File("apikey.txt").getAbsolutePath());
+
 				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey2.txt")));
 				MAPS_API_KEY = br.readLine();
 			} catch (FileNotFoundException e) {
@@ -54,9 +54,8 @@ public class RestaurantGetter {
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
 
-		System.out.println(url);
 			String json_string = readWebsite(url);
-			System.out.println(json_string);
+			
 			if (json_string == null) return null; 
 
 			//Parse the JSON object to retrieve necessary Restaurant info
@@ -129,8 +128,6 @@ public class RestaurantGetter {
 			if (json_string == null) return null;
 			
 			JSONObject mainObj= new JSONObject(json_string);
-
-			System.out.println(MAPS_API_KEY);
 			
 			JSONArray dist=(JSONArray)mainObj.get("rows");
 	        JSONObject obj2 = (JSONObject)dist.get(0);

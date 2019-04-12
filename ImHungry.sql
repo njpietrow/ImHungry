@@ -42,7 +42,8 @@ CREATE TABLE Recipe(
 );
    
 CREATE TABLE ListRestaurants(
-	restaurant_id varchar(100) primary key not null,
+	entry_no int(10) primary key auto_increment,
+	restaurant_id varchar(100) not null,
     username varchar(100) not null,
     list_id int(2) not null,
     list_no int(10) not null,
@@ -52,7 +53,8 @@ CREATE TABLE ListRestaurants(
     );
     
 CREATE TABLE ListRecipes(
-	recipe_url varchar(100) primary key not null,
+	entry_no int(10) primary key auto_increment,
+	recipe_url varchar(100) not null,
     username varchar(100) not null,
     list_id int(2) not null,
     list_no int(10) not null,
@@ -80,6 +82,8 @@ Insert into List(list_id,list_name) values (2,"Do Not Show");
 Insert into List(list_id,list_name) values (3,"Quick Access");
 
 Select * from Recipe;
+SELECT * FROM ListRecipes l2, Recipe r where username="GJHalfond" AND l2.recipe_url = r.recipe_url;
+SELECT * From ListRestaurants;
 
 #Select * from User;
 #SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
