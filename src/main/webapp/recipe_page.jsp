@@ -151,7 +151,6 @@
 	
 		    	<div id=ingredients_unordered>Ingredients: 
 		    	
-			<div id=ingredients_unordered>Ingredients: 
 		    	<% 
 		    		if(stuff_ingredients.size() == 0) {
 		    			%> 
