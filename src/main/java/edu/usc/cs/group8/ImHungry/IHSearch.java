@@ -1,5 +1,9 @@
 package edu.usc.cs.group8.ImHungry;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -8,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Scanner;
 
 import javax.servlet.ServletException;
@@ -36,11 +39,34 @@ public class IHSearch extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
 	private static final String TOMMY_TROJAN_LOC = "34.020593,-118.285447";
 	
 	public IHSearch() {
-        super();
+		super();
+		
+        
+        RestaurantGetter.getKey();
+        BufferedReader br = null;
+		try {
+			System.out.println(new File("apikey.txt").getAbsolutePath());
+			br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
+			MAPS_API_KEY = br.readLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 	
 	/*
@@ -48,7 +74,14 @@ public class IHSearch extends HttpServlet {
 	 * search functions to retrieve the results. The results are stored in session data.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		setAccessControlHeaders(response);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String keyword = request.getParameter("search_query");
 		String number = request.getParameter("num_results");
 		String radius = request.getParameter("num_miles");
@@ -87,6 +120,9 @@ public class IHSearch extends HttpServlet {
 	
 	private void addToQuickAccess(User currUser, String keyword, String number) {
 		if (currUser == null) return;
+		if (currUser.getName() == null) return;
+		if (currUser.getName().equals("")) return;
+		System.out.println(currUser.getName());
 		Connection conn = null;
 		PreparedStatement st = null;
 		currUser.getLists().addToQuickAccess(new Query(keyword,number));
@@ -172,6 +208,9 @@ public class IHSearch extends HttpServlet {
 			System.out.println(url);
 		
 			String json_string = readWebsite(url);
+			
+			System.out.println(json_string);
+			
 			if (json_string == null) return null;
 
 			//Parse the JSON file to retrieve relevant Restaurants

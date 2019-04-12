@@ -43,7 +43,7 @@ public class User {
 	
 	public User()
 	{
-		name = null;
+		name = "";
 		favorites = new ArrayList<Result>();
 		toExplore = new ArrayList<Result>();
 		doNotShow = new ArrayList<Result>();
@@ -640,7 +640,7 @@ public class User {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
                     "user=root&password=root&useSSL=false");
 			st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
-			String username = "";
+			String username = null;
 			st.setString(1, username);
 			st.setString(2, r);
 			st.execute();
@@ -843,6 +843,7 @@ public class User {
 	}
 	
 	public Restaurant get(String token, String name) {
+		if (name == null) return null;
 		if (token.charAt(0)=='\'') {
 			token = token.substring(1,token.length()-1);
 		}
@@ -858,6 +859,7 @@ public class User {
 		}
 	}
 	public Recipe get(String token) {
+		if (name == null) return null;
 		if (token.charAt(0)=='\'') {
 			token = token.substring(1,token.length()-1);
 		}

@@ -1,5 +1,10 @@
 package edu.usc.cs.group8.ImHungry;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
@@ -15,7 +20,30 @@ import org.json.JSONObject;
  * Email: pietrow@usc.edu
  */
 public class RestaurantGetter {
-	private static final String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	
+	public static void getKey() {
+		 BufferedReader br = null;
+			try {
+				System.out.println(new File("apikey.txt").getAbsolutePath());
+				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
+				MAPS_API_KEY = br.readLine();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					if (br != null)
+						br.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+	}
 	/* 
 	 * this method gets all parameters except for driving time from Google Place Detail Search
 	 */
