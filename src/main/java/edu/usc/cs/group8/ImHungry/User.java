@@ -75,7 +75,7 @@ public class User {
 				st.setString(1, name);
 				rs = st.executeQuery();
 				int list_size = -1; 
-				if (rs != null)
+				if (rs.next())
 				{
 					list_size = rs.getInt("list_size"); 
 				}
@@ -179,7 +179,7 @@ public class User {
 				st.setString(1, name);
 				rs = st.executeQuery();
 				int list_size = -1; 
-				if (rs != null)
+				if (rs.next())
 				{
 					list_size = rs.getInt("list_size"); 
 				}
@@ -285,7 +285,7 @@ public class User {
 				st.setString(1, name);
 				rs = st.executeQuery();
 				int list_size = -1; 
-				if (rs != null)
+				if (rs.next())
 				{
 					list_size = rs.getInt("list_size"); 
 				}

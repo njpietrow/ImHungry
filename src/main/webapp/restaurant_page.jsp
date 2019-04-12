@@ -94,7 +94,8 @@
 						else {
 							list_id = "DO_NOT_SHOW"; 
 						}
-							location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=restaurant.getId() %>;	
+						var token = "<%= restaurant.getId() %>";
+							location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + token;	
 					    };
 				</script>
 	        </div> 
