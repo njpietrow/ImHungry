@@ -21,8 +21,7 @@
   <% Restaurant restaurant = new Restaurant("",""); 
   if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
 		    			String id = request.getParameter("restaurant_id");
-		    			String name = request.getParameter("restaurant_name");
-			    		restaurant = (Restaurant)((User)(session.getAttribute("user"))).get(id,name);
+			    		restaurant = (Restaurant)((User)(session.getAttribute("user"))).get(id,"");
 		    		}
 		    		//get the appropriate list id
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
@@ -95,7 +94,7 @@
 						else {
 							list_id = "DO_NOT_SHOW"; 
 						}
-							location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=restaurant.getId() %> +"&restaurant_name=" + <%=restaurant.getName() %>;	
+							location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id=&restaurant_id=" + <%=restaurant.getId() %>;	
 					    };
 				</script>
 	        </div> 

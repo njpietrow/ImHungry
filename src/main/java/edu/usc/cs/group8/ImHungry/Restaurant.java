@@ -60,6 +60,16 @@ public class Restaurant extends Result implements Serializable{
 		this.rating = 0.0;
 	}
 	
+	public Restaurant (String id) {
+		super.setName("");
+		this.id= id;
+		this.driveTime = -1;
+		this.websiteURL = "";
+		this.address = "";
+		this.phoneNum = "";
+		this.priceRange = -1;
+		this.rating = 0.0;
+	}
 
 	public Restaurant() {
 		// TODO Auto-generated constructor stub

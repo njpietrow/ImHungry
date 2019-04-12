@@ -157,12 +157,12 @@ public class IHManageListTest {
 		search.sortRestaurants(testRestaurants,currUser);
 		
 		IHManageList manager = new IHManageList();
-		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"TO_EXPLORE", "1", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"TO_EXPLORE", "", "1", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"FAVORITES", "2", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"FAVORITES", "", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "", "2", testRecipes, testRestaurants);
 		
 		ArrayList<Recipe> newRecipes = search.doRecipeSearch("falafel", "3",currUser);
 		ArrayList<Restaurant> newRestaurants = search.doRestaurantSearch("ramen", "3", "5000", currUser);
@@ -189,12 +189,12 @@ public class IHManageListTest {
 		search.sortRestaurants(testRestaurants,currUser);
 		
 		IHManageList manager = new IHManageList();
-		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"TO_EXPLORE", "1", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"TO_EXPLORE", "", "1", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"FAVORITES", "2", "", "", testRecipes, testRestaurants);
-		manager.addToList(currUser,"FAVORITES", "", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "1", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"TO_EXPLORE", "", "1", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "2", "", testRecipes, testRestaurants);
+		manager.addToList(currUser,"FAVORITES", "", "2", testRecipes, testRestaurants);
 		
 		manager.removeFromList(currUser,"FAVORITES", "1");
 		manager.removeFromList(currUser,"TO_EXPLORE", "1");
@@ -223,8 +223,8 @@ public class IHManageListTest {
 		ArrayList<Recipe> recipe = search.doRecipeSearch("falafel", "1",currUser);
 		ArrayList<Restaurant> restaurant = search.doRestaurantSearch("ramen", "1", "5000", currUser);
 		
-		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", "", recipe, restaurant);
-		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"DO_NOT_SHOW", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"DO_NOT_SHOW", "", "0", recipe, restaurant);
 		
 		manager.moveToList(currUser,"DO_NOT_SHOW", "FAVORITES", "1");
 		manager.moveToList(currUser,"DO_NOT_SHOW", "TO_EXPLORE", "0");
@@ -235,8 +235,8 @@ public class IHManageListTest {
 		
 		manager.removeFromList(currUser,"FAVORITES", "0");
 		manager.removeFromList(currUser,"TO_EXPLORE", "0");
-		manager.addToList(currUser,"FAVORITES", "0", "", "", recipe, restaurant);
-		manager.addToList(currUser,"FAVORITES", "", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"FAVORITES", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"FAVORITES", "", "0", recipe, restaurant);
 		manager.moveToList(currUser,"FAVORITES", "DO_NOT_SHOW", "1");
 		manager.moveToList(currUser,"FAVORITES", "TO_EXPLORE", "0");
 		
@@ -246,8 +246,8 @@ public class IHManageListTest {
 		
 		manager.removeFromList(currUser,"DO_NOT_SHOW", "0");
 		manager.removeFromList(currUser,"TO_EXPLORE", "0");
-		manager.addToList(currUser,"TO_EXPLORE", "0", "", "", recipe, restaurant);
-		manager.addToList(currUser,"TO_EXPLORE", "", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"TO_EXPLORE", "0", "", recipe, restaurant);
+		manager.addToList(currUser,"TO_EXPLORE", "", "0", recipe, restaurant);
 		manager.moveToList(currUser,"TO_EXPLORE", "DO_NOT_SHOW", "1");
 		manager.moveToList(currUser,"TO_EXPLORE", "FAVORITES", "0");
 		

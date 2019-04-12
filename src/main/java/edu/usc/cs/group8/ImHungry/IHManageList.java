@@ -81,11 +81,7 @@ public class IHManageList extends HttpServlet {
 			String restaurantName;
 			String recipeID = request.getParameter("recipe_id");
 			String restaurantID = request.getParameter("restaurant_id");
-			if (restaurantID != null && !restaurantID.equals("")) {
-				restaurantName = request.getParameter("restaurant_name");
-			}
-			else restaurantName = ""; 
-			addToList(currUser,listID,recipeID,restaurantID,restaurantName,recipes,restaurants);
+			addToList(currUser,listID,recipeID,restaurantID,recipes,restaurants);
 			if (recipeID != "") {
 				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipeID).forward(request, response);
 			} else {
@@ -712,7 +708,7 @@ public class IHManageList extends HttpServlet {
 	 * Based on the specified list and item number (gathered from the "recipeID" or "restaurantID" parameters)
 	 * it adds an item to a list.
 	 */
-	public void addToList(User currUser, String listID, String recipeID, String restaurantID, String restaurantName, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
+	public void addToList(User currUser, String listID, String recipeID, String restaurantID, ArrayList<Recipe> recipes, ArrayList<Restaurant> restaurants) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -961,7 +957,7 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 			if (r == null) {
-				r = (Restaurant)currUser.get(restaurantID,restaurantName);
+				r = (Restaurant)currUser.get(restaurantID,"");
 			}
 			if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);

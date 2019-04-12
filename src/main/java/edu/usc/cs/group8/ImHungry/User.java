@@ -730,7 +730,7 @@ public class User {
 						st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
 						String username = "";
 						st.setString(1, username);
-						st.setString(2, ingreds.get(i));
+						st.setString(2, ingreds.get(j));
 						st.execute();
 					}
 					catch (SQLException ex) {
@@ -809,8 +809,7 @@ public class User {
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
                     "user=root&password=root&useSSL=false");
-			st = conn.prepareStatement("DELETE FROM Groceries WHERE username = ? "
-					+ "and list_id= ?");
+			st = conn.prepareStatement("DELETE FROM Groceries WHERE username = ?");
 			st.setString(1,name);
 			st.execute();
 					
@@ -851,7 +850,7 @@ public class User {
 			return (Restaurant)cache.get(token);
 		} else {
 			//TODO: Get the real name of the restaurant
-			Restaurant r = new Restaurant (name,token);
+			Restaurant r = new Restaurant(token);
 			r = RestaurantGetter.getContactInfo(r);
 			r = RestaurantGetter.getDriveTime(r);
 			cache.put(token,r);
