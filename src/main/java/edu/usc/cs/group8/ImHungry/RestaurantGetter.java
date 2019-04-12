@@ -26,7 +26,7 @@ public class RestaurantGetter {
 		 BufferedReader br = null;
 			try {
 				System.out.println(new File("apikey.txt").getAbsolutePath());
-				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
+				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt2")));
 				MAPS_API_KEY = br.readLine();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -129,6 +129,8 @@ public class RestaurantGetter {
 			if (json_string == null) return null;
 			
 			JSONObject mainObj= new JSONObject(json_string);
+
+			System.out.println(MAPS_API_KEY);
 			
 			JSONArray dist=(JSONArray)mainObj.get("rows");
 	        JSONObject obj2 = (JSONObject)dist.get(0);
