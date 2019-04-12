@@ -81,11 +81,18 @@ public class User {
 				}
 				st.close();
 				list_size = list_size+1;
+				rs.close();
+				
+				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
 
-				st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
-				st.setString(1, ((Restaurant) r).getId());
-				st.setString(2, r.getName());
-				st.execute();
+				if (!rs.next()) {
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
+					st.setString(1, ((Restaurant) r).getId());
+					st.setString(2, r.getName());
+					st.execute();
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,0,?)");
 				st.setString(1, ((Restaurant) r).getId());
@@ -95,6 +102,7 @@ public class User {
 			}
 			catch (SQLException ex) {
 		        // handle any errors
+				ex.printStackTrace();
 		        System.out.println("SQLException: " + ex.getMessage());
 		        System.out.println("SQLState: " + ex.getSQLState());
 		        System.out.println("VendorError: " + ex.getErrorCode());
@@ -127,11 +135,19 @@ public class User {
 				}
 				st.close();
 				list_size = list_size+1; 
+				
+				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
 
-				st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
-				st.setString(1, ((Recipe) r).getURL());
-				st.setString(2, r.getName());
-				st.execute();
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, ((Recipe) r).getURL());
+					st.setString(2, r.getName());
+					st.execute();
+				
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,0,?)");
 				st.setString(1, ((Recipe) r).getURL());
@@ -185,11 +201,18 @@ public class User {
 				}
 				st.close();
 				list_size = list_size+1;
-
-				st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
-				st.setString(1, ((Restaurant) r).getId());
-				st.setString(2, r.getName());
-				st.execute();
+				rs.close();
+				
+				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
+					st.setString(1, ((Restaurant) r).getId());
+					st.setString(2, r.getName());
+					st.execute();
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,1,?)");
 				st.setString(1, ((Restaurant) r).getId());
@@ -199,6 +222,7 @@ public class User {
 			}
 			catch (SQLException ex) {
 		        // handle any errors
+				ex.printStackTrace();
 		        System.out.println("SQLException: " + ex.getMessage());
 		        System.out.println("SQLState: " + ex.getSQLState());
 		        System.out.println("VendorError: " + ex.getErrorCode());
@@ -232,10 +256,16 @@ public class User {
 				st.close();
 				list_size = list_size+1; 
 
-				st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
-				st.setString(1, ((Recipe) r).getURL());
-				st.setString(2, r.getName());
-				st.execute();
+				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, ((Recipe) r).getURL());
+					st.setString(2, r.getName());
+					st.execute();
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,1,?)");
 				st.setString(1, ((Recipe) r).getURL());
@@ -291,11 +321,18 @@ public class User {
 				}
 				st.close();
 				list_size = list_size+1;
-
-				st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, recipe_name) values(?,?)");
-				st.setString(1, ((Restaurant) r).getId());
-				st.setString(2, r.getName());
-				st.execute();
+				rs.close();
+				
+				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
+					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
+					st.setString(1, ((Restaurant) r).getId());
+					st.setString(2, r.getName());
+					st.execute();
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
 				st.setString(1, ((Restaurant) r).getId());
@@ -305,6 +342,7 @@ public class User {
 			}
 			catch (SQLException ex) {
 		        // handle any errors
+				ex.printStackTrace();
 		        System.out.println("SQLException: " + ex.getMessage());
 		        System.out.println("SQLState: " + ex.getSQLState());
 		        System.out.println("VendorError: " + ex.getErrorCode());
@@ -337,11 +375,18 @@ public class User {
 				}
 				st.close();
 				list_size = list_size+1; 
-
-				st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
-				st.setString(1, ((Recipe) r).getURL());
-				st.setString(2, r.getName());
-				st.execute();
+				rs.close();
+				
+				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
+				st.setString(1, r.getName());
+				rs = st.executeQuery();
+				
+				if (!rs.next()) {
+					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
+					st.setString(1, ((Recipe) r).getURL());
+					st.setString(2, r.getName());
+					st.execute();
+				}
 				
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,2,?)");
 				st.setString(1, ((Recipe) r).getURL());
@@ -647,6 +692,7 @@ public class User {
 		}
 		catch (SQLException ex) {
 	        // handle any errors
+			ex.printStackTrace();
 	        System.out.println("SQLException: " + ex.getMessage());
 	        System.out.println("SQLState: " + ex.getSQLState());
 	        System.out.println("VendorError: " + ex.getErrorCode());
@@ -680,6 +726,7 @@ public class User {
 			}
 			catch (SQLException ex) {
 		        // handle any errors
+				ex.printStackTrace();
 		        System.out.println("SQLException: " + ex.getMessage());
 		        System.out.println("SQLState: " + ex.getSQLState());
 		        System.out.println("VendorError: " + ex.getErrorCode());
@@ -735,6 +782,7 @@ public class User {
 					}
 					catch (SQLException ex) {
 				        // handle any errors
+						ex.printStackTrace();
 				        System.out.println("SQLException: " + ex.getMessage());
 				        System.out.println("SQLState: " + ex.getSQLState());
 				        System.out.println("VendorError: " + ex.getErrorCode());
@@ -781,6 +829,7 @@ public class User {
 				}
 				catch (SQLException ex) {
 			        // handle any errors
+					ex.printStackTrace();
 			        System.out.println("SQLException: " + ex.getMessage());
 			        System.out.println("SQLState: " + ex.getSQLState());
 			        System.out.println("VendorError: " + ex.getErrorCode());

@@ -26,7 +26,7 @@ public class RestaurantGetter {
 		 BufferedReader br = null;
 			try {
 				System.out.println(new File("apikey.txt").getAbsolutePath());
-				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt2")));
+				br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey2.txt")));
 				MAPS_API_KEY = br.readLine();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
