@@ -1,1 +1,2 @@
 
+task :default => :test
