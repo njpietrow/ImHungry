@@ -1,6 +1,16 @@
-sudo: false
+language: ruby
+sudo: required
+addons:
+ chrome: stable
 
-# http://docs.travis-ci.com/user/languages/java/
-language: java
-jdk:
-  - oraclejdk8
+before_install:
+ - gem update --system
+ - gem install cucumber capybara selenium rspec 'selenium-webdriver'
+ - wget http://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip
+ - unzip chromedriver_linux64.zip
+ - rm chromedriver_linux64.zip
+ - sudo mv -f chromedriver /usr/local/bin/
+ - sudo chmod +x /usr/local/bin/chromedriver
+ - google-chrome-stable --headless --no-sandbox
+ - export DISPLAY=:99.0
+ - sh -e /etc/init.d/xvfb start
