@@ -216,7 +216,6 @@ public class IHManageList extends HttpServlet {
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		System.out.println(recipeID);
 		if (recipeID != null && !recipeID.equals("")) {
 			String token = "";
 			recipeID = recipeID.substring(1,recipeID.length()-1);
@@ -281,7 +280,6 @@ public class IHManageList extends HttpServlet {
 			if (r == null) {
 				r = (Recipe)currUser.get(recipeID);
 			}
-			System.out.println(r);
 			if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);
 			}

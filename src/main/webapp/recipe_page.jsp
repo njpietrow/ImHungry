@@ -27,7 +27,12 @@
 				//grab the recipe id
 		    		if (request.getParameter("recipe_id") != null && !request.getParameter("recipe_id").equals("")){
 		    			String id = request.getParameter("recipe_id");
-			    		recipe = (Recipe)((User)(session.getAttribute("user"))).get(id);
+		    			User currUser;
+		    			if ((session.getAttribute("user")) != null){
+		    				currUser = (User)(session.getAttribute("user"));
+		    			}
+		    			else currUser = new User();
+			    		recipe = (Recipe)(currUser.get(id));
 		    		}
 		    		//grab the item id
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
@@ -58,8 +63,6 @@
 			        String imgURL = recipe.getImgURL();
 			        ArrayList<String> stuff_ingredients = recipe.getIngredients();
 		    		ArrayList<String> stuff_instructions = recipe.getInstructions();
-		    		
-		    		System.out.println(recipe.getURL());
 		    		
 		    		String token = "";
 		    		for (int i = 0; i < recipe.getURL().length(); i++){

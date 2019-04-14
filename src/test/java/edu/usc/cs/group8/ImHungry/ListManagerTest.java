@@ -11,6 +11,7 @@ public class ListManagerTest {
 		IHSearch search = new IHSearch();
 		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
+		myRecipe.setURL("https://dinnerthendessert.com/general-tsos-chicken/");
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1", "5000",currUser).get(0);
 		currUser.addToFavorites(myRecipe);
 		currUser.addToFavorites(myRestaurant);
@@ -33,6 +34,7 @@ public class ListManagerTest {
 		IHSearch search = new IHSearch();
 		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
+		myRecipe.setURL("https://dinnerthendessert.com/general-tsos-chicken/");
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1","5000", currUser).get(0);
 		currUser.addToToExplore(myRecipe);
 		currUser.addToToExplore(myRestaurant);
@@ -55,6 +57,7 @@ public class ListManagerTest {
 		IHSearch search = new IHSearch();
 		User currUser = new User("GJHalfond");
 		Recipe myRecipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("https://dinnerthendessert.com/general-tsos-chicken/"));
+		myRecipe.setURL("https://dinnerthendessert.com/general-tsos-chicken/");
 		Restaurant myRestaurant = search.doRestaurantSearch("spaghetti", "1","5000", currUser).get(0);
 		currUser.addToDoNotShow(myRecipe);
 		currUser.addToDoNotShow(myRestaurant);

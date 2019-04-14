@@ -14,12 +14,10 @@ public class DataPersistenceTest {
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
 		Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
-		System.out.println(r);
 		r.setURL("http://localhost:8080/ImHungry/testrecipe.html");
 		currUser.addToFavorites(r);
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
-		System.out.println("curr: " + currUser.getLists().getFavorites());
 		assertTrue(currUser.getLists().favoritesContains(r));
 
 		
@@ -55,7 +53,9 @@ public class DataPersistenceTest {
 		LoginHelper helper = new LoginHelper();
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
-		currUser.getLists().addToFavorites(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5)));
+		Recipe r =RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		r.setURL("http://localhost:8080/ImHungry/testrecipe.html");
+		currUser.addToFavorites(r);
 		helper.logout(currUser);
 		helper.login("KevinCalaway","Doopadoop",currUser);
 		assertFalse(currUser.getLists().favoritesContains(new Recipe("Curry", "20", "10", "food.jpg", new ArrayList<String>(10), new ArrayList<String>(5))));
@@ -69,7 +69,7 @@ public class DataPersistenceTest {
 		IHSearch searchy = new IHSearch(); 
 		searchy.doRestaurantSearch("Curry", "3", "5000", currUser); 
 		helper.logout(currUser);
-		helper.login("KevinCalaway","Boopadoop",currUser);
+		helper.login("KCalaway","Doopadoop",currUser);
 		assertNotEquals(currUser.getLastSearch(),new Query("Curry","3"));
 	}
 
@@ -81,7 +81,7 @@ public class DataPersistenceTest {
 		IHSearch searchy = new IHSearch(); 
 		searchy.doRestaurantSearch("Curry", "3", "5000", currUser); 
 		helper.logout(currUser);
-		helper.login("KevinCalaway","Boopadoop",currUser);
+		helper.login("KCalaway","Doopadoop",currUser);
 		assertFalse(currUser.getLists().quickAccessContains(new Query("Curry","3")));
 	}
 }

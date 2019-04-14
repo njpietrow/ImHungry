@@ -58,6 +58,8 @@ public class Query {
 		return true;
 	}
 	
-	
+	public String toString() {
+		return numResults + " " + keyword;
+	}
 
 }

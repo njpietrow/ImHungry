@@ -139,9 +139,7 @@ public class LoginHelper {
 	        
 	        currUser.getLists().setQuickAccess(quickAccess);
 	        
-	        System.out.println(favoriteRecipes);
-	        System.out.println(favoriteRestaurants);
-	        System.out.println(favorites);
+	        System.out.println(username + ": " + quickAccess);
 	        
 	        return true;
 	        // Do something with the Connection
@@ -163,7 +161,6 @@ public class LoginHelper {
 			return false;
 		}
 		currUser.setName("");
-		currUser.clearGroceryList();
 		currUser.reset();
 		return true;
 		

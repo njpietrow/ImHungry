@@ -32,7 +32,7 @@ public class User {
 	
 	public User(String name)
 	{
-		name = name;
+		this.name = name;
 		favorites = new ArrayList<Result>();
 		toExplore = new ArrayList<Result>();
 		doNotShow = new ArrayList<Result>();
@@ -619,22 +619,21 @@ public class User {
 	public void removeFromFavorites(int index){
 		if (favorites.size() > index)
 		{
-			
-			favorites.remove(index);
+			removeFromFavorites(favorites.get(index));
 		}
 	}
 	
 	public void removeFromToExplore(int index){
 		if (toExplore.size() > index)
 		{
-			toExplore.remove(index);
+			removeFromToExplore(toExplore.get(index));
 		}
 	}
 	
 	public void removeFromDoNotShow(int index){
 		if (doNotShow.size() > index)
 		{
-			doNotShow.remove(index);
+			removeFromDoNotShow(doNotShow.get(index));
 		}
 	}
 	
@@ -663,9 +662,15 @@ public class User {
 	}
 	
 	public void reset() {
-		favorites.clear();
-		toExplore.clear();
-		doNotShow.clear();
+		for (int i = favorites.size() - 1; i >= 0; i--) {
+			removeFromFavorites(i);
+		}
+		for (int i = toExplore.size() - 1; i >= 0; i--) {
+			removeFromToExplore(i);
+		}
+		for (int i = doNotShow.size() - 1; i >= 0; i--) {
+			removeFromDoNotShow(i);
+		}
 	}
 
 	public boolean quickAccessContains(Query query) {
