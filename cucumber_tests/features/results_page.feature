@@ -19,9 +19,6 @@ Scenario: Manage List
 Scenario: Back to Search
 	Then I should see a button called "Back to Search" 
 
-Scenario: Click on Restaurant
-	When I click on the first restaurant result
-	Then I should be on the restaurants page 
 Scenario: Click on Recipe
 	When I click on the first recipe result
 	Then I should be on the recipe page 
