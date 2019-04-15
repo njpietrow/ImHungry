@@ -27,3 +27,11 @@ Scenario: Success login
 	And click on login
 	Then stay on search page
 	
+	Scenario: Success sign up
+ 	When I click on Signup button
+ 	And enter credentials "TestUs", "testpa", and "testpa"
+ 	And click on signup
+	And I click on Login button again
+	And enter credentials "TestUs" and "testpa" again
+	And click on login again
+	Then stay on search page again
