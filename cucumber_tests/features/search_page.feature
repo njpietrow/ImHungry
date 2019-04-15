@@ -21,6 +21,4 @@ Scenario: Input box
 Scenario: Basic Pizza Search 
 	When I type "pizza" in the input box
 	And I click on the Feed Me button 
-	Then I should I should see 5 restaurant results for "pizza" on the results page
-	And I should see 5 recipe results for "pizza" on the results page 
-
+	Then I should I should be on the "IH Search" page 

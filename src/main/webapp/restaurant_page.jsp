@@ -21,7 +21,13 @@
   <% Restaurant restaurant = new Restaurant("",""); 
   if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
 		    			String id = request.getParameter("restaurant_id");
-			    		restaurant = (Restaurant)((User)(session.getAttribute("user"))).get(id,"");
+		    			System.out.println(id);
+		    			User currUser;
+		    			if ((session.getAttribute("user")) != null){
+		    				currUser = (User)(session.getAttribute("user"));
+		    			}
+		    			else currUser = new User();
+			    		restaurant = (Restaurant)(currUser.get(id,""));
 		    		}
 		    		//get the appropriate list id
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){

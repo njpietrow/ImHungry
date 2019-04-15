@@ -49,7 +49,6 @@ public class IHSearch extends HttpServlet {
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
-			System.out.println(new File("apikey.txt").getAbsolutePath());
 			br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
 			MAPS_API_KEY = br.readLine();
 		} catch (FileNotFoundException e) {
@@ -122,7 +121,6 @@ public class IHSearch extends HttpServlet {
 		if (currUser == null) return;
 		if (currUser.getName() == null) return;
 		if (currUser.getName().equals("")) return;
-		System.out.println(currUser.getName());
 		Connection conn = null;
 		PreparedStatement st = null;
 		currUser.getLists().addToQuickAccess(new Query(keyword,number));
@@ -205,11 +203,8 @@ public class IHSearch extends HttpServlet {
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
 		
-			System.out.println(url);
-		
 			String json_string = readWebsite(url);
 			
-			System.out.println(json_string);
 			
 			if (json_string == null) return null;
 
