@@ -44,6 +44,7 @@ public class IHLogin extends HttpServlet {
 			User currUser = new User();
 			if (l.login(username, password, currUser)) {
 				request.getSession().setAttribute("user", currUser);
+				
 				request.getRequestDispatcher("search_page.jsp").forward(request, response);
 			} else {
 				response.setStatus(response.SC_BAD_GATEWAY);

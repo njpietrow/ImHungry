@@ -74,8 +74,8 @@ CREATE TABLE Groceries(
 	
 
     
-INSERT into User(username,password,list_size) values ("GJHalfond",3352,0);
-INSERT into User(username,password,list_size) values ("KCalaway",22218,0);
+INSERT into User(username,password,list_size) values ("GJHalfond",6102,0);
+INSERT into User(username,password,list_size) values ("KCalaway",30943,0);
 Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");
 Insert into List(list_id,list_name) values (2,"Do Not Show");

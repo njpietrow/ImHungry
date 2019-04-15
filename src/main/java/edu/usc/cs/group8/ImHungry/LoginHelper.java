@@ -200,7 +200,7 @@ public class LoginHelper {
 	public long encrypt(String password) {
 		long encrypted = 0;
 		for (int i = 0; i < password.length(); i++) {
-			encrypted += ((int)password.charAt(i) * Math.pow(i, 2));
+			encrypted += ((int)password.charAt(i) * Math.pow(i+1, 2));
 		}
 		return encrypted;
 	}
