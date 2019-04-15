@@ -91,15 +91,12 @@ public class IHManageListTest {
         when(request.getParameter("recipe_id")).thenReturn("");
         when(request.getParameter("restaurant_id")).thenReturn(restaurants.get(0).getId());
         
-        System.out.println(restaurants.get(0).getId());
         manager.doGet(request, response);
         
         when(request.getParameter("action")).thenReturn("DISPLAY");
         when(request.getParameter("list_id")).thenReturn("FAVORITES");
         when(request.getParameter("item_id")).thenReturn("1");
         
-        System.out.println(currUser.getFavorites());
-        
         manager.doGet(request, response);
         
         when(request.getParameter("action")).thenReturn("ADD");
@@ -153,6 +150,8 @@ public class IHManageListTest {
         when(request.getParameter("item_id")).thenReturn("1");
         
         manager.doGet(request, response);
+        
+        currUser.reset();
 	}
 
 	@Test
@@ -182,6 +181,8 @@ public class IHManageListTest {
 		assertFalse(newRecipes.contains(testRecipes.get(0)));
 		assertEquals(newRestaurants.get(0), testRestaurants.get(2));
 		assertFalse(newRestaurants.contains(testRestaurants.get(0)));
+		
+		currUser.reset();
 	}
 	
 	@Test
@@ -219,6 +220,8 @@ public class IHManageListTest {
 		assertEquals(newRestaurants.get(0), oldRestaurants.get(0));
 		assertEquals(newRestaurants.get(1), oldRestaurants.get(1));
 		assertEquals(newRestaurants.get(2), oldRestaurants.get(2));
+		
+		currUser.reset();
 	}
 	
 	@Test
@@ -264,7 +267,7 @@ public class IHManageListTest {
 		assertEquals(currUser.getLists().getFavorites().get(0),recipe.get(0));
 		assertEquals(currUser.getLists().getDoNotShow().get(0),restaurant.get(0));
 		
-		
+		currUser.reset();
 	}
 
 }

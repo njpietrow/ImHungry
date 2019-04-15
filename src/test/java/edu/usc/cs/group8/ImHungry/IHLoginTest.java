@@ -50,6 +50,11 @@ public class IHLoginTest {
 		when(request.getParameter("password")).thenReturn("Waterfall");
 		when(request.getParameter("action")).thenReturn("LogIn");
 		LG.service(request,response);
+		
+		when(request.getParameter("username")).thenReturn("Armando");
+		when(request.getParameter("password")).thenReturn("Waterfall");
+		when(request.getParameter("action")).thenReturn("LogIn");
+		LG.service(request,response);
 	}
 	
 	@Test

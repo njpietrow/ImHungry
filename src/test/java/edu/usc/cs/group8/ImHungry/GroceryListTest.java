@@ -10,7 +10,7 @@ public class GroceryListTest {
 
 	@Test
 	public void addToListTest() {
-		User user = new User("Buster");
+		User user = new User("GJHalfond");
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");
@@ -33,8 +33,27 @@ public class GroceryListTest {
 	
 	@Test
 	public void removeFromListTest() {
-		User user = new User("Buster");
+		User user = new User("GJHalfond");
 		ArrayList<String> ingredients = new ArrayList<String>();
+		user.removeFromGroceryList("Not an ingredient.");
+		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
+		user.addToGroceryList("Delete this.");
+		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
+		user.addToGroceryList("Bad1");
+		user.addToGroceryList("Bad2");
+		user.addToGroceryList("Bad3");
+		user.addToGroceryList("Bad4");
+		user.addToGroceryList("Bad5");
+		user.addToGroceryList("Bad6");
+		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
+		user.removeFromGroceryList("Not an ingredient.");
+		user.removeFromGroceryList("Delete this.");
+		user.removeFromGroceryList("Bad1");
+		user.removeFromGroceryList("Bad2");
+		user.removeFromGroceryList("Bad3");
+		user.removeFromGroceryList("Bad4");
+		user.removeFromGroceryList("Bad5");
+		user.removeFromGroceryList("Bad6");
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");
 		ingredients.add("Like 48 red hots");
@@ -61,7 +80,7 @@ public class GroceryListTest {
 	
 	@Test
 	public void clearListTest() {
-		User user = new User("Buster");
+		User user = new User("GJHalfond");
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("10 eggs");
 		ingredients.add("A whole bunch of flour");

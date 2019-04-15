@@ -11,6 +11,7 @@ public class DataPersistenceTest {
 	@Test
 	public void testListsStillThere() {
 		LoginHelper helper = new LoginHelper();
+		helper.logout(new User());
 		User currUser = new User();
 		helper.login("GJHalfond","Scrum",currUser);
 		Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));

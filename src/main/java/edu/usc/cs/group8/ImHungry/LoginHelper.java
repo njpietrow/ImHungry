@@ -68,7 +68,7 @@ public class LoginHelper {
 	        	case 1: 
 	        		toExploreRestaurants.put(listNum, temp);
 	        		break;
-	        	case 2:
+	        	default:
 	        		doNotShowRestaurants.put(listNum, temp);
 	        		break;
 	        	}
@@ -93,7 +93,7 @@ public class LoginHelper {
 	        	case 1: 
 	        		toExploreRecipes.put(listNum, temp);
 	        		break;
-	        	case 2:
+	        	default:
 	        		doNotShowRecipes.put(listNum, temp);
 	        		break;
 	        	}
@@ -138,8 +138,6 @@ public class LoginHelper {
 	        currUser.getLists().setDoNotShow(new ArrayList<Result>(doNotShow.values()));
 	        
 	        currUser.getLists().setQuickAccess(quickAccess);
-	        
-	        System.out.println(username + ": " + quickAccess);
 	        
 	        return true;
 	        // Do something with the Connection

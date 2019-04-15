@@ -18,17 +18,6 @@ public class User {
 	private ArrayList<String> groceryList; 
 	
 	private HashMap<String,Result> cache;
-
-	public User(String name, ArrayList<Result> favorites, ArrayList<Result> toExplore, ArrayList<Result> doNotShow, ArrayList<Query> quickAccess, ArrayList<String> groceryList)
-	{
-		this.name = name;
-		this.favorites = favorites;
-		this.toExplore = toExplore;
-		this.doNotShow = doNotShow;
-		this.quickAccess = quickAccess;
-		this.groceryList = groceryList;
-		cache = new HashMap<String,Result>();
-	}
 	
 	public User(String name)
 	{
@@ -79,6 +68,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
@@ -123,7 +113,7 @@ public class User {
 				}	
 			}
 		}
-		else if (r instanceof Recipe)
+		else
 		{
 			try
 			{
@@ -138,6 +128,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1; 
 				
@@ -209,6 +200,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
@@ -253,7 +245,7 @@ public class User {
 				}	
 			}
 		}
-		else if (r instanceof Recipe)
+		else
 		{
 			try
 			{
@@ -268,6 +260,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1; 
 
@@ -339,6 +332,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
@@ -383,7 +377,7 @@ public class User {
 				}	
 			}
 		}
-		else if (r instanceof Recipe)
+		else
 		{
 			try
 			{
@@ -398,6 +392,7 @@ public class User {
 				{
 					list_size = rs.getInt("list_size"); 
 				}
+				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1; 
 				rs.close();
@@ -482,7 +477,7 @@ public class User {
 					st.setString(3, "0");
 					st.execute();
 				}
-				else if (r instanceof Recipe)
+				else
 				{
 					String url = ((Recipe) r).getURL();
 					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
@@ -533,7 +528,7 @@ public class User {
 					st.setString(3, "1");
 					st.execute();
 				}
-				else if (r instanceof Recipe)
+				else
 				{
 					String url = ((Recipe) r).getURL();
 					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
@@ -584,7 +579,7 @@ public class User {
 					st.setString(3, "2");
 					st.execute();
 				}
-				else if (r instanceof Recipe)
+				else
 				{
 					String url = ((Recipe) r).getURL();
 					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
@@ -684,14 +679,6 @@ public class User {
 	public void addToQuickAccess(Query q) {
 		quickAccess.add(q);
 	}
-	
-	public void removeFromQuickAccess(Query q) {
-		quickAccess.remove(q);
-	}
-	
-	public void removeFromQuickAccess(int index) {
-		quickAccess.remove(index);
-	}
 
 	public void setFavorites(ArrayList<Result> favorites) {
 		this.favorites = favorites;
@@ -720,8 +707,7 @@ public class User {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
                     "user=root&password=root&useSSL=false");
 			st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
-			String username = null;
-			st.setString(1, username);
+			st.setString(1, name);
 			st.setString(2, r);
 			st.execute();
 		}
@@ -748,33 +734,7 @@ public class User {
 		PreparedStatement st = null;
 		for (int i = 0; i < ingreds.size(); i++)
 		{
-			groceryList.add(ingreds.get(i));
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-	                    "user=root&password=root&useSSL=false");
-				st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
-				String username = "";
-				st.setString(1, username);
-				st.setString(2, ingreds.get(i));
-				st.execute();
-			}
-			catch (SQLException ex) {
-		        // handle any errors
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
-			finally {
-				try {
-					conn.close();
-					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-			}
+			addToGroceryList(ingreds.get(i));
 		}
 	}
 
@@ -810,8 +770,7 @@ public class User {
 						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 			                    "user=root&password=root&useSSL=false");
 						st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
-						String username = "";
-						st.setString(1, username);
+						st.setString(1, name);
 						st.setString(2, ingreds.get(j));
 						st.execute();
 					}
@@ -857,8 +816,7 @@ public class User {
 					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 		                    "user=root&password=root&useSSL=false");
 					st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
-					String username = "";
-					st.setString(1, username);
+					st.setString(1, name);
 					st.setString(2, res);
 					st.execute();
 				}
@@ -926,10 +884,7 @@ public class User {
 	}
 	
 	public Restaurant get(String token, String name) {
-		if (name == null) return null;
-		if (token.charAt(0)=='\'') {
-			token = token.substring(1,token.length()-1);
-		}
+		if (this.name == null) return null;
 		if (cache.containsKey(token)) {
 			return (Restaurant)cache.get(token);
 		} else {
