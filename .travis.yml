@@ -1,4 +1,6 @@
-language: java
+language: 
+  - java
+  - ruby
 
 jdk:
   - oraclejdk8
@@ -18,4 +20,5 @@ branches:
 
 before_install:
   - cd src/test/java/edu/usc/cs/group8/ImHungry
+  
 
