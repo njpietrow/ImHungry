@@ -95,7 +95,7 @@ end
 Then("stay on search page again") do
     expect(page).to have_content("Feed Me!")
 end
-End of signup tests
+#End of signup tests
 
 # Results page tests
 Given("I am on the results page after pizza search") do
