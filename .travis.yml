@@ -5,7 +5,9 @@ language:
 jdk:
   - oraclejdk8
 
-script: mvn test -B
+script: 
+  - cd target 
+  - mvn test -B
 
 # Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
 addons:
@@ -18,7 +20,4 @@ branches:
   only:
   - master
 
-before_install:
-  - cd src/test/java/edu/usc/cs/group8/ImHungry
-  
 
