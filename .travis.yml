@@ -5,6 +5,10 @@ language:
 jdk:
   - oraclejdk8
 
+sudo: required
+addons:
+ chrome: stable
+ 
 script: 
   - cd cucumber_tests
   - gem update --system
