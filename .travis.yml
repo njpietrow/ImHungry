@@ -9,7 +9,7 @@ sudo: required
 addons:
  chrome: stable
  
-script: 
+before_install: 
   - cd cucumber_tests
   - gem update --system
   - gem install bundler
@@ -22,21 +22,17 @@ script:
   - google-chrome-stable --headless --no-sandbox
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+
+script:
   - bundle install
   - bundle exec cucumber
   - cd .. 
   - mvn clean install 
   - mvn test -B
 
-# Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
 addons:
   apt:
     packages:
     - oracle-java8-installer
-
-# safelist
-branches:
-  only:
-  - master
 
 
