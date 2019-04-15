@@ -35,9 +35,11 @@ public class GroceryListTest {
 	public void removeFromListTest() {
 		User user = new User("GJHalfond");
 		ArrayList<String> ingredients = new ArrayList<String>();
+		Recipe emptyRecipe = new Recipe("Empty","0","0","",new ArrayList<String>(), new ArrayList<String>());
 		user.removeFromGroceryList("Not an ingredient.");
 		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
 		user.addToGroceryList("Delete this.");
+		user.removeFromGroceryList(emptyRecipe);
 		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
 		user.addToGroceryList("Bad1");
 		user.addToGroceryList("Bad2");
