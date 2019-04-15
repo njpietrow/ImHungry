@@ -17,5 +17,5 @@ branches:
   - master
 
 before_install:
-  - cd src\test\java\edu\usc\cs\group8\ImHungry
+  - cd src/test/java/edu/usc/cs/group8/ImHungry
 
