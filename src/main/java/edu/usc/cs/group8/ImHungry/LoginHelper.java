@@ -118,7 +118,7 @@ public class LoginHelper {
 	        while(rs.next())
 	        {
 	        	String ingredient = rs.getString("ingredient");
-	        	currUser.addToGroceryList(ingredient);
+	        	groceries.add(ingredient);
 	        	
 	        }
 	        

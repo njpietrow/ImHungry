@@ -16,10 +16,22 @@ public class DataPersistenceTest {
 		helper.login("GJHalfond","Scrum",currUser);
 		Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
 		r.setURL("http://localhost:8080/ImHungry/testrecipe.html");
+		Restaurant p = currUser.get("ChIJ_xMfDefHwoAR9ho1OxKZ850", "Pasta Roma");
 		currUser.addToFavorites(r);
+		currUser.addToFavorites(p);
+		currUser.addToToExplore(r);
+		currUser.addToToExplore(p);
+		currUser.addToDoNotShow(r);
+		currUser.addToDoNotShow(p);
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
 		assertTrue(currUser.getLists().favoritesContains(r));
+		assertTrue(currUser.getLists().toExploreContains(r));
+		assertTrue(currUser.getLists().doNotShowContains(r));
+		assertTrue(currUser.getLists().favoritesContains(p));
+		assertTrue(currUser.getLists().toExploreContains(p));
+		assertTrue(currUser.getLists().doNotShowContains(p));
+		currUser.reset();
 
 		
 		

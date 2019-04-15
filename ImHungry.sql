@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS ImHungry;
 
+SET GLOBAL time_zone = '-7:00';
+
 CREATE DATABASE ImHungry;
 USE ImHungry;
 
@@ -85,6 +87,8 @@ Select * from Recipe;
 SELECT * FROM ListRecipes l2, Recipe r where username="GJHalfond" AND l2.recipe_url = r.recipe_url;
 SELECT * From ListRestaurants;
 Select * From QuickAccess;
+Select * From Groceries;
 
+Select * from restaurant;
 #Select * from User;
 #SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
