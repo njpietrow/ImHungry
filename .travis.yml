@@ -6,7 +6,7 @@ jdk:
   - oraclejdk8
 
 script: 
-  - cd target 
+  - mvn clean install 
   - mvn test -B
 
 # Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
