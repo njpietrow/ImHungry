@@ -29,8 +29,11 @@
 		    	<% for(int i = 0; i < ((ArrayList<String>)(session.getAttribute("images"))).size(); i+=1) { %> 
 			            <img class="collage_image" src=<%=((ArrayList<String>)(session.getAttribute("images"))).get(i)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 			    <% } %>
-			    <!-- buttons + dropdown menu -->
-			    <div class="btn-group-vertical" id="button_stuff">
+			  
+	    	</div>
+	    	
+	    	  <!-- buttons + dropdown menu -->
+			    <div class="btn-group-vertical" id="button_stuff" style=" ">
 					<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 						<div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 						<a class="dropdown-item" href="#">Favorites</a>
@@ -55,7 +58,7 @@
 
 						<!-- Manage List Button is the button to be clicked after user has selected a list from the dropdown menu
 						 And by clicking the manage list button, user will be redirected to the page that s/he selected-->
-						<button class="btn btn-dark" id="manage_list_button">Manage List</button>
+						<button class="btn btn-dark" id="manage_list_button" style="">Manage List</button>
 							<!-- Redirect to the List Management Page -->
 							<script type="text/javascript">
 								document.getElementById("manage_list_button").onclick = function(){
@@ -86,8 +89,8 @@
 								};
 							</script>
 				</div>
+			    <!--end of buttons  -->
 			    
-	    	</div>
 			<%-- <div class = "text-center"> 
 				<!-- This is the header for the result page -->
 				<h1>Results for <%= session.getAttribute("query") %></h1>
@@ -165,6 +168,8 @@
 						</div>
 					</div>
 		        </div>
+		        
+		        <div style="clear:both"></div>
 	        </div>
 	    </div>
 	    

@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
-	public String name; 
-	
+	public String name;
+
 	private ArrayList<Result> favorites;
 	private ArrayList<Result> toExplore;
 	private ArrayList<Result> doNotShow;
 	private ArrayList<Query> quickAccess;
-	private ArrayList<String> groceryList; 
-	
+	private ArrayList<String> groceryList;
+
 	private HashMap<String,Result> cache;
-	
+
 	public User(String name)
 	{
 		this.name = name;
@@ -29,7 +29,7 @@ public class User {
 		groceryList = new ArrayList<String>();
 		cache = new HashMap<String,Result>();
 	}
-	
+
 	public User()
 	{
 		name = "";
@@ -40,39 +40,39 @@ public class User {
 		groceryList = new ArrayList<String>();
 		cache = new HashMap<String,Result>();
 	}
-	
+
 	public User getLists() {
 		// TODO Auto-generated method stub
-		 return this; 
+		 return this;
 	}
-	
+
 	public void addToFavorites(Result r) {
 		if (!favorites.contains(r)) favorites.add(r);
-		
+
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
-		
+		ResultSet rs = null;
+
 		if (r instanceof Restaurant)
 		{
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
-				
+
 				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
@@ -83,13 +83,13 @@ public class User {
 					st.setString(2, r.getName());
 					st.execute();
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,0,?)");
 				st.setString(1, ((Restaurant) r).getId());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -110,7 +110,7 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 		}
 		else
@@ -118,39 +118,39 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
-				list_size = list_size+1; 
-				
+				list_size = list_size+1;
+
 				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
-				
+
 				if (!rs.next()) {
 
 					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
 					st.setString(1, ((Recipe) r).getURL());
 					st.setString(2, r.getName());
 					st.execute();
-				
+
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,0,?)");
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -171,57 +171,57 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
-			}			
+				}
+			}
 		}
-		
+
 	}
-	
+
 	public void addToToExplore(Result r) {
 		if (!toExplore.contains(r)) toExplore.add(r);
-		
-		
+
+
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
-		
+		ResultSet rs = null;
+
 		if (r instanceof Restaurant)
 		{
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
-				
+
 				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
-				
+
 				if (!rs.next()) {
 					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
 					st.setString(1, ((Restaurant) r).getId());
 					st.setString(2, r.getName());
 					st.execute();
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,1,?)");
 				st.setString(1, ((Restaurant) r).getId());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -242,7 +242,7 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 		}
 		else
@@ -250,37 +250,37 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
-				list_size = list_size+1; 
+				list_size = list_size+1;
 
 				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
-				
+
 				if (!rs.next()) {
 					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
 					st.setString(1, ((Recipe) r).getURL());
 					st.setString(2, r.getName());
 					st.execute();
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,1,?)");
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -301,59 +301,59 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
-			}			
+				}
+			}
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	public void addToDoNotShow(Result r) {
 		if (!doNotShow.contains(r)) doNotShow.add(r);
-		
-		
+
+
 		Connection conn = null;
 		PreparedStatement st = null;
-		ResultSet rs = null;	
-		
+		ResultSet rs = null;
+
 		if (r instanceof Restaurant)
 		{
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
 				list_size = list_size+1;
 				rs.close();
-				
+
 				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
-				
+
 				if (!rs.next()) {
 					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
 					st.setString(1, ((Restaurant) r).getId());
 					st.setString(2, r.getName());
 					st.execute();
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
 				st.setString(1, ((Restaurant) r).getId());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -374,7 +374,7 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 		}
 		else
@@ -382,38 +382,38 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
-				
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
 				rs = st.executeQuery();
-				int list_size = -1; 
+				int list_size = -1;
 				if (rs.next())
 				{
-					list_size = rs.getInt("list_size"); 
+					list_size = rs.getInt("list_size");
 				}
 				if (list_size == -1) return;
 				st.close();
-				list_size = list_size+1; 
+				list_size = list_size+1;
 				rs.close();
-				
+
 				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
 				st.setString(1, r.getName());
 				rs = st.executeQuery();
-				
+
 				if (!rs.next()) {
 					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
 					st.setString(1, ((Recipe) r).getURL());
 					st.setString(2, r.getName());
 					st.execute();
 				}
-				
+
 				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,2,?)");
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
 				st.setInt(3, list_size);
 				st.execute();
-				
+
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
 				st.setInt(1, list_size);
 				st.setString(2, name);
@@ -434,11 +434,11 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 		}
-		
-		
+
+
 	}
 
 	public String getName() {
@@ -446,33 +446,33 @@ public class User {
 	}
 	public void setName(String newname)
 	{
-		name = newname; 
+		name = newname;
 	}
-	
+
 	public Query getLastSearch() {
 		if (quickAccess.isEmpty()) {
 			return null;
 		}
 		return quickAccess.get(quickAccess.size()-1);
 	}
-	
+
 	public void removeFromFavorites(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		if (favoritesContains(r))
 		{
-		
+
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 				if (r instanceof Restaurant)
 				{
 					String id = ((Restaurant) r).getId();
-					
+
 					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
 							+ "and list_id=?");
-					st.setString(1, id);	
+					st.setString(1, id);
 					st.setString(2, name);
 					st.setString(3, "0");
 					st.execute();
@@ -486,7 +486,7 @@ public class User {
 					st.setString(2,  name);
 					st.setString(3, "0");
 					st.execute();
-				}				
+				}
 			}
 			catch (SQLException ex)
 			{
@@ -503,12 +503,12 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
 			favorites.remove(r);
 		}
 	}
-	
+
 	public void removeFromToExplore(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -516,14 +516,14 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 				if (r instanceof Restaurant)
 				{
 					String id = ((Restaurant) r).getId();
-					
+
 					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
 							+ "and list_id=?");
-					st.setString(1, id);	
+					st.setString(1, id);
 					st.setString(2, name);
 					st.setString(3, "1");
 					st.execute();
@@ -537,7 +537,7 @@ public class User {
 					st.setString(2,  name);
 					st.setString(3, "1");
 					st.execute();
-				}				
+				}
 			}
 			catch (SQLException ex)
 			{
@@ -554,12 +554,12 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
-			}				
+				}
+			}
 			toExplore.remove(r);
 		}
 	}
-	
+
 	public void removeFromDoNotShow(Result r) {
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -567,14 +567,14 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false");
+                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 				if (r instanceof Restaurant)
 				{
 					String id = ((Restaurant) r).getId();
-					
+
 					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
 							+ "and list_id=?");
-					st.setString(1, id);	
+					st.setString(1, id);
 					st.setString(2, name);
 					st.setString(3, "2");
 					st.execute();
@@ -588,7 +588,7 @@ public class User {
 					st.setString(2,  name);
 					st.setString(3, "2");
 					st.execute();
-				}				
+				}
 			}
 			catch (SQLException ex)
 			{
@@ -605,57 +605,57 @@ public class User {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
-			}				
+				}
+			}
 			doNotShow.remove(r);
 		}
 	}
-	
+
 	public void removeFromFavorites(int index){
 		if (favorites.size() > index)
 		{
 			removeFromFavorites(favorites.get(index));
 		}
 	}
-	
+
 	public void removeFromToExplore(int index){
 		if (toExplore.size() > index)
 		{
 			removeFromToExplore(toExplore.get(index));
 		}
 	}
-	
+
 	public void removeFromDoNotShow(int index){
 		if (doNotShow.size() > index)
 		{
 			removeFromDoNotShow(doNotShow.get(index));
 		}
 	}
-	
+
 	public boolean favoritesContains(Result r) {
 		return favorites.contains(r);
 	}
-	
+
 	public boolean toExploreContains(Result r) {
 		return toExplore.contains(r);
 	}
-	
+
 	public boolean doNotShowContains(Result r) {
 		return doNotShow.contains(r);
 	}
-	
+
 	public ArrayList<Result> getFavorites(){
 		return favorites;
 	}
-	
+
 	public ArrayList<Result> getToExplore(){
 		return toExplore;
 	}
-	
+
 	public ArrayList<Result> getDoNotShow(){
 		return doNotShow;
 	}
-	
+
 	public void reset() {
 		for (int i = favorites.size() - 1; i >= 0; i--) {
 			removeFromFavorites(i);
@@ -675,7 +675,7 @@ public class User {
 	public ArrayList<Query> getQuickAccess() {
 		return quickAccess;
 	}
-	
+
 	public void addToQuickAccess(Query q) {
 		quickAccess.add(q);
 	}
@@ -683,20 +683,20 @@ public class User {
 	public void setFavorites(ArrayList<Result> favorites) {
 		this.favorites = favorites;
 	}
-	
+
 	public void setToExplore(ArrayList<Result> toExplore) {
 		this.toExplore = toExplore;
 	}
-	
+
 	public void setDoNotShow(ArrayList<Result> doNotShow) {
 		this.doNotShow = doNotShow;
 	}
-	
+
 	public void setQuickAccess(ArrayList<Query> quickAccess) {
 		this.quickAccess = quickAccess;
 	}
 
-	
+
 	public void addToGroceryList(String r) {
 		// TODO Auto-generated method stub
 		groceryList.add(r);
@@ -705,7 +705,7 @@ public class User {
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                    "user=root&password=root&useSSL=false");
+					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 			st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
 			st.setString(1, name);
 			st.setString(2, r);
@@ -725,7 +725,7 @@ public class User {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
 	}
 	public void addToGroceryList(Recipe r) {
@@ -743,22 +743,22 @@ public class User {
 		for (int i = 0; i < groceryList.size(); i++)
 		{
 			if (groceryList.get(i).equals(res))
-				return true; 
+				return true;
 		}
-		return false; 
+		return false;
 	}
 
 	public boolean removeFromGroceryList(Recipe r) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		if (groceryList.size() < 1)
-			return false; 
-		
+			return false;
+
 		ArrayList<String> ingreds = r.getIngredients();
 		if (groceryList.size() < ingreds.size())
-			return false; 
+			return false;
 		if (ingreds.size() == 0)
-			return true; 
+			return true;
 		for (int i = groceryList.size()-1; i >= 0; i--)
 		{
 			for (int j = ingreds.size()-1; j >= 0; j--)
@@ -768,7 +768,7 @@ public class User {
 					try
 					{
 						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-			                    "user=root&password=root&useSSL=false");
+		                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 						st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
 						st.setString(1, name);
 						st.setString(2, ingreds.get(j));
@@ -788,25 +788,25 @@ public class User {
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}	
+						}
 					}
 					groceryList.remove(i);
 					ingreds.remove(j);
 					if (ingreds.size() == 0)
-						return true; 
-					break; 
+						return true;
+					break;
 				}
 			}
 		}
-		return false; 
-		
+		return false;
+
 	}
 
 	public boolean removeFromGroceryList(String res) {
 		Connection conn = null;
 		PreparedStatement st = null;
 		if (groceryList.size() < 1)
-			return false; 
+			return false;
 		for (int i = 0; i < groceryList.size(); i++)
 		{
 			if (groceryList.get(i).equals(res))
@@ -814,7 +814,7 @@ public class User {
 				try
 				{
 					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-		                    "user=root&password=root&useSSL=false");
+	                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 					st = conn.prepareStatement("DELETE FROM Groceries WHERE username =? and ingredient = ?");
 					st.setString(1, name);
 					st.setString(2, res);
@@ -834,14 +834,14 @@ public class User {
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}	
+					}
 				}
 				groceryList.remove(i);
-				return true; 
+				return true;
 			}
 		}
-		return false; 
-		
+		return false;
+
 	}
 
 	public void clearGroceryList() {
@@ -850,11 +850,11 @@ public class User {
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                    "user=root&password=root&useSSL=false");
+					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 			st = conn.prepareStatement("DELETE FROM Groceries WHERE username = ?");
 			st.setString(1,name);
 			st.execute();
-					
+
 		}
 		catch (SQLException ex)
 		{
@@ -871,7 +871,7 @@ public class User {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
 		while(groceryList.size() > 0)
 		{
@@ -880,9 +880,9 @@ public class User {
 	}
 
 	public ArrayList<String> getGroceries() {
-		return groceryList; 
+		return groceryList;
 	}
-	
+
 	public Restaurant get(String token, String name) {
 		if (this.name == null) return null;
 		if (cache.containsKey(token)) {
@@ -910,7 +910,11 @@ public class User {
 			r.setURL(token);
 			cache.put(token, r);
 			return r;
-		} 
+		}
+	}
+
+	public void setGroceries(ArrayList<String> groceries) {
+		this.groceryList = groceries;
+		
 	}
 }
-

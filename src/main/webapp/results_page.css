@@ -18,11 +18,9 @@ html body {
 	}
 
 .btn-group-vertical {
-	position: absolute;
-	bottom: 40% !important;
-	left:130%;
-	/* left:95%; */
-	z-index:1;
+	position:absolute;
+	left:80%;
+	top:20%;
 }
 
 .btn-group-vertical > button{

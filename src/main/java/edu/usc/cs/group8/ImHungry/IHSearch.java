@@ -38,14 +38,14 @@ public class IHSearch extends HttpServlet {
 	 * num_results for number of results
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
 	private static final String TOMMY_TROJAN_LOC = "34.020593,-118.285447";
-	
+
 	public IHSearch() {
 		super();
-		
-        
+
+
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
@@ -67,13 +67,13 @@ public class IHSearch extends HttpServlet {
 			}
 		}
     }
-	
+
 	/*
 	 * This function takes the search query and requested number of results, and calls the three
 	 * search functions to retrieve the results. The results are stored in session data.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		setAccessControlHeaders(response);
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -93,13 +93,13 @@ public class IHSearch extends HttpServlet {
 		}
 //		String radius = request.getParameter("radius");
 //		TODO need to create radius parameter from input box
-		
+
 		// No session required for Search
 		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number,currUser);
 		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius,currUser);
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
-		
+
 		if (images != null && recipes != null && restaurants != null) {
 			addToQuickAccess(currUser,keyword,number);
 			if (currUser == null) currUser = new User();
@@ -111,12 +111,12 @@ public class IHSearch extends HttpServlet {
 			request.getSession().setAttribute("query", keyword);
 			request.getRequestDispatcher("results_page.jsp").forward(request, response);
 		}
-		
+
 		response.setStatus(response.SC_BAD_GATEWAY);
 		response.getWriter().println("Unknown error occurred.");
 		response.getWriter().flush();
 	}
-	
+
 	private void addToQuickAccess(User currUser, String keyword, String number) {
 		if (currUser == null) return;
 		if (currUser.getName() == null) return;
@@ -127,14 +127,14 @@ public class IHSearch extends HttpServlet {
 		 try {
 		        conn =
 		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-		                                       "user=root&password=root&useSSL=false");
+	                                       "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results) values (?,?,?)");
 		        st.setString(1,  currUser.getName());
 		        st.setString(2,  keyword);
 		        st.setString(3, number);
 		        st.execute();
 		        // Do something with the Connection
-		
+
 		    } catch (SQLException ex) {
 		        // handle any errors
 		        System.out.println("SQLException: " + ex.getMessage());
@@ -147,7 +147,7 @@ public class IHSearch extends HttpServlet {
 	 * Sorts restaurants according to the comparator RestaurantComparator below
 	 */
 	public void sortRestaurants(ArrayList<Restaurant> restaurants, User currUser) {
-		
+
 		restaurants.sort((r1,r2) -> {
 			if (currUser.getLists().favoritesContains(r1) && !currUser.getLists().favoritesContains(r2)) {
 			return Integer.MIN_VALUE;
@@ -155,7 +155,7 @@ public class IHSearch extends HttpServlet {
 			return Integer.MAX_VALUE;
 		}
 		else return r1.getDriveTime() - r2.getDriveTime();});
-		
+
 	}
 
 	/*
@@ -163,7 +163,7 @@ public class IHSearch extends HttpServlet {
 	 */
 	public void sortRecipes(ArrayList<Recipe> recipes, User currUser) {
 		recipes.sort((r1,r2) -> {
-			
+
 			if (currUser.getLists().favoritesContains(r1) && !currUser.getLists().favoritesContains(r2)) {
 				return Integer.MIN_VALUE;
 		} else if (currUser.getLists().favoritesContains(r2) && !currUser.getLists().favoritesContains(r1)) {
@@ -190,22 +190,22 @@ public class IHSearch extends HttpServlet {
 		addToQuickAccess(currUser,keyword,number);
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
-		
+
 		//set url for Google Nearby Search API request
 		// TODO
 		//need to pass in radius parameter taken from the form
 		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
 				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
-//				+ "&radius=5000"				
+//				+ "&radius=5000"
 				+ "&radius=" + radius
 				+ "&keyword=" + keyword
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
-		
+
 			String json_string = readWebsite(url);
-			
-			
+
+
 			if (json_string == null) return null;
 
 			//Parse the JSON file to retrieve relevant Restaurants
@@ -216,8 +216,8 @@ public class IHSearch extends HttpServlet {
 			int check = Integer.parseInt(number) + 3;
 			//checks to see if the query returned less than the number of results to return.
 			if (jsonArray.length()<check)
-				check = jsonArray.length(); 
-			
+				check = jsonArray.length();
+
 			for (int i = 0; restaurants.size() < Integer.parseInt(number) && i < check; i++) {
 				JSONObject iterate_obj = (JSONObject) jsonArray.get(i);
 				String id = (String) iterate_obj.get("place_id");
@@ -228,12 +228,12 @@ public class IHSearch extends HttpServlet {
 					restaurants.add(temp);
 				}
 			}
-			
+
 			//Populate the array of Restaurant objects with the rest of the required info
 			for (int i =0; i < restaurants.size();i++) {
 				Restaurant curr_restaurant = restaurants.get(i);
 				curr_restaurant = currUser.get(curr_restaurant.getId(),curr_restaurant.getName());
-				restaurants.set(i, curr_restaurant);                                
+				restaurants.set(i, curr_restaurant);
 			}
 		return restaurants;
 	}
@@ -250,7 +250,7 @@ public class IHSearch extends HttpServlet {
 		String results = readWebsite("https://www.google.com/search?q=" + keyword + "%20recipe&num=100");
 		if (results == null) return null;
 		else {
-			
+
 			// "class="r"><a href= is the key that means a new result is starting.
 			ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 			int i = 0;
@@ -262,7 +262,7 @@ public class IHSearch extends HttpServlet {
 						while (results.charAt(i) != '"' && i < results.length()) i++;
 						Recipe recipe = (Recipe)currUser.get(results.substring(j,i));
 						if (recipe == null) recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
-						
+
 						if (currUser == null) currUser = new User();
 						if (recipe == null || currUser.getLists().doNotShowContains(recipe) || recipes.contains(recipe)) {
 							continue;
@@ -336,4 +336,3 @@ public class IHSearch extends HttpServlet {
     }
 
 }
-

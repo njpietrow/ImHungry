@@ -1,20 +1,42 @@
-language: ruby
+language: 
+  - java
+  - ruby
+
+jdk:
+  - oraclejdk8
+
 sudo: required
 addons:
  chrome: stable
-
-before_install:
- - gem update --system
- - gem install cucumber capybara selenium rspec 'selenium-webdriver'
- - wget http://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip
- - unzip chromedriver_linux64.zip
- - rm chromedriver_linux64.zip
- - sudo mv -f chromedriver /usr/local/bin/
- - sudo chmod +x /usr/local/bin/chromedriver
- - google-chrome-stable --headless --no-sandbox
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
  
- script: 
- - cd cucumber_tests 
- - 'bundle exec cucumber'
+script: 
+  - cd cucumber_tests
+  - gem update --system
+  - gem install bundler
+  - gem install cucumber capybara selenium rspec 'selenium-webdriver'
+  - wget http://chromedriver.storage.googleapis.com/2.46/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - rm chromedriver_linux64.zip
+  - sudo mv -f chromedriver /usr/local/bin/
+  - sudo chmod +x /usr/local/bin/chromedriver
+  - google-chrome-stable --headless --no-sandbox
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - bundle install
+  - bundle exec cucumber
+  - cd .. 
+  - mvn clean install 
+  - mvn test -B
+
+# Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
+
+# safelist
+branches:
+  only:
+  - master
+
+
