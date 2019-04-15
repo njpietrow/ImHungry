@@ -5,7 +5,7 @@ language:
 jdk:
   - oraclejdk8
 
-script: ant build
+script: mvn test -B
 
 # Use JDK 8u45. The above line just causes the use of a minor version of Java 8.
 addons:
