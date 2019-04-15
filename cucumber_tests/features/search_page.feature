@@ -4,8 +4,6 @@ Feature: Search ImHungry
 Background: 
 	Given I am on the default search page 
 
-
-
 Scenario: "Feed Me" Button
 	Then the Feed Me button is on the search page
 
@@ -22,3 +20,10 @@ Scenario: Basic Pizza Search
 	When I type "pizza" in the input box
 	And I click on the Feed Me button 
 	Then I should I should be on the "IH Search" page 
+	
+Scenario: Success login
+	When I click on Login button
+	And enter credentials "GJHalfond" and "Scrum"
+	And click on login
+	Then stay on search page
+	
