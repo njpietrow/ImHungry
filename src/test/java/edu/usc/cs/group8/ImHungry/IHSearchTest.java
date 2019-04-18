@@ -181,7 +181,10 @@ public class IHSearchTest {
 		User currUser = new User("GJHalfond");
 		ArrayList<Restaurant> restaurants = IHS.doRestaurantSearch("pizza", "33", "1",currUser);
 		IHS.sortRestaurants(restaurants,currUser);
-		assertEquals(restaurants.size(),0);
+		assertEquals(restaurants.size(),14);
+		restaurants = IHS.doRestaurantSearch("pizza", "33", "2",currUser);
+		IHS.sortRestaurants(restaurants,currUser);
+		assertEquals(restaurants.size(),20);
 
 	}
 	

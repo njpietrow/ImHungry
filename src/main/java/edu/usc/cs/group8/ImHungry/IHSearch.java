@@ -45,7 +45,6 @@ public class IHSearch extends HttpServlet {
 	public IHSearch() {
 		super();
 
-		/*
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
@@ -66,7 +65,6 @@ public class IHSearch extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		*/
     }
 
 	/*
