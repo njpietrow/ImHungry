@@ -5,3 +5,4 @@ target/
 /src/api key.txt
 apikey.txt
 apikey2.txt
+cucumber_tests/features/support/env.rb
