@@ -58,7 +58,7 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+                        "user=root&password=root&useSSL=false&allowPublicKeyRetrieval=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
