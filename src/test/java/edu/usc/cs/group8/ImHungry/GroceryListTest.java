@@ -77,6 +77,9 @@ public class GroceryListTest {
 		user.getLists().removeFromGroceryList("A can of chicken");
 		assertFalse(user.getLists().groceryListContains("A can of chicken"));
 		assertTrue(user.getLists().groceryListContains("A whole bunch of flour"));
+		user.addToGroceryList(gross);
+		user.removeFromGroceryList("A whole bunch of flour");
+		assertFalse(user.getLists().groceryListContains("A whole bunch of flour"));
 		
 	}
 	
