@@ -19,7 +19,7 @@ public class GroceryListTest {
 		ingredients.add("A can of chicken");
 		ingredients.add("An entire bottle of Sriracha-brand sriracha");
 		Recipe gross = user.get("http://localhost:8080/ImHungry/testrecipe.html");
-		user.getLists().addToGroceryList(gross);
+		user.addToGroceryList(gross);
 		assertTrue(user.getLists().groceryListContains("Like 48 red hots"));
 		assertFalse(user.getLists().groceryListContains("Green beans"));
 		ArrayList<String> moreIngredients = new ArrayList<String>();
@@ -97,7 +97,7 @@ public class GroceryListTest {
 		ingredients.add("A dollop of Daisy");
 		ingredients.add("A can of chicken");
 		Recipe gross = user.get("http://localhost:8080/ImHungry/testrecipe.html");
-		user.getLists().addToGroceryList(gross);
+		user.addToGroceryList(gross);
 		ArrayList<String> moreIngredients = new ArrayList<String>();
 		moreIngredients.add("Green beans");
 		moreIngredients.add("Like 48 red hots");
