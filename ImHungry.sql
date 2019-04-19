@@ -70,7 +70,9 @@ CREATE TABLE Groceries(
    groceryID int (10) primary key auto_increment not null,
    username varchar(100) not null,
    ingredient varchar(10000) not null,
-   foreign key (username) references User(username)
+   recipe_url varchar(100) not null,
+   foreign key (username) references User(username),
+   foreign key (recipe_url) references Recipe(recipe_url)
    );
    
 	

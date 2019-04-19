@@ -45,7 +45,6 @@ public class IHSearch extends HttpServlet {
 	public IHSearch() {
 		super();
 
-		/*
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
@@ -66,7 +65,6 @@ public class IHSearch extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		*/
     }
 
 	/*
@@ -191,7 +189,7 @@ public class IHSearch extends HttpServlet {
 		addToQuickAccess(currUser,keyword,number);
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
-
+		int rmeters = Integer.parseInt(radius) * 1609;
 		//set url for Google Nearby Search API request
 		// TODO
 		//need to pass in radius parameter taken from the form
@@ -199,7 +197,7 @@ public class IHSearch extends HttpServlet {
 				+ "location=" + TOMMY_TROJAN_LOC
 				+ "&type=restaurant"
 //				+ "&radius=5000"
-				+ "&radius=" + radius
+				+ "&radius=" + rmeters
 				+ "&keyword=" + keyword
 				+ "&key=" + MAPS_API_KEY
 				+ "\n";
