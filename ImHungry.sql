@@ -70,13 +70,15 @@ CREATE TABLE Groceries(
    groceryID int (10) primary key auto_increment not null,
    username varchar(100) not null,
    ingredient varchar(10000) not null,
-   foreign key (username) references User(username)
+   recipe_url varchar(100) not null,
+   foreign key (username) references User(username),
+   foreign key (recipe_url) references Recipe(recipe_url)
    );
    
 	
 
     
-INSERT into User(username,password,list_size) values ("GJHalfond",6102,0);
+#INSERT into User(username,password,list_size) values ("GJHalfond",6102,0);
 INSERT into User(username,password,list_size) values ("KCalaway",30943,0);
 Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");

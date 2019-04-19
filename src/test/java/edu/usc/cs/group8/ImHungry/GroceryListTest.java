@@ -18,8 +18,8 @@ public class GroceryListTest {
 		ingredients.add("A dollop of Daisy");
 		ingredients.add("A can of chicken");
 		ingredients.add("An entire bottle of Sriracha-brand sriracha");
-		Recipe gross = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",ingredients,new ArrayList<String>());
-		user.getLists().addToGroceryList(gross);
+		Recipe gross = user.get("http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList(gross);
 		assertTrue(user.getLists().groceryListContains("Like 48 red hots"));
 		assertFalse(user.getLists().groceryListContains("Green beans"));
 		ArrayList<String> moreIngredients = new ArrayList<String>();
@@ -38,15 +38,15 @@ public class GroceryListTest {
 		Recipe emptyRecipe = new Recipe("Empty","0","0","",new ArrayList<String>(), new ArrayList<String>());
 		user.removeFromGroceryList("Not an ingredient.");
 		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
-		user.addToGroceryList("Delete this.");
+		user.addToGroceryList("Delete this.","http://localhost:8080/ImHungry/testrecipe.html");
 		user.removeFromGroceryList(emptyRecipe);
 		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
-		user.addToGroceryList("Bad1");
-		user.addToGroceryList("Bad2");
-		user.addToGroceryList("Bad3");
-		user.addToGroceryList("Bad4");
-		user.addToGroceryList("Bad5");
-		user.addToGroceryList("Bad6");
+		user.addToGroceryList("Bad1","http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList("Bad2","http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList("Bad3","http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList("Bad4","http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList("Bad5","http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList("Bad6","http://localhost:8080/ImHungry/testrecipe.html");
 		user.removeFromGroceryList(RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html")));
 		user.removeFromGroceryList("Not an ingredient.");
 		user.removeFromGroceryList("Delete this.");
@@ -61,12 +61,14 @@ public class GroceryListTest {
 		ingredients.add("Like 48 red hots");
 		ingredients.add("A dollop of Daisy");
 		ingredients.add("A can of chicken");
-		Recipe gross = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",ingredients,new ArrayList<String>());
+		Recipe gross = user.get("http://localhost:8080/ImHungry/testrecipe.html");
 		user.getLists().addToGroceryList(gross);
+		gross.setURL("http://localhost:8080/ImHungry/testrecipe.html");
 		ArrayList<String> moreIngredients = new ArrayList<String>();
 		moreIngredients.add("Green beans");
 		moreIngredients.add("Like 48 red hots");
 		Recipe greenBeans = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",moreIngredients,new ArrayList<String>());
+		greenBeans.setURL("http://localhost:8080/ImHungry/testrecipe.html");
 		user.getLists().addToGroceryList(greenBeans);
 		assertTrue(user.getLists().groceryListContains("Green beans"));
 		assertTrue(user.getLists().groceryListContains("Like 48 red hots"));
@@ -77,6 +79,11 @@ public class GroceryListTest {
 		user.getLists().removeFromGroceryList("A can of chicken");
 		assertFalse(user.getLists().groceryListContains("A can of chicken"));
 		assertTrue(user.getLists().groceryListContains("A whole bunch of flour"));
+		user.addToGroceryList(gross);
+		System.out.println(user.getGroceries());
+		user.removeFromGroceryList("A whole bunch of flour");
+		System.out.println(user.getGroceries());
+		assertFalse(user.getLists().groceryListContains("A whole bunch of flour"));
 		
 	}
 	
@@ -89,8 +96,8 @@ public class GroceryListTest {
 		ingredients.add("Like 48 red hots");
 		ingredients.add("A dollop of Daisy");
 		ingredients.add("A can of chicken");
-		Recipe gross = new Recipe("Gross Recipe","10","15","https://i.imgur.com/bjnLBdq.jpg",ingredients,new ArrayList<String>());
-		user.getLists().addToGroceryList(gross);
+		Recipe gross = user.get("http://localhost:8080/ImHungry/testrecipe.html");
+		user.addToGroceryList(gross);
 		ArrayList<String> moreIngredients = new ArrayList<String>();
 		moreIngredients.add("Green beans");
 		moreIngredients.add("Like 48 red hots");
