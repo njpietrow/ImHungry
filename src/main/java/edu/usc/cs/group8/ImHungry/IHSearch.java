@@ -48,7 +48,7 @@ public class IHSearch extends HttpServlet {
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
+			br = new BufferedReader(new FileReader(new File("/Users/cpietrow 1/Documents/SW S19/310CSCI/ImHungry/apikey.txt")));
 			MAPS_API_KEY = br.readLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
