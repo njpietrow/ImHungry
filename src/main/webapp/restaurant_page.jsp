@@ -18,6 +18,9 @@
     <title>Restaurant Page</title>
   </head>
   <body>
+  <!-- navbar -->
+  <jsp:include page="modules/nav_bar.jsp" />
+		
   <% Restaurant restaurant = new Restaurant("",""); 
   if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
 		    			String id = request.getParameter("restaurant_id");

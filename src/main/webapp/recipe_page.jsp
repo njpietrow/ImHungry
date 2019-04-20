@@ -19,6 +19,9 @@
     <title>Recipe Page</title>
   </head>
   <body id="print_preview">
+  <!-- navbar -->
+  <jsp:include page="modules/nav_bar.jsp" />
+		
   <% Recipe recipe = new Recipe("","","","",new ArrayList<String>(),new ArrayList<String>()); 
   
 		    	//Creating a new recipe object
@@ -138,6 +141,8 @@
 				        location.href = "IHManageList?action=ADD&list_id=" + list_id + "&recipe_id='"+ recipe_id + "'&restaurant_id=";	
 				    };
 	        	</script>
+	        	
+	        	<button class="btn btn-dark" id="grocery_list_button" >Add to Grocery List</button>
 	        </div> 
 		<!-- Use the recipe servlet to use the relevant information -->
         	<div class="recipe_information" id="all_stuff_on_page">	

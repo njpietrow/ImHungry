@@ -18,6 +18,9 @@
 		<title>Results for <%= session.getAttribute("query") %></title>
 	</head>
 	<body>
+		<!-- navbar -->
+		<jsp:include page="modules/nav_bar.jsp" />
+		
 		<!-- import links -->
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
