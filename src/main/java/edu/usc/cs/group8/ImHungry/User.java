@@ -702,14 +702,18 @@ public class User {
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+
+		
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-			st = conn.prepareStatement("SELECT * FROM Groceries WHERE username = ? and ingredient = ? and recipe_url = ?");
+			//st = conn.prepareStatement("SELECT * FROM Groceries WHERE username = ? AND ingredient = ? AND recipe_url = ?");
+			st = conn.prepareStatement("SELECT * FROM Groceries WHERE username = ? AND ingredient = ? AND recipe_url = ?");
 			st.setString(1, name);
 			st.setString(2, r);
 			st.setString(3, recipeURL);
+			System.out.println(st);
 			rs = st.executeQuery();
 			if (!rs.next()) {
 				groceryList.add(r);
@@ -739,13 +743,17 @@ public class User {
 				e.printStackTrace();
 			}
 		}
+		
+	
 	}
 	public void addToGroceryList(Recipe r) {
 		ArrayList<String> ingreds = r.getIngredients();
 		Connection conn = null;
 		PreparedStatement st = null;
+		System.out.println(ingreds.size());
 		for (int i = 0; i < ingreds.size(); i++)
 		{
+			System.out.println(ingreds.get(i));
 			addToGroceryList(ingreds.get(i),r.getURL());
 		}
 	}
