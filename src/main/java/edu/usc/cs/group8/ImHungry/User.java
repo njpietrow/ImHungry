@@ -58,7 +58,7 @@ public class User {
 			try
 			{
 				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+                        "user=root&password=root&useSSL=false&allowPublicKeyRetrieval=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
 
 				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
 				st.setString(1, name);
@@ -697,19 +697,30 @@ public class User {
 	}
 
 
-	public void addToGroceryList(String r) {
+	public void addToGroceryList(String r, String recipeURL) {
 		// TODO Auto-generated method stub
-		groceryList.add(r);
 		Connection conn = null;
 		PreparedStatement st = null;
+		ResultSet rs = null;
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-			st = conn.prepareStatement("INSERT INTO Groceries(username, ingredient) VALUES(?,?)");
+			st = conn.prepareStatement("SELECT * FROM Groceries WHERE username = ? and ingredient = ? and recipe_url = ?");
 			st.setString(1, name);
 			st.setString(2, r);
-			st.execute();
+			st.setString(3, recipeURL);
+			rs = st.executeQuery();
+			if (!rs.next()) {
+				groceryList.add(r);
+				PreparedStatement st2 = null;
+				st2 = conn.prepareStatement("INSERT INTO Groceries(username, ingredient, recipe_url) VALUES(?,?,?)");
+				st2.setString(1, name);
+				st2.setString(2, r);
+				st2.setString(3, recipeURL);
+				st2.execute();
+				st2.close();
+			}
 		}
 		catch (SQLException ex) {
 	        // handle any errors
@@ -722,6 +733,7 @@ public class User {
 			try {
 				conn.close();
 				st.close();
+				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -734,7 +746,7 @@ public class User {
 		PreparedStatement st = null;
 		for (int i = 0; i < ingreds.size(); i++)
 		{
-			addToGroceryList(ingreds.get(i));
+			addToGroceryList(ingreds.get(i),r.getURL());
 		}
 	}
 
@@ -884,15 +896,54 @@ public class User {
 	}
 
 	public Restaurant get(String token, String name) {
+		
 		if (this.name == null) return null;
 		if (cache.containsKey(token)) {
 			return (Restaurant)cache.get(token);
 		} else {
-			//TODO: Get the real name of the restaurant
 			Restaurant r = new Restaurant(token);
 			r = RestaurantGetter.getContactInfo(r);
 			r = RestaurantGetter.getDriveTime(r);
 			cache.put(token,r);
+			//TODO: Get the real name of the restaurant
+			Connection conn = null;
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+						"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+				st = conn.prepareStatement("SELECT * FROM Restaurant WHERE restaurant_id = ? AND restaurant_name = ?");
+				st.setString(1, token);
+				st.setString(2, r.getName());
+				rs = st.executeQuery();
+				if (!rs.next()) {
+					PreparedStatement st2 = null;
+					st2 = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id,restaurant_name) VALUES(?,?)");
+					st2.setString(1, token);
+					st2.setString(2, r.getName());
+					st2.execute();
+					st2.close();
+				}
+			}
+			catch (SQLException ex) {
+		        // handle any errors
+				ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
+			finally {
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			return r;
 		}
 	}
@@ -909,6 +960,43 @@ public class User {
 			if (r == null) return null;
 			r.setURL(token);
 			cache.put(token, r);
+			Connection conn = null;
+			PreparedStatement st = null;
+			ResultSet rs = null;
+			try
+			{
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+						"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+				st = conn.prepareStatement("SELECT * FROM Recipe WHERE recipe_url = ? AND recipe_name = ?");
+				st.setString(1, token);
+				st.setString(2, r.getName());
+				rs = st.executeQuery();
+				if (!rs.next()) {
+					PreparedStatement st2 = null;
+					st2 = conn.prepareStatement("INSERT INTO Recipe(recipe_url,recipe_name) VALUES(?,?)");
+					st2.setString(1, token);
+					st2.setString(2, r.getName());
+					st2.execute();
+					st2.close();
+				}
+			}
+			catch (SQLException ex) {
+		        // handle any errors
+				ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
+			finally {
+				try {
+					conn.close();
+					st.close();
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			return r;
 		}
 	}
