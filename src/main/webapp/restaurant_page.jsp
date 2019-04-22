@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="java.util.List" %>
-    <%@ page import="java.util.ArrayList" %>
-    <%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
-    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
-    <%@ page import="java.util.*" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
+<%@ page import="edu.usc.cs.group8.ImHungry.User" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -15,6 +15,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+	 <!-- Required Links -->
+   	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	
     <title>Restaurant Page</title>
   </head>
   <body>
@@ -23,41 +30,36 @@
 		
   <% Restaurant restaurant = new Restaurant("",""); 
   if (request.getParameter("restaurant_id") != null && !request.getParameter("restaurant_id").equals("")){
-		    			String id = request.getParameter("restaurant_id");
-		    			System.out.println(id);
-		    			User currUser;
-		    			if ((session.getAttribute("user")) != null){
-		    				currUser = (User)(session.getAttribute("user"));
-		    			}
-		    			else currUser = new User();
-			    		restaurant = (Restaurant)(currUser.get(id,""));
-		    		}
-		    		//get the appropriate list id
-		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
-		    			int index = Integer.parseInt(request.getParameter("item_id"));
-		    			if (request.getParameter("list_id").equals("FAVORITES")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("TO_EXPLORE")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
-		    			}
-		    			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
-		    				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
-		    			}
-		    		}
-				//get all required information from the restaurant object
-		    		String restaurant_name = restaurant.getName();
-			        int drive_time = restaurant.getDriveTime();
-			        String website_URL = restaurant.getWebsiteURL();
-			        String map_url = restaurant.getMapURL();
-			        String restaurant_address = restaurant.getAddress();
-			        String restaurant_phone_num = restaurant.getPhoneNum();
-			        int price_range = restaurant.getPriceRange();%>
-	 <!-- Required Links -->
-    	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/ssbootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+		String id = request.getParameter("restaurant_id");
+		System.out.println(id);
+		User currUser;
+		if ((session.getAttribute("user")) != null){
+			currUser = (User)(session.getAttribute("user"));
+		}
+		else currUser = new User();
+  		restaurant = (Restaurant)(currUser.get(id,""));
+ 		}
+   		//get the appropriate list id
+   		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
+   			int index = Integer.parseInt(request.getParameter("item_id"));
+   			if (request.getParameter("list_id").equals("FAVORITES")){
+   				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getFavorites().get(index);
+   			}
+   			if (request.getParameter("list_id").equals("TO_EXPLORE")){
+   				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getToExplore().get(index);
+   			}
+   			if (request.getParameter("list_id").equals("DO_NOT_SHOW")){
+   				restaurant = (Restaurant)((User)(session.getAttribute("user"))).getLists().getDoNotShow().get(index);
+   			}
+   		}
+		//get all required information from the restaurant object
+   		String restaurant_name = restaurant.getName();
+        int drive_time = restaurant.getDriveTime();
+        String website_URL = restaurant.getWebsiteURL();
+        String map_url = restaurant.getMapURL();
+        String restaurant_address = restaurant.getAddress();
+        String restaurant_phone_num = restaurant.getPhoneNum();
+        int price_range = restaurant.getPriceRange();%>
 	
 	<!-- Container Class -->	
 	<div class="container">

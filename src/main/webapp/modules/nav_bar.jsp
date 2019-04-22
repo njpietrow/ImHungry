@@ -12,6 +12,10 @@
 	      </li>
 	
 	    </ul>
+	    
+	     <span class="navbar-text">
+     	 Welcome, name
+    	</span>
 	  </div>
 	</nav>
 <!-- end of nav -->
