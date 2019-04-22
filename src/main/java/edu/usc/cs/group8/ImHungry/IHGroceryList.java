@@ -71,7 +71,7 @@ public class IHGroceryList extends HttpServlet {
 		String recipe_url = request.getParameter("recipe_url");
 		if (recipe_url != null)
 		{
-			r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(recipe_url));
+			r = currUser.get(recipe_url);
 			ingredients = r.getIngredients();
 			if (action.equals("ADD")) {
 				for (int i = 0; i < ingredients.size(); i++)
