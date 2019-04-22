@@ -134,8 +134,11 @@
 		
 		<!-- end oof mainCntent -->
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> parent of 1c89596... cleaned merge conflict
 		
 		
 >>>>>>> parent of 1c89596... cleaned merge conflict
