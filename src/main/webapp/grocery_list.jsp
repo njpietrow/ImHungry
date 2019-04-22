@@ -43,14 +43,10 @@
 					
 					<% 
 					//Getting grocery list from session
-					
-					/* if ( ((User)(session.getAttribute("user"))).getGroceries() == null){
-						
-						return;
-					}   */
+				
 				
 					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
-					
+				
 					//if no items in grocery list
 					if(grocery_results.size() == 0)
 					{
@@ -65,60 +61,59 @@
 						String ingredient = (String)(grocery_results.get(i));
 						System.out.println(ingredient);
 						
-						%><li> <label> <input type="radio" name="gItem_select">  <%= ingredient%> </label></li><% 
+						%><li> <label> <input type="radio" name="gItem_select" value="<%=ingredient %>">  <%= ingredient%> </label></li><% 
 					}
 				 %> 
 				 
 				</ul>
 				<!-- end of coompleteGList -->
+			<button class="btn btn-dark" id="delete_btn" >Delete Ingredient</button> 
 			
 			</div>
 			<!-- end of gListWrap -->
 			
-			<div id="buttonContainer">
-			
-				<div class="btn-group-vertical" id="button_stuff">
-		        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
-		        	<button id="back_to_results_button" class="btn btn-dark">Back to Results</button> 
-		        	<!-- Back to Results -->
-		        	
-				     
-		        	<button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
-		        	
-		        	
-		        	<button class="btn btn-dark" id="grocery_list_button" >Add to Grocery List</button>
-		        </div> 
-	        
-			</div>
-			
-	        <!-- end of button group -->
+		
 		</div>
 		
 		<!-- end oof mainCntent -->
 
 
+		
 		<script type = "text/javascript">
-						
-			
-			document.getElementById("delete_button").onclick=function(){
-     				var ingredient = getUrlVars()["ingredient"];
-     				var recipe_url = getUrlVars()["recipe_url"];
-     				var radios = document.getElementsByTagName('input');
-     				var item_index;
-     				for (var i = 0; i < radios.length; i++) {
-     				    if (radios[i].type === 'radio' && radios[i].checked) {
-     				        // get the item_index from the radio button input
-     				        item_index = radios[i].value;       
-     				    }
-     				}
-     				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
-     				var redirect_link = "IHGroceryList?ingredient=" + ingredient + "&action=REMOVE&recipe_url=" + recipe_url;
-     				location.href = redirect_link;
-     		}
 					
-					
-		</script>
-					
+		
+		document.getElementById("delete_btn").onclick=function(){
+			 
+    				var ingredient;
+    				var recipe_url = getUrlVars()["recipe_url"];
+    				var radios = document.getElementsByTagName('input');
+    				
+    				System.out.println("deleting ");
+    				
+    				for (var i = 0; i < radios.length; i++) {
+    				    if (radios[i].type === 'radio' && radios[i].checked) {
+    				        // get the item_index from the radio button input
+    				        ingredient = radios[i].value;    
+    				        System.out.println("deleting "+item_index);
+    				    }
+    				}
+    				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+    				var redirect_link = "IHGroceryList?ingredient=" + ingredient + "&action=REMOVE&recipe_url=" + recipe_url;
+    				location.href = redirect_link;
+    		}
+		
+		
+		
+		//Helper function to get the value of the attribute in the url
+ 			function getUrlVars() {
+ 			    var vars = {};
+ 			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+ 			        vars[key] = value;
+ 			    });
+ 			    return vars;
+ 			}
+							
+		</script>		
 		
 	</body>
 </html>

@@ -150,11 +150,15 @@
 			      							System.out.println("list name: " + list_name);
 			      						}
 			      						String redirect_link = "http://localhost:8080/ImHungry/IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
-			      						%><tr><th><a href=<%= redirect_link%>><%=recipe_name %> </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th></a>
+			      						%><tr>
 			      						
 			      						<!-- The following radio button will allow the user to choose one of the items 
 			      						from the current list, and conduct the MOVE or DELETE function -->
-			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=recipe_name %> from this List</input>
+			      						<th><input type="radio" value=<%=i %> name="only_one_selection"></input></th>
+			      						
+			      						<th><a href=<%= redirect_link%>><%=recipe_name %></a> </th> <th>Prep Time: <%=prepTime %></th> <th>Cook Time: <%=cookTime %></th>
+	
+										
 			      						<br></tr><%
 			      					}
 			      					else if (list.get(i) instanceof Restaurant){ //If it is a restaurant, then required restaurant information will be displayed in one row in the table
@@ -171,14 +175,26 @@
 			      						}
 			      						String redirect_link = "IHManageList?list_id=" + list_name + "&action=DISPLAY&item_id=" + Integer.toString(i); 
 
-			      						%> <tr><th><a href=<%= redirect_link %>><%=restaurant_name %> </th> <th>Drive Time: <%=driveTime %> min </th> <th><%=address %> </th> <th><%
-											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
-												$
-											<% } %></th></a>  
-
+			      						%> <tr>
+			      						<th>
 			      						<!-- The following radio button will allow the user to choose one of the items 
 			      						from the current list, and conduct the MOVE or DELETE function -->
-			      						<input type="radio" value=<%=i %> name="only_one_selection">Select <%=restaurant_name %> from this list </input>
+			      						<input type="radio" value=<%=i %> name="only_one_selection"> </input>
+			      						</th>
+			      						
+			      						<th>
+			      						<a href=<%= redirect_link %>><%=restaurant_name %> </a>
+			      						</th> 
+			      						<th>Drive Time: <%=driveTime %> min </th> 
+			      						<th><%=address %> </th> 
+			      						<th><%
+											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
+												$
+											<% } %>
+										</th>  
+
+										
+
 			      						<br></tr><%
 			      					}
 			      				}
@@ -255,9 +271,56 @@
 			      				location.href = redirect_link;
 			      			}
 			      		</script>
+			      		
+			      		<button class="move_item_up_btn btn-dark" onclick="moveUp()" style="margin-bottom:10px;">Move selected item up the list</button>
+			      		<button class="move_item_dwn_btn btn-dark" onclick="moveDown()" style="margin-bottom:10px;">Move selected item down the list</button> 
 			      	</div>
 				</div>
 			</div>
 		</div>
+		
+		
+		
+	<!--rearrange items functions -->
+	<script>
+	function moveUp(){
+		var list_name = getUrlVars()["list_id"];
+		var radios = document.getElementsByTagName('input');
+		var item_index;
+		var item_index2;
+		for (var i = 0; i < radios.length; i++) {
+		    if (radios[i].type === 'radio' && radios[i].checked) {
+		        // get the item_index from the radio button input
+		        item_index = radios[i].value;    
+		        
+		    }
+		}
+		item_index2 = parseInt(item_index, 10) -1;
+		//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+		var redirect_link = "IHManageList?list_id=" + list_name + "&action=SWAP&index1=" + item_index.toString()+"&index2=" + item_index2.toString();
+		location.href = redirect_link;
+		
+	}
+	
+	function moveDown(){
+		var list_name = getUrlVars()["list_id"];
+		var radios = document.getElementsByTagName('input');
+		var item_index;
+		var item_index2;
+		for (var i = 0; i < radios.length; i++) {
+		    if (radios[i].type === 'radio' && radios[i].checked) {
+		        // get the item_index from the radio button input
+		        item_index = radios[i].value;  
+		       
+		    }
+		}
+		item_index2 =  parseInt(item_index, 10) +1;
+		
+		//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+		var redirect_link = "IHManageList?list_id=" + list_name + "&action=SWAP&index1=" + item_index.toString()+"&index2=" + item_index2.toString();
+		location.href = redirect_link;
+	}
+	
+	</script>
 	</body>
 </html>
