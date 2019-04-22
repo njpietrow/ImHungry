@@ -10,7 +10,6 @@
     <%@ page import="javax.servlet.http.HttpServletRequest" %>
     <%@ page import="javax.servlet.http.HttpServletResponse" %>    
     <%@ page import="java.util.*" %> 
-    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 	<head>
@@ -41,32 +40,65 @@
 			<div id="title">Grocery List</div>
 			<div id="gListWrap">
 				<ul id="completeGList">
-				<li>item</li>
 					
-				<%-- 	<%
+				<% 	
 					//Getting grocery list from session
-					User curr = ((User)(session.getAttribute("currUser")));
 					
-					if (curr.getGroceries() == null){
+					/* if ( ((User)(session.getAttribute("user"))).getGroceries() == null){
 						
 						return;
-					}  
-					ArrayList<String> grocery_results = (ArrayList<String>)(curr.getGroceries());
-					for (int i = 0; i < grocery_results.size(); i++){
+					}   */
+				
+					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
+					
+					ArrayList<String> cities = new ArrayList<>(Arrays.asList("London", "Tokyo", "New York"));
+
+					//if no items in grocery list
+					if(cities.size() == 0)
+					{
+						%>  <p> No Items in grocery list</p>  <% 
+						
+						return;
+					}
+					
+					for (int i = 0; i < cities.size(); i++){
 						
 						//The following will get the detailed restaurant information needed to be displayed
-						String ingredient = grocery_results.get(i);
+						String ingredient = (String)(cities.get(i));
+						System.out.println(ingredient);
 						
-						%><li> <%= ingredient %><li><% 
+						%><li> <label> <input type="radio" name="gItem_select">  <%= ingredient%> </label></li><% 
 					}
-					%> --%>
+				 %> 
+				 
 				</ul>
 				<!-- end of coompleteGList -->
 			
 			</div>
 			<!-- end of gListWrap -->
+			<div id="buttonContainer">
 			
+				<div class="btn-group-vertical" id="button_stuff">
+		        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
+		        	<button id="back_to_results_button" class="btn btn-dark">Back to Results</button> 
+		        	<!-- Back to Results -->
+		        	
+				     
+		        	<button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
+		        	
+		        	
+		        	<button class="btn btn-dark" id="grocery_list_button" >Add to Grocery List</button>
+		        </div> 
+	        
+			</div>
+			
+	        <!-- end of button group -->
 		</div>
+		
+		
+		
+		 
+		
 		<!-- end oof mainCntent -->
 		
 		
