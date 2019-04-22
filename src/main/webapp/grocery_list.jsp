@@ -51,20 +51,20 @@
 				
 					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
 					
-					ArrayList<String> cities = new ArrayList<>(Arrays.asList("London", "Tokyo", "New York"));
+		
 
 					//if no items in grocery list
-					if(cities.size() == 0)
+					if(grocery_results.size() == 0)
 					{
 						%>  <p> No Items in grocery list</p>  <% 
 						
 						return;
 					}
 					
-					for (int i = 0; i < cities.size(); i++){
+					for (int i = 0; i < grocery_results.size(); i++){
 						
 						//The following will get the detailed restaurant information needed to be displayed
-						String ingredient = (String)(cities.get(i));
+						String ingredient = (String)(grocery_results.get(i));
 						System.out.println(ingredient);
 						
 						%><li> <label> <input type="radio" name="gItem_select" value = <%= i %>>  <%= ingredient%> </label></li><% 
@@ -133,14 +133,6 @@
 		 
 		
 		<!-- end oof mainCntent -->
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-=======
->>>>>>> parent of 1c89596... cleaned merge conflict
-		
-		
->>>>>>> parent of 1c89596... cleaned merge conflict
 	</body>
 </html>
