@@ -135,7 +135,11 @@
 					</div>
 		        </div>
 		        
-		        <div style="clear:both"></div>
+		       <div style="clear:both"></div>
+		        
+				<!-- recent collage -->
+			  <jsp:include page="modules/recent_collage.jsp" />
+	
 	        </div>
 	    </div>
 	    

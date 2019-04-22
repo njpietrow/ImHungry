@@ -31,11 +31,14 @@ html body {
 .list_name_header{
 	margin-top: 50px;
 	margin-left: 100px;
+
+	
 }
 
 .btn-group-vertical {
 	float:right;
 	margin-right:20%;
+	margin-top:15%;
 	
 }
 .btn-group-vertical > button{

@@ -35,45 +35,7 @@
 		<!-- navbar -->
 		<jsp:include page="modules/nav_bar.jsp" />
 		
-		<!-- begin of body -->
-		<div id="mainContent">
-			<div id="title">Grocery List</div>
-			<div id="gListWrap">
-				<ul id="completeGList">
-					
-					<% 
-					//Getting grocery list from session
-				
-				
-					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
-				
-					//if no items in grocery list
-					if(grocery_results.size() == 0)
-					{
-						%>  <p> No Items in grocery list</p>  <% 
-						
-						return;
-					}
-					
-					for (int i = 0; i < grocery_results.size(); i++){
-						
-						//The following will get the detailed restaurant information needed to be displayed
-						String ingredient = (String)(grocery_results.get(i));
-						System.out.println(ingredient);
-				
-						%><li> <label> <input type="radio" name="gItem_select" value = <%= i %>>  <%= ingredient%> </label></li><% 
-					}
-				 %> 
-				 
-				</ul>
-				<!-- end of coompleteGList -->
-			<button class="btn btn-dark" id="delete_btn" >Delete Ingredient</button> 
-			
-			</div>
-			<!-- end of gListWrap -->
-			
-		
-			<div id="buttonContainer">
+		<div id="buttonContainer">
 			
 				<div class="btn-group-vertical" id="button_stuff">
 		        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
@@ -121,6 +83,45 @@
 		        </div> 
 	        
 			</div>
+			
+		
+		<!-- begin of body -->
+		<div id="mainContent">
+			<div id="title">Grocery List</div>
+			<div id="gListWrap">
+				<ul id="completeGList">
+					
+					<% 
+					//Getting grocery list from session
+				
+				
+					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
+				
+					//if no items in grocery list
+					if(grocery_results.size() == 0)
+					{
+						%>  <p> No Items in grocery list</p>  <% 
+						
+						return;
+					}
+					
+					for (int i = 0; i < grocery_results.size(); i++){
+						
+						//The following will get the detailed restaurant information needed to be displayed
+						String ingredient = (String)(grocery_results.get(i));
+						System.out.println(ingredient);
+				
+						%><li> <label> <input type="radio" name="gItem_select" value = <%= i %>>  <%= ingredient%> </label></li><% 
+					}
+				 %> 
+				 
+				</ul>
+			
+			
+			</div>
+			<!-- end of gListWrap -->
+			
+		
 			
 	        <!-- end of button group -->
 		</div>
