@@ -210,14 +210,28 @@
   	<!-- End Container Class -->	
 	  
 	<!-- add grocery to grocery list -->
-  	<script>
-		//function to set list id to the appropriate list if selected
-        	 document.getElementById("grocery_list_button").onclick = function () {
-				console.log("add ingredients clicked on!");
-			 //send to servlet
-		        location.href = "IHGroceryList?action=ADD";	
-		    };
-     </script>
+<script type = "text/javascript">
+						
+			
+			document.getElementById("grocery_list_button").onclick=function(){
+     				var recipe_url = getUrlVars()["recipe_id"];
+     				var radios = document.getElementsByTagName('input');
+     				var item_index;
+    
+     				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+     				var redirect_link = "IHGroceryList?action=ADD&recipe_url=" + recipe_url;
+     				location.href = redirect_link;
+     		}
+			function getUrlVars() {
+  			    var vars = {};
+  			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+  			        vars[key] = value;
+  			    });
+  			    return vars;
+  			}
+					
+					
+		</script>
 	<!-- More Required Links -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
