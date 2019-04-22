@@ -90,6 +90,7 @@ Insert into List(list_id,list_name) values (3,"Quick Access");
 Select * from Recipe;
 SELECT * FROM ListRecipes l2, Recipe r where username="GJHalfond" AND l2.recipe_url = r.recipe_url;
 SELECT * From ListRestaurants;
+SELECT * From ListRecipes;
 Select * From QuickAccess;
 Select * From Groceries;
 
