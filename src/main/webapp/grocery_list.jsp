@@ -29,7 +29,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 		
-		<title>List Management Page</title>
+		<title>Grocery List Page</title>
 	</head>
 	
 	<body>
@@ -42,6 +42,31 @@
 			<div id="gListWrap">
 				<ul id="completeGList">
 				<li>item</li>
+					
+					<script type = "text/javascript">
+					
+					
+					
+					
+					
+					document.getElementById("delete_button").onclick=function(){
+	      				var ingredient = getUrlVars()["ingredient"];
+	      				var recipe_url = getUrlVars()["recipe_url"];
+	      				var radios = document.getElementsByTagName('input');
+	      				var item_index;
+	      				for (var i = 0; i < radios.length; i++) {
+	      				    if (radios[i].type === 'radio' && radios[i].checked) {
+	      				        // get the item_index from the radio button input
+	      				        item_index = radios[i].value;       
+	      				    }
+	      				}
+	      				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+	      				var redirect_link = "IHGroceryList?ingredient=" + ingredient + "&action=REMOVE&recipe_url=" + recipe_url;
+	      				location.href = redirect_link;
+	      			}
+					
+					
+					</script>
 					
 				<%-- 	<%
 					//Getting grocery list from session
@@ -67,7 +92,7 @@
 			<!-- end of gListWrap -->
 			
 		</div>
-		<!-- end oof mainCntent -->
+		<!-- end of mainCntent -->
 		
 		
 	</body>

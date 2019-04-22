@@ -20,14 +20,20 @@ Scenario: Basic Pizza Search
 	When I type "pizza" in the input box
 	And I click on the Feed Me button 
 	Then I should I should be on the "IH Search" page 
-	
+
 Scenario: Success login
 	When I click on Login button
 	And enter credentials "GJHalfond" and "Scrum"
 	And click on login
 	Then stay on search page
+
+Scenario: Failed login
+	When I click on Login button
+	And enter credentials "GJHalfond" and "Waterfall"
+	And click on login 
+	Then I should see "Incorrect password." 
 	
-	Scenario: Success sign up
+Scenario: Success sign up
  	When I click on Signup button
  	And enter credentials "TestUs", "testpa", and "testpa"
  	And click on signup

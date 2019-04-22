@@ -22,3 +22,4 @@ Scenario: Back to Search
 Scenario: Click on Recipe
 	When I click on the first recipe result
 	Then I should be on the recipe page 
+

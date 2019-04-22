@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * USC ID: 9724507315
  * Email: calaway@usc.edu
  */
-@WebServlet("/IHGroceryList")
+
 public class IHGroceryList extends HttpServlet {
 
 	/**
@@ -49,6 +49,7 @@ public class IHGroceryList extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		Recipe r; 
 		ArrayList<String> ingredients; 
 		User currUser = new User();
 		try {
@@ -64,7 +65,9 @@ public class IHGroceryList extends HttpServlet {
 			return;
 		}
 		try{
-			ingredients = (ArrayList<String>)(request.getSession().getAttribute("ingredients"));
+			//GOT TO PASS RECIPE NOT INGREDIENTS 
+			r = (Recipe)(request.getSession().getAttribute("recipe"));
+			ingredients = r.getIngredients();
 		} catch (Exception e){
 			response.setStatus(response.SC_BAD_GATEWAY);
 			response.getWriter().println("Unknown error occurred.");
@@ -75,10 +78,11 @@ public class IHGroceryList extends HttpServlet {
 		
 		//based on request parameter, will add the recipe or restaurant to the list
 		if (action.equals("ADD")) {
-			String ingred = request.getParameter("ingredient");
-			String recipe_url = request.getParameter("recipe_url");
-			addToList(currUser, ingred, recipe_url);
-			
+			for (int i = 0; i < ingredients.size(); i++)
+			{
+				String ingred = ingredients.get(i);
+				addToList(currUser, ingred, r.getURL());
+			}
 		}
 		
 		if (action.equals("REMOVE")) {
