@@ -1,0 +1,6 @@
+<div id=recentCollage>
+   
+   
+   
+   
+</div>

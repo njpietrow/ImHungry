@@ -27,9 +27,6 @@ ul{
 	
 }
  
- #buttonContainer{
- 
- }
  
 .list_name_header{
 	margin-top: 50px;
@@ -39,14 +36,14 @@ ul{
 .btn-group-vertical {
 	
 	
-	/* top:100px !important;
+	 top:100px !important;
 	left:85%;
-	z-index:1; */
+	z-index:1; 
 }
 .btn-group-vertical > button{
 	margin-bottoom:10px;
-  /*   margin-bottom:10px;
-    border-radius:10px !important; */
+     margin-bottom:10px;
+    border-radius:10px !important; 
 }
 
 .list_results{

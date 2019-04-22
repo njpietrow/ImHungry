@@ -4,15 +4,39 @@ html body {
 	background-color: #f5f5f5;
 }
 
+
+#delete_button{
+	position:relative;
+	left:45%;
+	margin-bottom:20px;
+}
+#list_results_table th{
+	padding:10px;
+	
+}
+
+#move_item_up_btn, move_item_dwn_btn{
+	width: 100px;
+}
+
+.div_for_entire_content{
+	margin-top:15%;
+}
+.container{
+	height:auto;
+	width:100vw;
+	
+}
+
 .list_name_header{
 	margin-top: 50px;
 	margin-left: 100px;
 }
 
 .btn-group-vertical {
-	top:100px !important;
-	left:85%;
-	z-index:1;
+	float:right;
+	margin-right:20%;
+	
 }
 .btn-group-vertical > button{
     margin-bottom:10px;

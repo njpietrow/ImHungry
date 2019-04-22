@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * Email: calaway@usc.edu
  */
 
+@WebServlet("/IHGroceryList")
 public class IHGroceryList extends HttpServlet {
 
 	/**
@@ -50,7 +51,7 @@ public class IHGroceryList extends HttpServlet {
 			e1.printStackTrace();
 		}
 		Recipe r; 
-		ArrayList<String> ingredients; 
+		ArrayList<String>ingredients; 
 		User currUser = new User();
 		try {
 			currUser = (User)request.getSession().getAttribute("user");
@@ -64,31 +65,35 @@ public class IHGroceryList extends HttpServlet {
 			response.getWriter().flush();
 			return;
 		}
-		try{
-			//GOT TO PASS RECIPE NOT INGREDIENTS 
-			r = (Recipe)(request.getSession().getAttribute("recipe"));
-			ingredients = r.getIngredients();
-		} catch (Exception e){
-			response.setStatus(response.SC_BAD_GATEWAY);
-			response.getWriter().println("Unknown error occurred.");
-			response.getWriter().flush();
-			return;
-		}
-		String action = request.getParameter("action");
 		
-		//based on request parameter, will add the recipe or restaurant to the list
-		if (action.equals("ADD")) {
-			for (int i = 0; i < ingredients.size(); i++)
-			{
-				String ingred = ingredients.get(i);
-				addToList(currUser, ingred, r.getURL());
+		String action = request.getParameter("action");
+			//GOT TO PASS RECIPE NOT INGREDIENTS 
+		String recipe_url = request.getParameter("recipe_url");
+		if (recipe_url != null)
+		{
+			r = currUser.get(recipe_url);
+			ingredients = r.getIngredients();
+			if (action.equals("ADD")) {
+				for (int i = 0; i < ingredients.size(); i++)
+				{
+					String ingred = ingredients.get(i);
+					addToList(currUser, ingred, r.getURL());
+				}
+				request.getRequestDispatcher("recipe_page.jsp?recipe_id=" + recipe_url).forward(request, response);
 			}
 		}
 		
+		
+		//based on request parameter, will add the recipe or restaurant to the list
+		
+		
 		if (action.equals("REMOVE")) {
 			String ingred = request.getParameter("ingredient");
-			String recipe_url = request.getParameter("recipe_url");
-			removeFromList(currUser, ingred, recipe_url);
+			int ing = Integer.parseInt(ingred);
+			String ingredient = currUser.getGroceries().get(ing);
+			removeFromList(currUser, ingredient);
+			System.out.println("deleted");
+			request.getRequestDispatcher("grocery_list.jsp").forward(request, response);
 		}
 
 	}
@@ -100,8 +105,8 @@ public class IHGroceryList extends HttpServlet {
 	/*
 	 * Based on the specified list and item number, it removes it from the list.
 	 */
-	public void removeFromList(User currUser, String ingred, String recipe_url) {
-		currUser.removeFromGroceryList(recipe_url);
+	public void removeFromList(User currUser, String ingred) {
+		currUser.removeFromGroceryList(ingred);
 		return; 
 		
 	}
