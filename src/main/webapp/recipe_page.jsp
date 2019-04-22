@@ -114,7 +114,6 @@
 			      </div>
 				<!-- Function to populate the empty dropdown list title with the list that is selected-->
 			      <script>
-			     
 				      $(function(){
 					    $(".dropdown-item").click(function(){					
 					      $("#btnGroupVerticalDrop2").text($(this).text());
@@ -144,29 +143,6 @@
 	        	</script>
 	        	
 	        	<button class="btn btn-dark" id="grocery_list_button" >Add to Grocery List</button>
-	        	<script type = "text/javascript">
-						
-			
-			document.getElementById("grocery_list_button").onclick=function(){
-     				var recipe_url = getUrlVars()["recipe_id"];
-     				var radios = document.getElementsByTagName('input');
-     				var item_index;
-    
-     				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
-     				var redirect_link = "IHGroceryList?action=ADD&recipe_url=" + recipe_url;
-     				location.href = redirect_link;
-     		}
-			function getUrlVars() {
-  			    var vars = {};
-  			    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-  			        vars[key] = value;
-  			    });
-  			    return vars;
-  			}
-					
-					
-		</script>
-	        	
 	        </div> 
 		<!-- Use the recipe servlet to use the relevant information -->
         	<div class="recipe_information" id="all_stuff_on_page">	

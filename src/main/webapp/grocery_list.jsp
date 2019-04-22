@@ -67,7 +67,7 @@
 						String ingredient = (String)(grocery_results.get(i));
 						System.out.println(ingredient);
 						
-						%><li> <label> <input type="radio" name="gItem_select" value = <%= i %>>  <%= ingredient%> </label></li><% 
+						%><li> <label> <input type="radio" name="gItem_select">  <%= ingredient%> </label></li><% 
 					}
 				 %> 
 				 
@@ -80,47 +80,14 @@
 			
 				<div class="btn-group-vertical" id="button_stuff">
 		        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
-		        	<script>
-			    	function PrintPreview() {
-			    		window.print();
-			    		/* var div = document.getElementById('button_stuff');
-			    	    div.style.display = 'none'; */
-			        }
-			</script>
-		        	
 		        	<button id="back_to_results_button" class="btn btn-dark">Back to Results</button> 
 		        	<!-- Back to Results -->
-		        	<script type="text/javascript">
-				    document.getElementById("back_to_results_button").onclick = function () {
-				        location.href = "results_page.jsp";
-				    };
-				</script>
+		        	
 				     
-		        	<!--  <button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
+		        	<button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
 		        	
 		        	
 		        	<button class="btn btn-dark" id="grocery_list_button" >Add to Grocery List</button>
-		       		-->
-		       		
-		       		<button id="delete_button">Delete the Selected Item from the list</button>
-			      		<!-- The following JavaScript function deals with Deleting the Selected Item from the Current List -->
-			      		<script type="text/javascript">
-			      			document.getElementById("delete_button").onclick=function(){
-			      				var radios = document.getElementsByTagName('input');
-			      				var item_index;
-			      				for (var i = 0; i < radios.length; i++) {
-			      				    if (radios[i].type === 'radio' && radios[i].checked) {
-			      				        // get the item_index from the radio button input       
-			      				        item_index = radios[i].value;       
-			      				    }
-			      				}
-			      				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
-			      				
-			      				var redirect_link = "IHGroceryList?action=REMOVE&ingredient=" + item_index.toString();
-			      				location.href = redirect_link;
-			      			}
-			      		</script> 
-		       		
 		        </div> 
 	        
 			</div>
@@ -134,5 +101,29 @@
 		
 		<!-- end oof mainCntent -->
 
+
+		<script type = "text/javascript">
+						
+			
+			document.getElementById("delete_button").onclick=function(){
+     				var ingredient = getUrlVars()["ingredient"];
+     				var recipe_url = getUrlVars()["recipe_url"];
+     				var radios = document.getElementsByTagName('input');
+     				var item_index;
+     				for (var i = 0; i < radios.length; i++) {
+     				    if (radios[i].type === 'radio' && radios[i].checked) {
+     				        // get the item_index from the radio button input
+     				        item_index = radios[i].value;       
+     				    }
+     				}
+     				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+     				var redirect_link = "IHGroceryList?ingredient=" + ingredient + "&action=REMOVE&recipe_url=" + recipe_url;
+     				location.href = redirect_link;
+     		}
+					
+					
+		</script>
+					
+		
 	</body>
 </html>
