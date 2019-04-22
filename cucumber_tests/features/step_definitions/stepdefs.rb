@@ -177,3 +177,89 @@ Then("the Add to List button is on the recipe page") do
   expect(page).to have_content("Add to List")
 end
 
+
+Given("I am on the Grocery Lists page after adding ingredients from the recipe page") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I select an item") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click on Remove item") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should not see the item on the list") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given("I am on the favorites list manage page after adding a Restaurant from the restaurants page") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click the dropdown") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I select To Explore") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I Click Move the selected Item") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click on Manage List") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should see the selected Item in To Explore") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click on Delete the Selected Item") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given("I am on the recipe page after clicking on first recipe link on results page") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click on {string}") do |string|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I am logged in") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should see the ingredients for the recipe in my grocery list") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should be on the results page") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Given("I am on the recipe page after clicking on first restaurant link on results page") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click on the drop-down") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("click on Favorites") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("click on Add to list") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should add a Restaurant to my favorites list") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+
