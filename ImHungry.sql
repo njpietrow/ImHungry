@@ -25,6 +25,7 @@ CREATE TABLE QuickAccess(
    username varchar(100) not null,
    keyword varchar(100) not null,
    num_results int(4) not null,
+   radius int(4) not null,
    foreign key (username) references User(username)
    );
    
