@@ -48,7 +48,7 @@ public class IHSearch extends HttpServlet {
         RestaurantGetter.getKey();
         BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(new File("/Users/cpietrow 1/Documents/SW S19/310CSCI/ImHungry/apikey.txt")));
+			br = new BufferedReader(new FileReader(new File("C:\\Users\\3mail\\ImHungryRepo\\ImHungry\\apikey.txt")));
 			MAPS_API_KEY = br.readLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -100,7 +100,7 @@ public class IHSearch extends HttpServlet {
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 
 		if (images != null && recipes != null && restaurants != null) {
-			addToQuickAccess(currUser,keyword,number,radius);
+			addToQuickAccess(currUser,keyword,number);
 			if (currUser == null) currUser = new User();
 			sortRecipes(recipes,currUser);
 			sortRestaurants(restaurants,currUser);
@@ -116,22 +116,21 @@ public class IHSearch extends HttpServlet {
 		response.getWriter().flush();
 	}
 
-	private void addToQuickAccess(User currUser, String keyword, String number, String radius) {
+	private void addToQuickAccess(User currUser, String keyword, String number) {
 		if (currUser == null) return;
 		if (currUser.getName() == null) return;
 		if (currUser.getName().equals("")) return;
 		Connection conn = null;
 		PreparedStatement st = null;
-		currUser.getLists().addToQuickAccess(new Query(keyword,number,radius));
+		currUser.getLists().addToQuickAccess(new Query(keyword,number));
 		 try {
 		        conn =
 		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 	                                       "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results,radius) values (?,?,?,?)");
+		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results) values (?,?,?)");
 		        st.setString(1,  currUser.getName());
 		        st.setString(2,  keyword);
-		        st.setString(3,  number);
-		        st.setString(4,  radius);
+		        st.setString(3, number);
 		        st.execute();
 		        // Do something with the Connection
 
@@ -185,8 +184,9 @@ public class IHSearch extends HttpServlet {
 	 */
 	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius, User currUser) {
 		if (currUser == null) currUser = new User();
-//		public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
+//	public ArrayList<Restaurant> doRestaurantSearch(String keyword, String number, String radius) {
 		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		addToQuickAccess(currUser,keyword,number);
 		//add "+" to keyword string
 		keyword = keyword.replaceAll(" ", "+").toLowerCase();
 		int rmeters = Integer.parseInt(radius) * 1609;

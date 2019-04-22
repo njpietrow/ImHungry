@@ -89,7 +89,7 @@ public class IHManageList extends HttpServlet {
 			}
 		}
 		
-		else if (action.equals("REMOVE")) {
+		if (action.equals("REMOVE")) {
 			String itemID = request.getParameter("item_id");
 			removeFromList(currUser,listID,itemID);
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
@@ -186,7 +186,10 @@ public class IHManageList extends HttpServlet {
 		}
 		
 	}
-
+	
+	
+	
+	
 	/*
 	 * Based on the provided source and destination lists, this function moves the specified item.
 	 */
