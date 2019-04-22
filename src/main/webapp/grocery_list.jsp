@@ -28,7 +28,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 		
-		<title>List Management Page</title>
+		<title>Grocery List Page</title>
 	</head>
 	
 	<body>
@@ -41,7 +41,7 @@
 			<div id="gListWrap">
 				<ul id="completeGList">
 					
-				<% 	
+					<% 
 					//Getting grocery list from session
 					
 					/* if ( ((User)(session.getAttribute("user"))).getGroceries() == null){
@@ -51,20 +51,18 @@
 				
 					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
 					
-					ArrayList<String> cities = new ArrayList<>(Arrays.asList("London", "Tokyo", "New York"));
-
 					//if no items in grocery list
-					if(cities.size() == 0)
+					if(grocery_results.size() == 0)
 					{
 						%>  <p> No Items in grocery list</p>  <% 
 						
 						return;
 					}
 					
-					for (int i = 0; i < cities.size(); i++){
+					for (int i = 0; i < grocery_results.size(); i++){
 						
 						//The following will get the detailed restaurant information needed to be displayed
-						String ingredient = (String)(cities.get(i));
+						String ingredient = (String)(grocery_results.get(i));
 						System.out.println(ingredient);
 						
 						%><li> <label> <input type="radio" name="gItem_select">  <%= ingredient%> </label></li><% 
@@ -76,6 +74,7 @@
 			
 			</div>
 			<!-- end of gListWrap -->
+			
 			<div id="buttonContainer">
 			
 				<div class="btn-group-vertical" id="button_stuff">
@@ -95,12 +94,31 @@
 	        <!-- end of button group -->
 		</div>
 		
-		
-		
-		 
-		
 		<!-- end oof mainCntent -->
-		
+
+
+		<script type = "text/javascript">
+						
+			
+			document.getElementById("delete_button").onclick=function(){
+     				var ingredient = getUrlVars()["ingredient"];
+     				var recipe_url = getUrlVars()["recipe_url"];
+     				var radios = document.getElementsByTagName('input');
+     				var item_index;
+     				for (var i = 0; i < radios.length; i++) {
+     				    if (radios[i].type === 'radio' && radios[i].checked) {
+     				        // get the item_index from the radio button input
+     				        item_index = radios[i].value;       
+     				    }
+     				}
+     				//send the REMOVE request to the backend servlet and let the backend deal with the remove logic and session storage.
+     				var redirect_link = "IHGroceryList?ingredient=" + ingredient + "&action=REMOVE&recipe_url=" + recipe_url;
+     				location.href = redirect_link;
+     		}
+					
+					
+		</script>
+					
 		
 	</body>
 </html>

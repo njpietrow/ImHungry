@@ -107,7 +107,8 @@ public class LoginHelper {
 	        {
 	        	String keyword = rs.getString("keyword");
 	        	int numResults = rs.getInt("num_results");
-	        	Query temp = new Query(keyword,"" + numResults);
+	        	int radius = rs.getInt("radius");
+	        	Query temp = new Query(keyword,"" + numResults,"" + radius);
 	        	quickAccess.add(temp);
 
 	        }

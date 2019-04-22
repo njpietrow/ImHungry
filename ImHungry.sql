@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS ImHungry;
 
 SET GLOBAL time_zone = '-7:00';
+SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE DATABASE ImHungry;
 USE ImHungry;
@@ -25,6 +26,7 @@ CREATE TABLE QuickAccess(
    username varchar(100) not null,
    keyword varchar(100) not null,
    num_results int(4) not null,
+   radius int(4) not null,
    foreign key (username) references User(username)
    );
    
@@ -78,7 +80,7 @@ CREATE TABLE Groceries(
 	
 
     
-#INSERT into User(username,password,list_size) values ("GJHalfond",6102,0);
+INSERT into User(username,password,list_size) values ("GJHalfond",6102,0);
 INSERT into User(username,password,list_size) values ("KCalaway",30943,0);
 Insert into List(list_id,list_name) values (0,"Favorites");
 Insert into List(list_id,list_name) values (1,"To Explore");
@@ -88,9 +90,11 @@ Insert into List(list_id,list_name) values (3,"Quick Access");
 Select * from Recipe;
 SELECT * FROM ListRecipes l2, Recipe r where username="GJHalfond" AND l2.recipe_url = r.recipe_url;
 SELECT * From ListRestaurants;
+SELECT * From ListRecipes;
 Select * From QuickAccess;
 Select * From Groceries;
 
 Select * from restaurant;
+SELECT * FROM Groceries WHERE username = 'GJHalfond' AND ingredient = 'Delete this.' AND recipe_url = 'http://localhost:8080/ImHungry/testrecipe.html'
 #Select * from User;
 #SELECT * FROM User WHERE username = "GJHalfond" AND password = "Scrum";
