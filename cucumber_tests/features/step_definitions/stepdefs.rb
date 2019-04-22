@@ -59,29 +59,7 @@ end
 Then("stay on search page") do
      expect(page).to have_content("Feed Me!")
 end
-#end of success login tests
-
-#Failed login
-When("I click on Login button") do
-  click_on("Login")
-end
-
-When("enter credentials {string} and {string}") do |string1, string2|
-  fill_in("uname_login_id", :with => string1)
-  fill_in("password_login_id", :with => string2)
-  sleep(3)
-end
-
-When("click on login") do
-  find("#btnLogin").click
-  sleep(3)
-end
-
-Then("I should see {string}") do |string|
-   expect(page).to have_content(string)
-end
-#end of fail login tests
-
+#end of login tests
 
 #Successful signup
 When("I click on Signup button") do

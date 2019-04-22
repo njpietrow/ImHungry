@@ -55,6 +55,7 @@
 							      list_has_been_chosen = true;
 							      chosen_list = $(this).text();
 							   });
+
 							});
 					</script>
 
@@ -75,6 +76,7 @@
 										else if (chosen_list == "Do Not Show"){
 											list_name = "DO_NOT_SHOW";
 										}
+
 										//Redirect the user to the chosen list
 										location.href = "list_management_page.jsp?list_id=" + list_name;
 									}
@@ -119,13 +121,9 @@
 								<%
 								//Getting restaurant results array list from session
 								if (session.getAttribute("restaurants") == null){
-									%><tr><th><a>Sorry, no restaurants found</a></th></tr> <%
 									return;
 								}
 								ArrayList<Restaurant> list_of_restaurant_results = (ArrayList<Restaurant>)(session.getAttribute("restaurants"));
-								if (list_of_restaurant_results.size()==0){
-									%><tr><th><a>Sorry, no restaurants found</a></th></tr> <%
-								}
 								for (int i = 0; i < list_of_restaurant_results.size(); i++){
 									
 									//The following will get the detailed restaurant information needed to be displayed

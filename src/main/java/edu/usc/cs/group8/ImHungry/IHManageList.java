@@ -89,7 +89,7 @@ public class IHManageList extends HttpServlet {
 			}
 		}
 		
-		else if (action.equals("REMOVE")) {
+		if (action.equals("REMOVE")) {
 			String itemID = request.getParameter("item_id");
 			removeFromList(currUser,listID,itemID);
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
@@ -100,12 +100,6 @@ public class IHManageList extends HttpServlet {
 			String destinationID = request.getParameter("destination_id");
 			moveToList(currUser,listID,destinationID,itemID);
 			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
-		}
-		
-		else if (action.equals("SWAP")) {
-			String index1 = request.getParameter("index1");
-			String index2 = request.getParameter("index2");
-			swapItems(currUser,listID,index1,index2);
 		}
 		
 		/*
@@ -144,48 +138,11 @@ public class IHManageList extends HttpServlet {
 		}
 	}
 	
-	public void swapItems(User currUser, String listID, String index1, String index2) {
-		int i = Integer.parseInt(index1);
-		int j = Integer.parseInt(index2);
-		if (i < 0) {
-			return;
-		}
-		if (j < 0) {
-			return;
-		}
-		if (listID.equals("FAVORITES")) {
-			if (i >= currUser.getFavorites().size()) {
-				return;
-			}
-
-			if (j >= currUser.getFavorites().size()) {
-				return;
-			}
-			currUser.swapFavorites(i, j);
-		}
-		else if(listID.equals("TO_EXPLORE")) {
-			if (i >= currUser.getToExplore().size()) {
-				return;
-			}
-
-			if (j >= currUser.getToExplore().size()) {
-				return;
-			}
-			currUser.swapToExplore(i, j);
-		}
-		else {
-			if (i >= currUser.getDoNotShow().size()) {
-				return;
-			}
-
-			if (j >= currUser.getDoNotShow().size()) {
-				return;
-			}
-			currUser.swapDoNotShow(i, j);
-		}
-		
-	}
-
+	
+	
+	
+	
+	
 	/*
 	 * Based on the provided source and destination lists, this function moves the specified item.
 	 */

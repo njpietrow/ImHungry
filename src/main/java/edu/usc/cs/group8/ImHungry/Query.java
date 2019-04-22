@@ -4,13 +4,11 @@ public class Query {
 	
 	public String keyword;
 	public String numResults; 
-	public String radius; 
 
-	public Query(String keyword, String numResults, String radius) {
+	public Query(String keyword, String numResults) {
 		// TODO Auto-generated constructor stub
 		this.keyword = keyword;
 		this.numResults = numResults; 
-		this.radius = radius;
 	}
 
 	public String getKeyword() {
@@ -28,14 +26,6 @@ public class Query {
 	public void setNumResults(String numResults) {
 		this.numResults = numResults;
 	}
-	public String getRadius() {
-		return radius;
-	}
-
-	public void setRadius(String radius) {
-		this.radius = radius;
-	}
-	
 
 	@Override
 	public int hashCode() {

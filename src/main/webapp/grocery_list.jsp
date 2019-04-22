@@ -28,7 +28,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 		
-		<title>Grocery List Page</title>
+		<title>List Management Page</title>
 	</head>
 	
 	<body>
@@ -41,7 +41,7 @@
 			<div id="gListWrap">
 				<ul id="completeGList">
 					
-					<% 
+				<% 	
 					//Getting grocery list from session
 					
 					/* if ( ((User)(session.getAttribute("user"))).getGroceries() == null){
@@ -51,18 +51,20 @@
 				
 					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
 					
+					ArrayList<String> cities = new ArrayList<>(Arrays.asList("London", "Tokyo", "New York"));
+
 					//if no items in grocery list
-					if(grocery_results.size() == 0)
+					if(cities.size() == 0)
 					{
 						%>  <p> No Items in grocery list</p>  <% 
 						
 						return;
 					}
 					
-					for (int i = 0; i < grocery_results.size(); i++){
+					for (int i = 0; i < cities.size(); i++){
 						
 						//The following will get the detailed restaurant information needed to be displayed
-						String ingredient = (String)(grocery_results.get(i));
+						String ingredient = (String)(cities.get(i));
 						System.out.println(ingredient);
 						
 						%><li> <label> <input type="radio" name="gItem_select" value = <%= i %>>  <%= ingredient%> </label></li><% 
@@ -74,7 +76,6 @@
 			
 			</div>
 			<!-- end of gListWrap -->
-			
 			<div id="buttonContainer">
 			
 				<div class="btn-group-vertical" id="button_stuff">
@@ -127,7 +128,16 @@
 	        <!-- end of button group -->
 		</div>
 		
+		
+		
+		 
+		
 		<!-- end oof mainCntent -->
+<<<<<<< HEAD
 
+=======
+		
+		
+>>>>>>> parent of 1c89596... cleaned merge conflict
 	</body>
 </html>
