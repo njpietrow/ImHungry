@@ -106,6 +106,7 @@ public class IHManageList extends HttpServlet {
 			String index1 = request.getParameter("index1");
 			String index2 = request.getParameter("index2");
 			swapItems(currUser,listID,index1,index2);
+			request.getRequestDispatcher("list_management_page.jsp?list_id=" + listID).forward(request, response);
 		}
 		
 		/*
