@@ -103,6 +103,15 @@ public class LoginHelper {
 	        st = conn.prepareStatement("SELECT * FROM QuickAccess where username=?");
 	        st.setString(1, username);
 	        rs = st.executeQuery();
+	        int numQueries = 0;
+	        if (rs.last()) {
+	        	numQueries = rs.getRow();
+	        }
+	        if (numQueries > 10) {
+	        	rs.absolute(-10);
+	        } else {
+	        	rs.first();
+	        }
 	        while(rs.next())
 	        {
 	        	String keyword = rs.getString("keyword");
