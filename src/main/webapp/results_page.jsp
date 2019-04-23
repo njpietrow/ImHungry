@@ -127,9 +127,62 @@
 								</tbody>
 							</table>
 						</div>
+						
+						 <div class="recipe_results">
+							<h2>Recipe Results</h2>
+							<table id="recipe_results_table" class="table table-striped">
+								<thead>
+									<tr>
+										<th>Recipe</th>
+										<th>Prep Time</th>
+										<th>Cook Time</th>
+									</tr>
+								</thead>
+								<tbody>
+								<%
+								//Getting restaurant results array list from session
+								if (session.getAttribute("recipes") == null){
+									%><tr><th><a>Sorry, no recipes found</a></th></tr> <%
+									return;
+								}
+								ArrayList<Recipe> list_of_recipe_results = (ArrayList<Recipe>)(session.getAttribute("recipes"));
+								if (list_of_recipe_results.size()==0){
+									%><tr><th><a>Sorry, no recipes found</a></th></tr> <%
+								}
+								for (int i = 0; i < list_of_recipe_results.size(); i++){
+									
+									//The following will get the detailed restaurant information needed to be displayed
+									Recipe recipe = list_of_recipe_results.get(i);
+									String recipe_name = recipe.getName();
+									String cookTime, prepTime;
+									if (recipe.getCookTime() == 0){
+										cookTime = "No cook time available.";
+									}
+									else cookTime = recipe.getCookTime() + " min";
+									if (recipe.getPrepTime() == 0){
+										prepTime = "No prep time available.";
+									}
+									else prepTime = recipe.getPrepTime() + " min";
+									%>  
+									<tr>
+										<td>
+											<a href="recipe_page.jsp?recipe_id=<%= recipe.getURL()%>"><%=recipe_name%></a>
+											
+										</td>
+										<td>
+											Prep Time: <%=prepTime %>
+										</td>
+										<td>
+											Cook Time: <%=cookTime %>
+										</td>
+									</tr> 
+								<% } %>
+								</tbody>
+							</table>
+						</div>
 					
 						<!-- The following div is the container for the recipe results table -->
-						<div class="recipe_results">
+						<%-- <div class="recipe_results">
 							<h2>Recipe Results</h2>
 							<table id="recipe_results_table" class="table table-striped">
 								<%
@@ -156,9 +209,11 @@
 								}
 								%>
 							</table>
-						</div>
+						</div> --%>
 					</div>
 		        </div>
+		        
+		       
 		        
 		       <div style="clear:both"></div>
 		        
@@ -174,9 +229,20 @@
 	
 	    <script>
 	    
-	 // Basic example
+	    //table pagination for restaurant results
 	    $(document).ready(function () {
 	      $('#restaurant_results_table').DataTable({
+	        "pagingType": "simple", // "simple" option for 'Previous' and 'Next' buttons only
+	        "pageLength": 2,
+	        "bLengthChange": false,
+	        "searching": false
+	      });
+	      /* $('.dataTables_length').addClass('bs-select'); */
+	    });
+	    
+	  //table pagination for recipe results
+	    $(document).ready(function () {
+	      $('#recipe_results_table').DataTable({
 	        "pagingType": "simple", // "simple" option for 'Previous' and 'Next' buttons only
 	        "pageLength": 2,
 	        "bLengthChange": false,
