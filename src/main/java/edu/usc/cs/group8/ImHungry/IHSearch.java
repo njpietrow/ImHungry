@@ -111,6 +111,7 @@ public class IHSearch extends HttpServlet {
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
 			request.getSession().setAttribute("query", keyword);
+			request.getSession().setAttribute("username", currUser.getName());
 			request.getRequestDispatcher("results_page.jsp").forward(request, response);
 		}
 
