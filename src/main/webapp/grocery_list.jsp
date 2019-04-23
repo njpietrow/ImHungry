@@ -33,7 +33,7 @@
 	
 	<body>
 		<!-- navbar -->
-	
+	  
 			
 		
 		<!-- begin of body -->

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ page import="java.util.List" %>
+    <%@ page import="java.util.ArrayList" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.Recipe" %>
+    <%@ page import="edu.usc.cs.group8.ImHungry.User" %>
+    <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -23,6 +28,11 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		<!-- Container class-->
 		<div class="container">
+		
+		<% User currUser = (User) request.getAttribute("user"); 
+			if (currUser != null)
+				System.out.println(currUser.getName());
+		%>
 	    	<br/>
 			<!-- Using bootstrap for the search form -->
 			<div class="row justify-content-center">
