@@ -94,17 +94,20 @@ public class IHSearch extends HttpServlet {
 //		TODO need to create radius parameter from input box
 
 		// No session required for Search
-		ArrayList<String> images = doImageSearch(keyword);
 		ArrayList<Recipe> recipes = doRecipeSearch(keyword,number,currUser);
 		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius,currUser);
 //		ArrayList<Restaurant> restaurants = doRestaurantSearch(keyword,number,radius);
 
-		if (images != null && recipes != null && restaurants != null) {
+		if (recipes != null && restaurants != null) {
 			addToQuickAccess(currUser,keyword,number,radius);
 			if (currUser == null) currUser = new User();
 			sortRecipes(recipes,currUser);
 			sortRestaurants(restaurants,currUser);
-			request.getSession().setAttribute("images", images);
+			if (currUser.getLastSearch() != null) {
+				request.getSession().setAttribute("images", currUser.getLastSearch().getImages());
+			} else {
+				request.getSession().setAttribute("images", new Query(keyword,number,radius).getImages());
+			}
 			request.getSession().setAttribute("recipes", recipes);
 			request.getSession().setAttribute("restaurants", restaurants);
 			request.getSession().setAttribute("query", keyword);
@@ -128,6 +131,12 @@ public class IHSearch extends HttpServlet {
 		        conn =
 		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 	                                       "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+		        PreparedStatement check = conn.prepareStatement("DELETE FROM QuickAccess where username = ? and keyword = ? and num_results = ? and radius = ?");
+		        check.setString(1, currUser.getName());
+		        check.setString(2,  keyword);
+		        check.setString(3,  number);
+		        check.setString(4,  radius);
+		        check.execute();
 		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results,radius) values (?,?,?,?)");
 		        st.setString(1,  currUser.getName());
 		        st.setString(2,  keyword);
@@ -138,6 +147,7 @@ public class IHSearch extends HttpServlet {
 
 		    } catch (SQLException ex) {
 		        // handle any errors
+		    	ex.printStackTrace();
 		        System.out.println("SQLException: " + ex.getMessage());
 		        System.out.println("SQLState: " + ex.getSQLState());
 		        System.out.println("VendorError: " + ex.getErrorCode());
@@ -279,32 +289,8 @@ public class IHSearch extends HttpServlet {
 		}
 	}
 
-	/*
-	 * This sends a request out to Google to find images related to the keyword. It
-	 * grabs the first ten and returns them in an ArrayList as raw URLs in Strings.
-	 */
-	public ArrayList<String> doImageSearch(String keyword) {
-		keyword = keyword.replaceAll(" ", "+").toLowerCase();
-		String results = readWebsite("https://www.google.com/search?q=" + keyword + "&tbm=isch&gws_rd=ssl");
-		if (results == null) return null;
-		else {
-			ArrayList<String> images = new ArrayList<String>();
-			int i = 0;
-			while (images.size() < 10 && i < results.length() - 5) {
-				for (int j = i; j < results.length() - 5; i++, j++) {
-					if (results.substring(j, j+5).equals("\"ou\":")) {
-						j += 6;
-						i = j;
-						while (results.charAt(i) != '"' && i < results.length()) i++;
-						images.add(results.substring(j,i));
-						break;
-					}
-				}
-			}
-			return images;
-		}
-	}
 
+	
 	/*
 	 * This code was borrowed from https://stackoverflow.com/questions/31462/how-to-fetch-html-in-java
      * to parse an HTML file in Java and contains also an added line setting the User-Agent to simulate

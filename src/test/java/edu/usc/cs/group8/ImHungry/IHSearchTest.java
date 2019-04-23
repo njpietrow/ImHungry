@@ -50,7 +50,6 @@ public class IHSearchTest {
         PrintWriter pw = new PrintWriter(sw);
         User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
-        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         Mockito.when(IHS.doRestaurantSearch("spaghetti","10", "5", currUser)).thenReturn(new ArrayList<Restaurant>());
         Mockito.when(IHS.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
@@ -72,7 +71,6 @@ public class IHSearchTest {
         PrintWriter pw = new PrintWriter(sw);
         User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
-        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
         Mockito.when(IHS.doRestaurantSearch("spaghetti","10", "5",currUser)).thenReturn(null);
         Mockito.when(IHS.doRecipeSearch("spaghetti","10",currUser)).thenReturn(null);
          
@@ -94,7 +92,6 @@ public class IHSearchTest {
         PrintWriter pw = new PrintWriter(sw);
         User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
-        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(null);
         when(MockSearch.doRestaurantSearch("spaghetti","10", "5",currUser)).thenReturn(new ArrayList<Restaurant>());
         when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
@@ -116,7 +113,6 @@ public class IHSearchTest {
         PrintWriter pw = new PrintWriter(sw);
         User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
-        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         when(MockSearch.doRestaurantSearch("spaghetti","10","5",currUser)).thenReturn(null);
         when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(new ArrayList<Recipe>());
          
@@ -138,7 +134,6 @@ public class IHSearchTest {
         PrintWriter pw = new PrintWriter(sw);
         User currUser = new User("GJHalfond");
         IHSearch IHS = spy(new IHSearch());
-        Mockito.when(IHS.doImageSearch("spaghetti")).thenReturn(new ArrayList<String>());
         when(MockSearch.doRestaurantSearch("spaghetti","10","5", currUser)).thenReturn(new ArrayList<Restaurant>());
         when(MockSearch.doRecipeSearch("spaghetti","10",currUser)).thenReturn(null);
          
