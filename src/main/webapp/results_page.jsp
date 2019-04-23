@@ -233,7 +233,7 @@
 	    $(document).ready(function () {
 	      $('#restaurant_results_table').DataTable({
 	        "pagingType": "simple", // "simple" option for 'Previous' and 'Next' buttons only
-	        "pageLength": 2,
+	        "pageLength": 5,
 	        "bLengthChange": false,
 	        "searching": false
 	      });
@@ -244,7 +244,7 @@
 	    $(document).ready(function () {
 	      $('#recipe_results_table').DataTable({
 	        "pagingType": "simple", // "simple" option for 'Previous' and 'Next' buttons only
-	        "pageLength": 2,
+	        "pageLength": 5,
 	        "bLengthChange": false,
 	        "searching": false
 	      });
