@@ -112,7 +112,7 @@
 											
 										</td>
 										<td>
-											Drive Time: <%=driveTime%> min 
+											<%=driveTime%> min 
 										</td>
 										<td>
 											<%=address %>
@@ -170,10 +170,10 @@
 											
 										</td>
 										<td>
-											Prep Time: <%=prepTime %>
+											<%=prepTime %>
 										</td>
 										<td>
-											Cook Time: <%=cookTime %>
+											<%=cookTime %>
 										</td>
 									</tr> 
 								<% } %>
