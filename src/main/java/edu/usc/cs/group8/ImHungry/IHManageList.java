@@ -325,7 +325,7 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 			if (r == null) {
-				r = (Recipe)currUser.get(recipeID);
+				r = currUser.getRecipe(recipeID);
 			}
 			if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);
@@ -375,7 +375,7 @@ public class IHManageList extends HttpServlet {
 				}
 			}
 			if (r == null) {
-				r = (Restaurant)currUser.get(restaurantID,"");
+				r = currUser.getRestaurant(restaurantID);
 			}
 			else if (listID.equals("FAVORITES")) {
 				currUser.getLists().addToFavorites(r);

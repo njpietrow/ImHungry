@@ -37,7 +37,7 @@
 			currUser = (User)(session.getAttribute("user"));
 		}
 		else currUser = new User();
-  		restaurant = (Restaurant)(currUser.get(id,""));
+  		restaurant = (Restaurant)(currUser.getRestaurant(id));
  		}
    		//get the appropriate list id
    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){

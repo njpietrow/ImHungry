@@ -241,7 +241,7 @@ public class IHSearch extends HttpServlet {
 			//Populate the array of Restaurant objects with the rest of the required info
 			for (int i =0; i < restaurants.size();i++) {
 				Restaurant curr_restaurant = restaurants.get(i);
-				curr_restaurant = currUser.get(curr_restaurant.getId(),curr_restaurant.getName());
+				curr_restaurant = currUser.getRestaurant(curr_restaurant.getId());
 				restaurants.set(i, curr_restaurant);
 			}
 		return restaurants;
@@ -269,7 +269,7 @@ public class IHSearch extends HttpServlet {
 						j += 19;
 						i = j;
 						while (results.charAt(i) != '"' && i < results.length()) i++;
-						Recipe recipe = (Recipe)currUser.get(results.substring(j,i));
+						Recipe recipe = (Recipe)currUser.getRecipe(results.substring(j,i));
 						if (recipe == null) recipe = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(results.substring(j,i)));
 
 						if (currUser == null) currUser = new User();

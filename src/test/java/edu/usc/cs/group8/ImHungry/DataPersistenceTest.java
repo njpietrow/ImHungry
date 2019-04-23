@@ -16,7 +16,7 @@ public class DataPersistenceTest {
 		helper.login("GJHalfond","Scrum",currUser);
 		Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
 		r.setURL("http://localhost:8080/ImHungry/testrecipe.html");
-		Restaurant p = currUser.get("ChIJ_xMfDefHwoAR9ho1OxKZ850", "Pasta Roma");
+		Restaurant p = currUser.getRestaurant("ChIJ_xMfDefHwoAR9ho1OxKZ850");
 		currUser.addToFavorites(r);
 		currUser.addToFavorites(p);
 		currUser.addToToExplore(r);
