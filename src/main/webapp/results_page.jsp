@@ -15,6 +15,7 @@
 	
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	    <link href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></link>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 		
 		<!-- import links -->
@@ -24,6 +25,7 @@
 		
 		<title>Results for <%= session.getAttribute("query") %></title>
 	</head>
+	
 	<body>
 		<!-- navbar -->
 		<jsp:include page="modules/nav_bar.jsp" />
@@ -77,6 +79,15 @@
 						<div class="restaurant_results">
 							<h2>Restaurant Results</h2>
 							<table id="restaurant_results_table" class="table table-striped">
+								<thead>
+									<tr>
+										<th>Restaurant</th>
+										<th>Drive Time</th>
+										<th>Address</th>
+										<th>Cost</th>
+									</tr>
+								</thead>
+								<tbody>
 								<%
 								//Getting restaurant results array list from session
 								if (session.getAttribute("restaurants") == null){
@@ -94,12 +105,26 @@
 									String restaurant_name = restaurant.getName();
 									int driveTime = restaurant.getDriveTime();
 									String address = restaurant.getAddress();
-									%> <tr><th><a href="restaurant_page.jsp?restaurant_id=<%= restaurant.getId()%>&restaurant_name=<%= restaurant.getName() %>"><%=restaurant_name%></a> </th> <th>Drive Time: <%=driveTime%> min </th> <th><%=address %> </th> <th><%
-											for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
+									%>  
+									<tr>
+										<td>
+											<a href="restaurant_page.jsp?restaurant_id=<%= restaurant.getId()%>&restaurant_name=<%= restaurant.getName() %>"><%=restaurant_name%></a>
+											
+										</td>
+										<td>
+											Drive Time: <%=driveTime%> min 
+										</td>
+										<td>
+											<%=address %>
+										</td>
+										<td>
+											<% for (int j = 0; j < restaurant.getPriceRange(); j++ ){%>
 												$
-											<% } %></th></tr> <%
-								}
-								%>
+											<% } %>
+										</td>
+									</tr> 
+								<% } %>
+								</tbody>
 							</table>
 						</div>
 					
@@ -142,12 +167,23 @@
 	
 	        </div>
 	    </div>
-	    
-	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	
 	    <script>
+	    
+	 // Basic example
+	    $(document).ready(function () {
+	      $('#restaurant_results_table').DataTable({
+	        "pagingType": "simple", // "simple" option for 'Previous' and 'Next' buttons only
+	        "pageLength": 2,
+	        "bLengthChange": false,
+	        "searching": false
+	      });
+	      /* $('.dataTables_length').addClass('bs-select'); */
+	    });
 	    
 			//This is a helper fuction that will help to make the dropdown menu look nicer
 			//Specifically, the name of the list will be displayed on the button after selected
@@ -162,12 +198,12 @@
 				   });
 			});
 			     
-		     <!-- Back to Search -->		
+		   /*   <!-- Back to Search -->	 */	
 		 	document.getElementById("back_to_search_button").onclick = function(){
 				location.href = "search_page.jsp";
 			};
 			
-			<!-- Redirect to the List Management Page -->
+			/* <!-- Redirect to the List Management Page --> */
 	    	document.getElementById("manage_list_button").onclick = function(){
 				if (list_has_been_chosen) {
 					var list_name = "";
