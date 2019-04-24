@@ -3,6 +3,7 @@
     <%@ page import="java.util.List" %>
     <%@ page import="java.util.ArrayList" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Recipe" %>
+     <%@ page import="edu.usc.cs.group8.ImHungry.Query" %>
     <%@ page import="edu.usc.cs.group8.ImHungry.Restaurant" %>
     <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

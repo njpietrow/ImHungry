@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 public class User {
 	public String name;
-
 	private ArrayList<Result> favorites;
 	private ArrayList<Result> toExplore;
 	private ArrayList<Result> doNotShow;

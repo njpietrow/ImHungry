@@ -93,8 +93,6 @@
 					
 					<% 
 					//Getting grocery list from session
-				
-				
 					ArrayList<String> grocery_results = ((User)(session.getAttribute("user"))).getGroceries();
 				
 					//if no items in grocery list
