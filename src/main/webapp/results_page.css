@@ -6,7 +6,41 @@ html body {
 a {
 	margin-right: 1em;
 }
+
+#recent_collage{
+	width:100%;
+	height: auto;
+	overflow-x: auto;
+	white-space:nowrap;
+	margin-top:20px;
+	margin-bottom:200px;
 	
+}
+.query_container{
+	background-coloor:lightgrey;
+	padding:5px 0px 0px 10px;
+	margin-right: 10px;
+	border: 1px solid grey;
+	width: 250px;
+	height:auto;
+	display:inline-block;
+	float:none;
+	box-shadow: 5px 5px 8px grey;
+	border-radius:5px;
+}
+.collage_sm{
+	width:50px;
+	height:auto;
+	float:left;
+}
+
+.collage_container{
+/* 	border:1px solid red; */
+	height:150px;
+	width:100%;
+	float:left;
+}
+
 #collage {
 	 position: relative;
 	  margin: auto;
