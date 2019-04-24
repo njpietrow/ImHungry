@@ -32,8 +32,10 @@
 	</head>
 	
 	<body>
-		<!-- navbar -->
-	  
+
+	  <!-- navbar -->
+		<jsp:include page="modules/nav_bar.jsp"></jsp:include>
+		
 			
 		
 		<!-- begin of body -->
