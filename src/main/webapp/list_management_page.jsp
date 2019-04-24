@@ -70,9 +70,14 @@
 		    
 	      	
 		<div class="overall_information">
-			<div class = "list_name_header"> 			
-				<h1>
-				<%
+			<div class = "list_name_header">
+				<h1><%
+				if (session.getAttribute("user") == null){
+					response.setStatus(response.SC_BAD_GATEWAY);
+					response.getWriter().println("Please log in to use the grocery list feature!");
+					response.getWriter().flush();
+					return;
+				}
 				//The following will get the list_name of the current page
 				String list_name = request.getParameter("list_id");
 				%>

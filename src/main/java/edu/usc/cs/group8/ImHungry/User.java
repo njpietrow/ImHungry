@@ -15,6 +15,8 @@ public class User {
 	private ArrayList<Result> doNotShow;
 	private ArrayList<Query> quickAccess;
 	private ArrayList<String> groceryList;
+	
+	private ArrayList<ArrayList<Result> > lists;
 
 	private HashMap<String,Result> cache;
 
@@ -26,6 +28,10 @@ public class User {
 		doNotShow = new ArrayList<Result>();
 		quickAccess = new ArrayList<Query>();
 		groceryList = new ArrayList<String>();
+		lists = new ArrayList<ArrayList<Result>>(3);
+		lists.add(favorites);
+		lists.add(toExplore);
+		lists.add(doNotShow);
 		cache = new HashMap<String,Result>();
 	}
 
@@ -37,6 +43,10 @@ public class User {
 		doNotShow = new ArrayList<Result>();
 		quickAccess = new ArrayList<Query>();
 		groceryList = new ArrayList<String>();
+		lists = new ArrayList<ArrayList<Result>>();
+		lists.add(favorites);
+		lists.add(toExplore);
+		lists.add(doNotShow);
 		cache = new HashMap<String,Result>();
 	}
 
@@ -44,9 +54,9 @@ public class User {
 		// TODO Auto-generated method stub
 		 return this;
 	}
-
-	public void addToFavorites(Result r) {
-		if (!favorites.contains(r)) favorites.add(r);
+	
+	public void addToList(Result r, int listNum) {
+		if (!lists.get(listNum).contains(r)) lists.get(listNum).add(r);
 
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -83,10 +93,11 @@ public class User {
 					st.execute();
 				}
 
-				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,0,?)");
+				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,?,?)");
 				st.setString(1, ((Restaurant) r).getId());
 				st.setString(2, name);
-				st.setInt(3, list_size);
+				st.setInt(3, listNum);
+				st.setInt(4, list_size);
 				st.execute();
 
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
@@ -144,10 +155,11 @@ public class User {
 
 				}
 
-				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,0,?)");
+				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,?,?)");
 				st.setString(1, ((Recipe) r).getURL());
 				st.setString(2, name);
-				st.setInt(3, list_size);
+				st.setInt(3, listNum);
+				st.setInt(4, list_size);
 				st.execute();
 
 				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
@@ -176,268 +188,17 @@ public class User {
 
 	}
 
+	public void addToFavorites(Result r) {
+		addToList(r,0);
+	}
+
 	public void addToToExplore(Result r) {
-		if (!toExplore.contains(r)) toExplore.add(r);
-
-
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-
-		if (r instanceof Restaurant)
-		{
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-
-				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
-				st.setString(1, name);
-				rs = st.executeQuery();
-				int list_size = -1;
-				if (rs.next())
-				{
-					list_size = rs.getInt("list_size");
-				}
-				if (list_size == -1) return;
-				st.close();
-				list_size = list_size+1;
-				rs.close();
-
-				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
-				st.setString(1, r.getName());
-				rs = st.executeQuery();
-
-				if (!rs.next()) {
-					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
-					st.setString(1, ((Restaurant) r).getId());
-					st.setString(2, r.getName());
-					st.execute();
-				}
-
-				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,1,?)");
-				st.setString(1, ((Restaurant) r).getId());
-				st.setString(2, name);
-				st.setInt(3, list_size);
-				st.execute();
-
-				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
-				st.setInt(1, list_size);
-				st.setString(2, name);
-				st.execute();
-			}
-			catch (SQLException ex) {
-		        // handle any errors
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
-			finally {
-				try {
-					conn.close();
-					st.close();
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		else
-		{
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-
-				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
-				st.setString(1, name);
-				rs = st.executeQuery();
-				int list_size = -1;
-				if (rs.next())
-				{
-					list_size = rs.getInt("list_size");
-				}
-				if (list_size == -1) return;
-				st.close();
-				list_size = list_size+1;
-
-				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
-				st.setString(1, r.getName());
-				rs = st.executeQuery();
-
-				if (!rs.next()) {
-					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
-					st.setString(1, ((Recipe) r).getURL());
-					st.setString(2, r.getName());
-					st.execute();
-				}
-
-				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,1,?)");
-				st.setString(1, ((Recipe) r).getURL());
-				st.setString(2, name);
-				st.setInt(3, list_size);
-				st.execute();
-
-				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
-				st.setInt(1, list_size);
-				st.setString(2, name);
-				st.execute();
-			}
-			catch (SQLException ex) {
-		        // handle any errors
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
-			finally {
-				try {
-					conn.close();
-					st.close();
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-
+		addToList(r,1);
 	}
 
 
 	public void addToDoNotShow(Result r) {
-		if (!doNotShow.contains(r)) doNotShow.add(r);
-
-
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-
-		if (r instanceof Restaurant)
-		{
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-
-				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
-				st.setString(1, name);
-				rs = st.executeQuery();
-				int list_size = -1;
-				if (rs.next())
-				{
-					list_size = rs.getInt("list_size");
-				}
-				if (list_size == -1) return;
-				st.close();
-				list_size = list_size+1;
-				rs.close();
-
-				st = conn.prepareStatement("SELECT * from Restaurant where restaurant_name = ?");
-				st.setString(1, r.getName());
-				rs = st.executeQuery();
-
-				if (!rs.next()) {
-					st = conn.prepareStatement("INSERT INTO Restaurant(restaurant_id, restaurant_name) values(?,?)");
-					st.setString(1, ((Restaurant) r).getId());
-					st.setString(2, r.getName());
-					st.execute();
-				}
-
-				st = conn.prepareStatement("INSERT INTO ListRestaurants(restaurant_id, username, list_id, list_no) values(?,?,2,?)");
-				st.setString(1, ((Restaurant) r).getId());
-				st.setString(2, name);
-				st.setInt(3, list_size);
-				st.execute();
-
-				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
-				st.setInt(1, list_size);
-				st.setString(2, name);
-				st.execute();
-			}
-			catch (SQLException ex) {
-		        // handle any errors
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
-			finally {
-				try {
-					conn.close();
-					st.close();
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		else
-		{
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-
-				st = conn.prepareStatement("SELECT list_size from User WHERE username=?");
-				st.setString(1, name);
-				rs = st.executeQuery();
-				int list_size = -1;
-				if (rs.next())
-				{
-					list_size = rs.getInt("list_size");
-				}
-				if (list_size == -1) return;
-				st.close();
-				list_size = list_size+1;
-				rs.close();
-
-				st = conn.prepareStatement("SELECT * from Recipe where recipe_name = ?");
-				st.setString(1, r.getName());
-				rs = st.executeQuery();
-
-				if (!rs.next()) {
-					st = conn.prepareStatement("INSERT INTO Recipe(recipe_url, recipe_name) values(?,?)");
-					st.setString(1, ((Recipe) r).getURL());
-					st.setString(2, r.getName());
-					st.execute();
-				}
-
-				st = conn.prepareStatement("INSERT INTO ListRecipes(recipe_url, username, list_id, list_no) values(?,?,2,?)");
-				st.setString(1, ((Recipe) r).getURL());
-				st.setString(2, name);
-				st.setInt(3, list_size);
-				st.execute();
-
-				st = conn.prepareStatement("UPDATE User Set list_size = ? WHERE username = ?");
-				st.setInt(1, list_size);
-				st.setString(2, name);
-				st.execute();
-			}
-			catch (SQLException ex) {
-		        // handle any errors
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
-			finally {
-				try {
-					conn.close();
-					st.close();
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-
+		addToList(r,2);
 	}
 
 	public String getName() {
@@ -454,11 +215,11 @@ public class User {
 		}
 		return quickAccess.get(quickAccess.size()-1);
 	}
-
-	public void removeFromFavorites(Result r) {
+	
+	public void removeFromList(Result r, int listNum) {
 		Connection conn = null;
 		PreparedStatement st = null;
-		if (favoritesContains(r))
+		if (lists.get(listNum).contains(r))
 		{
 
 			try
@@ -473,7 +234,7 @@ public class User {
 							+ "and list_id=?");
 					st.setString(1, id);
 					st.setString(2, name);
-					st.setString(3, "0");
+					st.setInt(3, listNum);
 					st.execute();
 				}
 				else
@@ -483,7 +244,7 @@ public class User {
 							+ "and list_id= ?");
 					st.setString(1, url);
 					st.setString(2,  name);
-					st.setString(3, "0");
+					st.setInt(3, listNum);
 					st.execute();
 				}
 			}
@@ -504,110 +265,20 @@ public class User {
 					e.printStackTrace();
 				}
 			}
-			favorites.remove(r);
+			lists.get(listNum).remove(r);
 		}
+	}
+
+	public void removeFromFavorites(Result r) {
+		removeFromList(r,0);
 	}
 
 	public void removeFromToExplore(Result r) {
-		Connection conn = null;
-		PreparedStatement st = null;
-		if (toExploreContains(r)){
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-				if (r instanceof Restaurant)
-				{
-					String id = ((Restaurant) r).getId();
-
-					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
-							+ "and list_id=?");
-					st.setString(1, id);
-					st.setString(2, name);
-					st.setString(3, "1");
-					st.execute();
-				}
-				else
-				{
-					String url = ((Recipe) r).getURL();
-					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
-							+ "and list_id= ?");
-					st.setString(1, url);
-					st.setString(2,  name);
-					st.setString(3, "1");
-					st.execute();
-				}
-			}
-			catch (SQLException ex)
-			{
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-			}
-			finally
-			{
-				try {
-					conn.close();
-					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			toExplore.remove(r);
-		}
+		removeFromList(r,1);
 	}
 
 	public void removeFromDoNotShow(Result r) {
-		Connection conn = null;
-		PreparedStatement st = null;
-		if (doNotShowContains(r)) {
-			try
-			{
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-                        "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-				if (r instanceof Restaurant)
-				{
-					String id = ((Restaurant) r).getId();
-
-					st = conn.prepareStatement("DELETE FROM ListRestaurants WHERE restaurant_id =? and username = ? "
-							+ "and list_id=?");
-					st.setString(1, id);
-					st.setString(2, name);
-					st.setString(3, "2");
-					st.execute();
-				}
-				else
-				{
-					String url = ((Recipe) r).getURL();
-					st = conn.prepareStatement("DELETE FROM ListRecipes WHERE recipe_url =? and username = ? "
-							+ "and list_id= ?");
-					st.setString(1, url);
-					st.setString(2,  name);
-					st.setString(3, "2");
-					st.execute();
-				}
-			}
-			catch (SQLException ex)
-			{
-				ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-			}
-			finally
-			{
-				try {
-					conn.close();
-					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			doNotShow.remove(r);
-		}
+		removeFromList(r,2);
 	}
 
 	public void removeFromFavorites(int index){
@@ -681,14 +352,17 @@ public class User {
 
 	public void setFavorites(ArrayList<Result> favorites) {
 		this.favorites = favorites;
+		lists.set(0, favorites);
 	}
 
 	public void setToExplore(ArrayList<Result> toExplore) {
 		this.toExplore = toExplore;
+		lists.set(1, toExplore);
 	}
 
 	public void setDoNotShow(ArrayList<Result> doNotShow) {
 		this.doNotShow = doNotShow;
+		lists.set(2, doNotShow);
 	}
 
 	public void setQuickAccess(ArrayList<Query> quickAccess) {
@@ -894,7 +568,7 @@ public class User {
 		return groceryList;
 	}
 
-	public Restaurant get(String token, String name) {
+	public Restaurant getRestaurant(String token) {
 		
 		if (this.name == null) return null;
 		if (cache.containsKey(token)) {
@@ -946,7 +620,7 @@ public class User {
 			return r;
 		}
 	}
-	public Recipe get(String token) {
+	public Recipe getRecipe(String token) {
 		if (name == null) return null;
 		if (token.charAt(0)=='\'') {
 			token = token.substring(1,token.length()-1);
@@ -1005,10 +679,11 @@ public class User {
 		
 	}
 	
-	public void swapFavorites(int index1, int index2) {
-		Result temp = favorites.get(index1);
-		favorites.set(index1,favorites.get(index2));
-		favorites.set(index2, temp);
+	public void swapItems(int index1, int index2, int listNum) {
+		ArrayList<Result> tempList = lists.get(listNum);
+		Result temp = tempList.get(index1);
+		lists.get(listNum).set(index1,lists.get(listNum).get(index2));
+		lists.get(listNum).set(index2, temp);
 		
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -1016,68 +691,75 @@ public class User {
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
 					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-			if (favorites.get(index1) instanceof Restaurant) {
-				if (favorites.get(index2) instanceof Restaurant) {
+			if (lists.get(listNum).get(index1) instanceof Restaurant) {
+				if (lists.get(listNum).get(index2) instanceof Restaurant) {
 					
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 0");
+					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = ?");
 					st.setString(1, name);
+					st.setInt(2, listNum);
 					rs = st.executeQuery();
 					int tempindex1 = -1;
 					int tempindex2 = -1;
 					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(favorites.get(index1))).getId())) {
+						if (rs.getString("restaurant_id").equals(((Restaurant)(lists.get(listNum).get(index1))).getId())) {
 							tempindex2 = rs.getInt("list_no");
 						}
-						if (rs.getString("restaurant_id").equals(((Restaurant)(favorites.get(index2))).getId())) {
+						if (rs.getString("restaurant_id").equals(((Restaurant)(lists.get(listNum).get(index2))).getId())) {
 							tempindex1 = rs.getInt("list_no");
 						}
 					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 0 AND list_no = ?");
+					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = ? AND list_no = ?");
 					st2.setInt(1, tempindex1);
 					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
+					st2.setInt(3, listNum);
+					st2.setInt(4, tempindex2);
 					st2.execute();
 					
 					st2.setInt(1, tempindex2);
 					st2.setString(2, name);
+					st2.setInt(3, listNum);
 					st2.setInt(3, tempindex1);
 					st2.execute();
 					
 					st2.close();
 				}
 				else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 0");
+					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = ?");
 					st.setString(1, name);
+					st.setInt(2, listNum);
 					rs = st.executeQuery();
 					int tempindex1 = -1;
 					int tempindex2 = -1;
 					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(favorites.get(index1))).getId())) {
+						if (rs.getString("restaurant_id").equals(((Restaurant)(lists.get(listNum).get(index1))).getId())) {
 							tempindex2 = rs.getInt("list_no");
 						}
 					}
 					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 0");
+					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = ?");
 					st2.setString(1, name);
+					st2.setInt(2, listNum);
 					ResultSet rs2 = st2.executeQuery();
 					
 					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(favorites.get(index2))).getURL())) {
+						if (rs2.getString("recipe_url").equals(((Recipe)(lists.get(listNum).get(index2))).getURL())) {
 							tempindex1 = rs2.getInt("list_no");
 						}
 					}
 					rs2.close();
 					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 0 AND list_no = ?");
+					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = ? AND list_no = ?");
 					st3.setInt(1, tempindex1);
 					st3.setString(2, name);
-					st3.setInt(3, tempindex2);
+					st3.setInt(3, listNum);
+					st3.setInt(4, tempindex2);
 					st3.execute();
 					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 0 AND list_no = ?");
+					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = ? AND list_no = ?");
 					st4.setInt(1, tempindex2);
 					st4.setString(2, name);
-					st4.setInt(3, tempindex1);
+					st4.setInt(3, listNum);
+					st4.setInt(4, tempindex1);
 					st4.execute();
 					
 					st2.close();
@@ -1085,65 +767,72 @@ public class User {
 					st4.close();
 				}
 			} else {
-				if (favorites.get(index2) instanceof Recipe) {
-					st = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 0");
+				if (lists.get(listNum).get(index2) instanceof Recipe) {
+					st = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = ?");
 					st.setString(1, name);
+					st.setInt(2, listNum);
 					rs = st.executeQuery();
 					int tempindex1 = -1;
 					int tempindex2 = -1;
 					while (rs.next()) {
-						if (rs.getString("recipe_url").equals(((Recipe)(favorites.get(index1))).getURL())) {
+						if (rs.getString("recipe_url").equals(((Recipe)(lists.get(listNum).get(index1))).getURL())) {
 							tempindex2 = rs.getInt("list_no");
 						}
-						if (rs.getString("recipe_url").equals(((Recipe)(favorites.get(index2))).getURL())) {
+						if (rs.getString("recipe_url").equals(((Recipe)(lists.get(listNum).get(index2))).getURL())) {
 							tempindex1 = rs.getInt("list_no");
 						}
 					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 0 AND list_no = ?");
+					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = ? AND list_no = ?");
 					st2.setInt(1, tempindex1);
 					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
+					st2.setInt(3, listNum);
+					st2.setInt(4, tempindex2);
 					st2.execute();
 					
 					st2.setInt(1, tempindex2);
 					st2.setString(2, name);
-					st2.setInt(3, tempindex1);
+					st2.setInt(3, listNum);
+					st2.setInt(4, tempindex1);
 					st2.execute();
 					
 					st2.close();
 				} else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 0");
+					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = ?");
 					st.setString(1, name);
+					st.setInt(2, listNum);
 					rs = st.executeQuery();
 					int tempindex1 = -1;
 					int tempindex2 = -1;
 					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(favorites.get(index2))).getId())) {
+						if (rs.getString("restaurant_id").equals(((Restaurant)(lists.get(listNum).get(index2))).getId())) {
 							tempindex1 = rs.getInt("list_no");
 						}
 					}
 					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 0");
+					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = ?");
 					st2.setString(1, name);
+					st2.setInt(2, listNum);
 					ResultSet rs2 = st2.executeQuery();
 					
 					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(favorites.get(index1))).getURL())) {
+						if (rs2.getString("recipe_url").equals(((Recipe)(lists.get(listNum).get(index1))).getURL())) {
 							tempindex2 = rs2.getInt("list_no");
 						}
 					}
 					rs2.close();
 					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 0 AND list_id = ?");
+					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = ? AND list_id = ?");
 					st3.setInt(1, tempindex2);
 					st3.setString(2, name);
-					st3.setInt(3, tempindex1);
+					st3.setInt(3, listNum);
+					st3.setInt(4, tempindex1);
 					st3.execute();
 					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 0 AND list_id = ?");
+					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = ? AND list_id = ?");
 					st4.setInt(1, tempindex1);
 					st4.setString(2, name);
-					st4.setInt(3, tempindex2);
+					st4.setInt(3, listNum);
+					st4.setInt(4, tempindex2);
 					st4.execute();
 					
 					st2.close();
@@ -1165,331 +854,17 @@ public class User {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void swapFavorites(int index1, int index2) {
+		swapItems(index1,index2,0);
 	}
 
 	public void swapToExplore(int index1, int index2) {
-		Result temp = toExplore.get(index1);
-		toExplore.set(index1,toExplore.get(index2));
-		toExplore.set(index2, temp);
-		
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-			if (toExplore.get(index1) instanceof Restaurant) {
-				if (toExplore.get(index2) instanceof Restaurant) {
-					
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 1");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(toExplore.get(index1))).getId())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-						if (rs.getString("restaurant_id").equals(((Restaurant)(toExplore.get(index2))).getId())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 1 AND list_no = ?");
-					st2.setInt(1, tempindex1);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
-					st2.execute();
-					
-					st2.setInt(1, tempindex2);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex1);
-					st2.execute();
-					
-					st2.close();
-				}
-				else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 1");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(toExplore.get(index1))).getId())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-					}
-					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 1");
-					st2.setString(1, name);
-					ResultSet rs2 = st2.executeQuery();
-					
-					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(toExplore.get(index2))).getURL())) {
-							tempindex1 = rs2.getInt("list_no");
-						}
-					}
-					rs2.close();
-					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 1 AND list_no = ?");
-					st3.setInt(1, tempindex1);
-					st3.setString(2, name);
-					st3.setInt(3, tempindex2);
-					st3.execute();
-					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 1 AND list_no = ?");
-					st4.setInt(1, tempindex2);
-					st4.setString(2, name);
-					st4.setInt(3, tempindex1);
-					st4.execute();
-					
-					st2.close();
-					st3.close();
-					st4.close();
-				}
-			} else {
-				if (toExplore.get(index2) instanceof Recipe) {
-					st = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 1");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("recipe_url").equals(((Recipe)(toExplore.get(index1))).getURL())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-						if (rs.getString("recipe_url").equals(((Recipe)(toExplore.get(index2))).getURL())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 1 AND list_no = ?");
-					st2.setInt(1, tempindex1);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
-					st2.execute();
-					
-					st2.setInt(1, tempindex2);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex1);
-					st2.execute();
-					
-					st2.close();
-				} else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 1");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(toExplore.get(index2))).getId())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 1");
-					st2.setString(1, name);
-					ResultSet rs2 = st2.executeQuery();
-					
-					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(toExplore.get(index1))).getURL())) {
-							tempindex2 = rs2.getInt("list_no");
-						}
-					}
-					rs2.close();
-					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 1 AND list_id = ?");
-					st3.setInt(1, tempindex2);
-					st3.setString(2, name);
-					st3.setInt(3, tempindex1);
-					st3.execute();
-					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 1 AND list_id = ?");
-					st4.setInt(1, tempindex1);
-					st4.setString(2, name);
-					st4.setInt(3, tempindex2);
-					st4.execute();
-					
-					st2.close();
-					st3.close();
-					st4.close();
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				conn.close();
-				st.close();
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		swapItems(index1,index2,1);
 	}
 
 	public void swapDoNotShow(int index1, int index2) {
-		Result temp = doNotShow.get(index1);
-		doNotShow.set(index1,doNotShow.get(index2));
-		doNotShow.set(index2, temp);
-		
-		Connection conn = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-					"user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-			if (doNotShow.get(index1) instanceof Restaurant) {
-				if (doNotShow.get(index2) instanceof Restaurant) {
-					
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 2");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(doNotShow.get(index1))).getId())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-						if (rs.getString("restaurant_id").equals(((Restaurant)(doNotShow.get(index2))).getId())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 2 AND list_no = ?");
-					st2.setInt(1, tempindex1);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
-					st2.execute();
-					
-					st2.setInt(1, tempindex2);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex1);
-					st2.execute();
-					
-					st2.close();
-				}
-				else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 2");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(doNotShow.get(index1))).getId())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-					}
-					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 2");
-					st2.setString(1, name);
-					ResultSet rs2 = st2.executeQuery();
-					
-					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(doNotShow.get(index2))).getURL())) {
-							tempindex1 = rs2.getInt("list_no");
-						}
-					}
-					rs2.close();
-					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 2 AND list_no = ?");
-					st3.setInt(1, tempindex1);
-					st3.setString(2, name);
-					st3.setInt(3, tempindex2);
-					st3.execute();
-					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 2 AND list_no = ?");
-					st4.setInt(1, tempindex2);
-					st4.setString(2, name);
-					st4.setInt(3, tempindex1);
-					st4.execute();
-					
-					st2.close();
-					st3.close();
-					st4.close();
-				}
-			} else {
-				if (doNotShow.get(index2) instanceof Recipe) {
-					st = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 2");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("recipe_url").equals(((Recipe)(doNotShow.get(index1))).getURL())) {
-							tempindex2 = rs.getInt("list_no");
-						}
-						if (rs.getString("recipe_url").equals(((Recipe)(doNotShow.get(index2))).getURL())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					PreparedStatement st2 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 2 AND list_no = ?");
-					st2.setInt(1, tempindex1);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex2);
-					st2.execute();
-					
-					st2.setInt(1, tempindex2);
-					st2.setString(2, name);
-					st2.setInt(3, tempindex1);
-					st2.execute();
-					
-					st2.close();
-				} else {
-					st = conn.prepareStatement("SELECT * FROM ListRestaurants WHERE username = ? AND list_id = 2");
-					st.setString(1, name);
-					rs = st.executeQuery();
-					int tempindex1 = -1;
-					int tempindex2 = -1;
-					while (rs.next()) {
-						if (rs.getString("restaurant_id").equals(((Restaurant)(doNotShow.get(index2))).getId())) {
-							tempindex1 = rs.getInt("list_no");
-						}
-					}
-					
-					PreparedStatement st2 = conn.prepareStatement("SELECT * FROM ListRecipes WHERE username = ? AND list_id = 2");
-					st2.setString(1, name);
-					ResultSet rs2 = st2.executeQuery();
-					
-					while (rs2.next()) {
-						if (rs2.getString("recipe_url").equals(((Recipe)(doNotShow.get(index1))).getURL())) {
-							tempindex2 = rs2.getInt("list_no");
-						}
-					}
-					rs2.close();
-					
-					PreparedStatement st3 = conn.prepareStatement("UPDATE ListRestaurants SET list_no = ? WHERE username = ? AND list_id = 2 AND list_id = ?");
-					st3.setInt(1, tempindex2);
-					st3.setString(2, name);
-					st3.setInt(3, tempindex1);
-					st3.execute();
-					
-					PreparedStatement st4 = conn.prepareStatement("UPDATE ListRecipes SET list_no = ? WHERE username = ? AND list_id = 2 AND list_id = ?");
-					st4.setInt(1, tempindex1);
-					st4.setString(2, name);
-					st4.setInt(3, tempindex2);
-					st4.execute();
-					
-					st2.close();
-					st3.close();
-					st4.close();
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				conn.close();
-				st.close();
-				rs.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		swapItems(index1,index2,2);
 	}
 }

@@ -37,7 +37,7 @@
 			currUser = (User)(session.getAttribute("user"));
 		}
 		else currUser = new User();
-  		restaurant = (Restaurant)(currUser.get(id,""));
+  		restaurant = (Restaurant)(currUser.getRestaurant(id));
  		}
    		//get the appropriate list id
    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){
@@ -67,8 +67,8 @@
 	    <!-- Button Group for Printable Version, Back to Results, Dropdown for Predefined Lists, and Add to list -->
 	    <div class="overall_information">
 	    	<div class="btn-group-vertical" id="button_stuff">
-	        	<button class="btn btn-success" onclick="PrintPreview()">Printable Version</button> 
-	        	<button id="back_to_results_button" class="btn btn-success">Back to Results</button> 
+	        	<button class="btn btn-dark" onclick="PrintPreview()">Printable Version</button> 
+	        	<button id="back_to_results_button" class="btn btn-dark">Back to Results</button> 
 	        	<!-- Back to Results -->
 	        	<script type="text/javascript">
 				    document.getElementById("back_to_results_button").onclick = function () {
@@ -76,7 +76,7 @@
 				    };
 			</script>
 			<!-- Standardized buttons -->
-	        	<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+	        	<button id="btnGroupVerticalDrop2" type="button" class="btn btn-secondary dropdown-toggle btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
 			      <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop2">
 			        <a class="dropdown-item" href="#">Favorites</a>
 			        <a class="dropdown-item" href="#">To Explore</a>
@@ -92,7 +92,7 @@
 					});
 			      </script>
 				<!-- Add to list button -->
-				<button class="btn btn-success" id="add_to_list_button">Add to list</button> 
+				<button class="btn btn-dark" id="add_to_list_button">Add to list</button> 
 				<script>
 					 document.getElementById("add_to_list_button").onclick = function () {
 						var list_id;

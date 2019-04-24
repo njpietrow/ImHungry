@@ -35,7 +35,7 @@
 		    				currUser = (User)(session.getAttribute("user"));
 		    			}
 		    			else currUser = new User();
-			    		recipe = (Recipe)(currUser.get(id));
+			    		recipe = (Recipe)(currUser.getRecipe(id));
 		    		}
 		    		//grab the item id
 		    		else if (request.getParameter("list_id") != null && !request.getParameter("list_id").equals("")){

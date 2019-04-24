@@ -11,52 +11,53 @@ public class ListReorderTest {
 		User myUser = new User("GJHalfond");
 		myUser.reset();
 		
-		myUser.addToFavorites(myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		myUser.addToFavorites(myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
-		assertEquals(myUser.getFavorites().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getFavorites().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		myUser.addToFavorites(myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		myUser.addToFavorites(myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
+		assertEquals(myUser.getFavorites().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getFavorites().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapFavorites(0,1);
 		
 		LoginHelper lh = new LoginHelper();
 		lh.logout(myUser);
 		lh.login("GJHalfond", "Scrum", myUser);
 		
-		assertEquals(myUser.getFavorites().get(1),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getFavorites().get(0),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getFavorites().get(1),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getFavorites().get(0),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
+		
 		myUser.swapFavorites(0,1);
-		assertEquals(myUser.getFavorites().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getFavorites().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getFavorites().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getFavorites().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		
 		myUser.reset();
 		
-		myUser.addToToExplore(myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		myUser.addToToExplore(myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
-		assertEquals(myUser.getToExplore().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getToExplore().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		myUser.addToToExplore(myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		myUser.addToToExplore(myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
+		assertEquals(myUser.getToExplore().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getToExplore().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapToExplore(0,1);
 		
 		lh.logout(myUser);
 		lh.login("GJHalfond", "Scrum", myUser);
-		assertEquals(myUser.getToExplore().get(1),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getToExplore().get(0),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getToExplore().get(1),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getToExplore().get(0),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapToExplore(0,1);
-		assertEquals(myUser.getToExplore().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getToExplore().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getToExplore().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getToExplore().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		
 		myUser.reset();
 		
-		myUser.addToDoNotShow(myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		myUser.addToDoNotShow(myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
-		assertEquals(myUser.getDoNotShow().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getDoNotShow().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		myUser.addToDoNotShow(myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		myUser.addToDoNotShow(myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
+		assertEquals(myUser.getDoNotShow().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getDoNotShow().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapDoNotShow(0,1);
 		lh.logout(myUser);
 		lh.login("GJHalfond", "Scrum", myUser);
-		assertEquals(myUser.getDoNotShow().get(1),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getDoNotShow().get(0),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getDoNotShow().get(1),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getDoNotShow().get(0),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapDoNotShow(0,1);
-		assertEquals(myUser.getDoNotShow().get(0),myUser.get("http://localhost:8080/ImHungry/testrecipe.html"));
-		assertEquals(myUser.getDoNotShow().get(1),myUser.get("ChIJwajStEu5woAR9O3sDMuI1UM",""));
+		assertEquals(myUser.getDoNotShow().get(0),myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
+		assertEquals(myUser.getDoNotShow().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 	}
 	
 	@Test
@@ -67,10 +68,10 @@ public class ListReorderTest {
 		lh.login("GJHalfond", "Scrum", currUser);
 		currUser.reset();
 		
-		Restaurant r1 = currUser.get("ChIJwajStEu5woAR9O3sDMuI1UM","");
-		Restaurant r2 = currUser.get("ChIJJewhXDol6IARKGxyEnT4sIA", "");
-		Recipe r3 = currUser.get("http://localhost:8080/ImHungry/testrecipe.html");
-		Recipe r4 = currUser.get("http://localhost:8080/ImHungry/testrecipe2.html");
+		Restaurant r1 = currUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM");
+		Restaurant r2 = currUser.getRestaurant("ChIJJewhXDol6IARKGxyEnT4sIA");
+		Recipe r3 = currUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html");
+		Recipe r4 = currUser.getRecipe("http://localhost:8080/ImHungry/testrecipe2.html");
 		
 		currUser.addToFavorites(r1);
 		currUser.addToFavorites(r2);

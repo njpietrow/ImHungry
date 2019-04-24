@@ -3,7 +3,10 @@
 html body {
 	background-color: #f5f5f5;
 }
-
+a {
+	margin-right: 1em;
+}
+	
 #collage {
 	 position: relative;
 	  margin: auto;
