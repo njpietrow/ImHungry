@@ -23,6 +23,7 @@ public class RestaurantGetter {
 	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
 	
 	public static void getKey() {
+		System.out.println("I got called!");
 		 BufferedReader br = null;
 			try {
 
@@ -60,6 +61,7 @@ public class RestaurantGetter {
 
 			//Parse the JSON object to retrieve necessary Restaurant info
 			JSONObject mainObj= new JSONObject(json_string);
+			System.out.println(MAPS_API_KEY);
 			JSONObject result = (JSONObject) mainObj.get("result");
 			
 			String address = "",phoneNum = "",website = "",name="";
