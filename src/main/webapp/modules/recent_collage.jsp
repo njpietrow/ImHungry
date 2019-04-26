@@ -14,8 +14,11 @@
    <!--  iterate through recent searches -->
    <% 
  	//Getting query list from session
- 	User person =  ((User)(session.getAttribute("user")));
-	ArrayList<Query> query_results = person.getQuickAccess();
+ 	ArrayList<Query> query_results;
+ 	if (session.getAttribute("user") != null){
+ 	 	User person =  ((User)(session.getAttribute("user")));
+ 		query_results = person.getQuickAccess();
+ 	} else query_results = new ArrayList<Query>();
 
 	//if no items in grocery list
 	if(query_results.size() == 0)
