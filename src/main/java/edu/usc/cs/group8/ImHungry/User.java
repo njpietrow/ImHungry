@@ -569,8 +569,11 @@ public class User {
 	}
 
 	public Restaurant getRestaurant(String token) {
-		
-		if (this.name == null) return null;
+		if (name == null) {
+			Restaurant r = RestaurantGetter.getContactInfo(RestaurantGetter.getDriveTime(new Restaurant(token)));
+			if (r == null) return null;
+			return r;
+		}
 		if (cache.containsKey(token)) {
 			return (Restaurant)cache.get(token);
 		} else {
@@ -621,7 +624,12 @@ public class User {
 		}
 	}
 	public Recipe getRecipe(String token) {
-		if (name == null) return null;
+		if (name == null) {
+			Recipe r = RecipeGetter.parseRecipe(RecipeGetter.readRecipe(token));
+			if (r == null) return null;
+			r.setURL(token);
+			return r;
+		}
 		if (token.charAt(0)=='\'') {
 			token = token.substring(1,token.length()-1);
 		}
