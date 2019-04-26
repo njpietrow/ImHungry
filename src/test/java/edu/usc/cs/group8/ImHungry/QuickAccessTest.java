@@ -12,7 +12,7 @@ public class QuickAccessTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3","5000", currUser); 
+		currUser.addToQuickAccess(new Query("Curry", "3","5000")); 
 		assertTrue(currUser.getLists().quickAccessContains(new Query("Curry","3", "5000")));
 	}
 	
@@ -22,7 +22,7 @@ public class QuickAccessTest {
 		User currUser = new User(); 
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
-		searchy.doRestaurantSearch("Curry", "3", "5000",currUser);
+		currUser.addToQuickAccess(new Query("Curry", "3","5000")); 
 		assertTrue(currUser.getLists().getQuickAccess().get(0).equals(new Query("Curry","3", "5000")));
 	}
 

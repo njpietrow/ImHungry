@@ -70,7 +70,6 @@ public class GroceryListTest {
 		moreIngredients.add("Like 48 red hots");
 		Recipe greenBeans = user.getRecipe("http://localhost:8080/ImHungry/testrecipe2.html");
 		user.getLists().addToGroceryList(greenBeans);
-		System.out.println(user.getGroceries());
 		assertTrue(user.getLists().groceryListContains("Green beans"));
 		assertTrue(user.getLists().groceryListContains("Like 48 red hots"));
 		user.getLists().removeFromGroceryList(greenBeans);
@@ -81,9 +80,7 @@ public class GroceryListTest {
 		assertFalse(user.getLists().groceryListContains("A can of chicken"));
 		assertTrue(user.getLists().groceryListContains("A whole bunch of flour"));
 		user.addToGroceryList(gross);
-		System.out.println(user.getGroceries());
 		user.removeFromGroceryList("A whole bunch of flour");
-		System.out.println(user.getGroceries());
 		assertFalse(user.getLists().groceryListContains("A whole bunch of flour"));
 		
 	}

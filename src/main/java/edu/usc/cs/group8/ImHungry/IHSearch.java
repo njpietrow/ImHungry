@@ -124,34 +124,8 @@ public class IHSearch extends HttpServlet {
 		if (currUser == null) return;
 		if (currUser.getName() == null) return;
 		if (currUser.getName().equals("")) return;
-		Connection conn = null;
-		PreparedStatement st = null;
 		currUser.getLists().addToQuickAccess(new Query(keyword,number,radius));
-		 try {
-		        conn =
-		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
-	                                       "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
-		        PreparedStatement check = conn.prepareStatement("DELETE FROM QuickAccess where username = ? and keyword = ? and num_results = ? and radius = ?");
-		        check.setString(1, currUser.getName());
-		        check.setString(2,  keyword);
-		        check.setString(3,  number);
-		        check.setString(4,  radius);
-		        check.execute();
-		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results,radius) values (?,?,?,?)");
-		        st.setString(1,  currUser.getName());
-		        st.setString(2,  keyword);
-		        st.setString(3,  number);
-		        st.setString(4,  radius);
-		        st.execute();
-		        // Do something with the Connection
-
-		    } catch (SQLException ex) {
-		        // handle any errors
-		    	ex.printStackTrace();
-		        System.out.println("SQLException: " + ex.getMessage());
-		        System.out.println("SQLState: " + ex.getSQLState());
-		        System.out.println("VendorError: " + ex.getErrorCode());
-		    }
+		
 	}
 
 	/*

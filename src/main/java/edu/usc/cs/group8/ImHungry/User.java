@@ -347,6 +347,33 @@ public class User {
 	}
 
 	public void addToQuickAccess(Query q) {
+		Connection conn = null;
+		PreparedStatement st = null;
+		 try {
+		        conn =
+		           DriverManager.getConnection("jdbc:mysql://localhost:3306/ImHungry?" +
+	                                       "user=root&password=root&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST");
+		        PreparedStatement check = conn.prepareStatement("DELETE FROM QuickAccess where username = ? and keyword = ? and num_results = ? and radius = ?");
+		        check.setString(1, name);
+		        check.setString(2, q.getKeyword());
+		        check.setString(3, q.getNumResults());
+		        check.setString(4, q.getRadius());
+		        check.execute();
+		        st = conn.prepareStatement("INSERT INTO QuickAccess(username,keyword,num_results,radius) values (?,?,?,?)");
+		        st.setString(1,  name);
+		        st.setString(2,  q.getKeyword());
+		        st.setString(3,  q.getNumResults());
+		        st.setString(4,  q.getRadius());
+		        st.execute();
+		        // Do something with the Connection
+
+		    } catch (SQLException ex) {
+		        // handle any errors
+		    	ex.printStackTrace();
+		        System.out.println("SQLException: " + ex.getMessage());
+		        System.out.println("SQLState: " + ex.getSQLState());
+		        System.out.println("VendorError: " + ex.getErrorCode());
+		    }
 		quickAccess.add(q);
 	}
 

@@ -60,6 +60,8 @@ public class LoginHelper {
 	        	temp = RestaurantGetter.getDriveTime(temp);
 	        	int listID = rs.getInt("list_id");
 	        	int listNum = rs.getInt("list_no");
+	        	
+	        	System.out.println(listNum + ": " + temp.getName());
 	        	switch(listID)
 	        	{
 	        	case 0:
@@ -85,6 +87,7 @@ public class LoginHelper {
 				temp.setURL(recURL);
 	        	int listID = rs.getInt("list_id");
 	        	int listNum = rs.getInt("list_no");
+	        	System.out.println(listNum + ": " + temp.getName());
 	        	switch(listID)
 	        	{
 	        	case 0:
@@ -111,6 +114,7 @@ public class LoginHelper {
 	        	rs.absolute(-10);
 	        } else {
 	        	rs.first();
+	        	rs.previous();
 	        }
 	        while(rs.next())
 	        {
