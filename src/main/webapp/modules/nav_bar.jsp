@@ -14,7 +14,7 @@ if (username == null || username == "")
 	  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="grocery_list.jsp">Grocery List <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" id="gListLink" href="grocery_list.jsp">Grocery List <span class="sr-only">(current)</span></a>
 	      </li>
 	
 	    </ul>

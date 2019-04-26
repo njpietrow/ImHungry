@@ -34,9 +34,7 @@
 	<body>
 
 	  <!-- navbar -->
-		<jsp:include page="modules/nav_bar.jsp"></jsp:include>
-		
-			
+	<jsp:include page="modules/nav_bar.jsp"></jsp:include>
 		
 		<!-- begin of body -->
 		<div id="mainContent">

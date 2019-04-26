@@ -20,7 +20,7 @@ import org.json.JSONObject;
  * Email: pietrow@usc.edu
  */
 public class RestaurantGetter {
-	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static String MAPS_API_KEY = "AIzaSyCGsxCmVveyEYtob-Uy5HbH0HX9ukxuT_M";
 	
 	public static void getKey() {
 		 BufferedReader br = null;
