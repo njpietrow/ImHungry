@@ -96,14 +96,32 @@ Then("I should I should be on the {string} page") do |string|
 
 end
 
-# Results page tests
-Given("I am on the results page after pizza search") do
-  visit 'http://localhost:8080/ImHungry/search_page.jsp'
-  click_on("Login")
-  fill_in("uname_login_id", :with => "GJHalfond")
-  fill_in("password_login_id", :with => "Scrum")
-  sleep(6)
+When("I login {string} and {string}")do |string1, string2|
+    click_on("Login")
+    fill_in("uname_login_id", :with => string1)
+    fill_in("password_login_id", :with => string2)
+    find("#btnLogin").click
 end
+
+When("I type {string} in the input box again") do |string|
+    fill_in("Enter Food", :with => string)
+end
+
+Then("I click on the Feed Me button again") do
+    click_on("Feed Me!")
+end
+
+Then("I should see collage with recent pizza search") do
+    expect(page).to have_selector('div', :class=> 'q_info_container')
+    sleep(6)
+end
+#
+#
+## Results page tests
+#Given("I am on the results page after pizza search") do
+#  visit 'http://localhost:8080/ImHungry/IHSearch?search_query=pizza&num_results=10&num_miles=5'
+#  sleep(6)
+#end
 ##
 #Then("I should see an image collage on the IH Search Page") do
 #  expect(page).to have_selector('img', :class=> 'collage_image')
@@ -131,10 +149,6 @@ end
 #end
 #
 ##end of result table requirements
-#
-#Then(" I should see collage with recent pizza search") do
-#    expect(page).to have_selector('div', :class=> 'q_info_container')
-#end
 #
 #Then("I should see a dropdown bar for list management") do
 #  expect(page).to have_selector('button', :id=> 'btnGroupVerticalDrop2')
@@ -164,7 +178,7 @@ end
 #Given("I am on the recipe page after clicking on first recipe results") do
 #  visit 'http://localhost:8080/ImHungry/recipe_page.jsp?recipe_id=https://www.jocooks.com/recipes/pizza-dough-recipe/'
 #end
-#
+
 #Then("the Printable Version button is on the recipe page") do
 #  expect(page).to have_content("Printable Version")
 #end
