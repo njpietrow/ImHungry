@@ -30,7 +30,7 @@
 	
 	
 	
-	for (int i = 0; i < query_results.size(); i++){
+	for (int i = query_results.size()-1 ; i > -1; i--){
 		//display each query
 		%> <div class = "query_container">  <%
 		
@@ -47,7 +47,7 @@
 		
 		Random r = new Random(); 
 		
-		for(int k = imgs.size(); k >-1 ; k--) { 
+		for(int k = 0; k < imgs.size() ; k++) { 
 		%> 
 			<img class="collage_sm" src=<%=imgs.get(k)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 		<% 

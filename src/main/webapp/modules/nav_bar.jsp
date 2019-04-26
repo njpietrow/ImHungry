@@ -14,12 +14,24 @@ if (username == null || username == "")
 	  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item active">
+	     
+	      	<a id="back_to_results_button" href="">Back to Results</a> 
 	        <a class="nav-link" id="gListLink" href="grocery_list.jsp">Grocery List <span class="sr-only">(current)</span></a>
 	      </li>
 	
 	    </ul>
 	    
 	     <span class="navbar-text">
+	     
+	     <!-- display logout if logged in -->
+	     <% 
+	     if ( username != "Guest")
+	     {
+	    	 %> <a id="logout" href="IHLogin?action=LogOut">Logout </a> <% 
+	    	 
+	     }  
+	     %>
+	    
      	 Welcome, <%=username %>
     	</span>
 	  </div>

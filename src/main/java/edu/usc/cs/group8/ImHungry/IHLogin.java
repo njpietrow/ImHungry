@@ -20,7 +20,6 @@ public class IHLogin extends HttpServlet {
      */
     public IHLogin() {
         super();
-    	RestaurantGetter.getKey();
 
         // TODO Auto-generated constructor stub
     }

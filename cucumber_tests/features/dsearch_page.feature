@@ -36,10 +36,22 @@ Scenario: Success login
 	And click on login
 	Then stay on search page
 	
-Scenario: Successful collage
+Scenario: Successful recent collage
  When I login "GJHalfond" and "Scrum"
  And I type "pizza" in the input box again
  Then I click on the Feed Me button again
  Then I should see collage with recent pizza search
  
-	
+ Scenario: Successfully add groceries and move items
+ 	When I login "GJHalfond" and "Scrum" again
+ And I type "pizza" in the input box third time
+ Then I click on the Feed Me button thrid time
+ Then I click on Homemade Pizza
+ Then I should see and click on add to grocery list button
+ Then I should go to grocery list page
+ Then I should see flour in grocery list
+ Then I go to favorites list page
+ Then I be able to move up and down
+ Then I be able to delete
+ 
+ 

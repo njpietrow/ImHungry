@@ -115,65 +115,111 @@ Then("I should see collage with recent pizza search") do
     expect(page).to have_selector('div', :class=> 'q_info_container')
     sleep(6)
 end
-#
-#
-## Results page tests
-#Given("I am on the results page after pizza search") do
-#  visit 'http://localhost:8080/ImHungry/IHSearch?search_query=pizza&num_results=10&num_miles=5'
-#  sleep(6)
-#end
-##
-#Then("I should see an image collage on the IH Search Page") do
-#  expect(page).to have_selector('img', :class=> 'collage_image')
-#end
-#
-##test result table requirements
-#Then("I should see a table of Restaurant Results") do
-#  expect(page).to have_content("Restaurant Results")
-#end
-#
-#Then("I should see a table of Recipe Results") do
-#  expect(page).to have_content("Recipe Results")
-#end
-#
-#When("Pagination test shows 0 to 5 of 10") do
-#    expect(page).to have_content("Showing 1 to 5 of 10")
-#end
-#
-#When("I click on next button") do
-#    find("#recipe_results_table_next").click
-#end
-#
-#Then("Pagination text should change to 6 to 10 of 10") do
-#    expect(page).to have_content("Showing 6 to 10 of 10")
-#end
-#
-##end of result table requirements
-#
-#Then("I should see a dropdown bar for list management") do
-#  expect(page).to have_selector('button', :id=> 'btnGroupVerticalDrop2')
-#end
-#
-#Then("I should see a button called {string}") do |string|
-#  expect(page).to have_selector('button', :id=> 'back_to_search_button')
-#end
-#
-# When("I click on the first restaurant result") do
-#   click_on("http://localhost:8080/ImHungry/restaurant_page.jsp?restaurant_id=ChIJLR-E1kjGwoARiXii9Jqc72I&restaurant_name=California Pizza Kitchen")
-# end
-#
-# Then("I should be on the restaurants page") do
-#   expect(page).to have_current_path("/ImHungry/restaurant_page.jsp?restaurant_id=ChIJLR-E1kjGwoARiXii9Jqc72I&restaurant_name=California%20Pizza%20Kitchen")
-# end
-#
-#When("I click on the first recipe result") do
-#  click_link("http://localhost:8080/ImHungry/recipe_page.jsp?recipe_id=https://www.jocooks.com/recipes/pizza-dough-recipe/")
-#end
-#
-#Then("I should be on the recipe page") do
-#  expect(page).to have_current_path("http://localhost:8080/ImHungry/recipe_page.jsp?recipe_id=https://www.jocooks.com/recipes/pizza-dough-recipe/")
-#end
-#
+
+#add groceries test and move items
+When ("I login {string} and {string} again") do |string1, string2|
+    click_on("Login")
+    fill_in("uname_login_id", :with => string1)
+    fill_in("password_login_id", :with => string2)
+    find("#btnLogin").click
+end
+
+When ("I type {string} in the input box third time") do |string|
+    fill_in("Enter Food", :with => string)
+end
+
+Then ("I click on the Feed Me button thrid time") do
+     click_on("Feed Me!")
+end
+
+Then ("I click on Homemade Pizza") do
+    click_on("Homemade Pizza")
+end
+
+Then ("I should see and click on add to grocery list button") do
+    click_on("#grocery_list_button")
+end
+
+Then ("I should go to grocery list page") do
+    click_on("#gListLink")
+end
+
+Then ("I should see flour in grocery list") do
+     expect(page).to have_content("flour")
+end
+
+Then ("I go to favorites list page") do
+    click_on("Back to Results")
+    click_on("Favorites")
+    click_on("Manage List")
+end
+
+Then ("I be able to move up and down") do
+    expect(page).to have_content("up")
+    expect(page).to have_content("down")
+end
+
+Then ("I be able to delete") do
+    expect(page).to have_content("delete")
+end
+
+# Results page tests
+Given("I am on the results page after pizza search") do
+  visit 'http://localhost:8080/ImHungry/IHSearch?search_query=pizza&num_results=10&num_miles=5'
+  sleep(6)
+end
+
+Then("I should see an image collage on the IH Search Page") do
+  expect(page).to have_selector('img', :class=> 'collage_image')
+end
+
+#test result table requirements
+Then("I should see a table of Restaurant Results") do
+  expect(page).to have_content("Restaurant Results")
+end
+
+Then("I should see a table of Recipe Results") do
+  expect(page).to have_content("Recipe Results")
+end
+
+When("Pagination test shows 0 to 5 of 10") do
+    expect(page).to have_content("Showing 1 to 5 of 10")
+end
+
+When("I click on next button") do
+    find("#recipe_results_table_next").click
+end
+
+Then("Pagination text should change to 6 to 10 of 10") do
+    expect(page).to have_content("Showing 6 to 10 of 10")
+end
+
+#end of result table requirements
+
+Then("I should see a dropdown bar for list management") do
+  expect(page).to have_selector('button', :id=> 'btnGroupVerticalDrop2')
+end
+
+Then("I should see a button called {string}") do |string|
+  expect(page).to have_selector('button', :id=> 'back_to_search_button')
+end
+
+ When("I click on the first restaurant result") do
+     click_on("http://localhost:8080/ImHungry/restaurant_page.jsp?restaurant_id=ChIJLR-E1kjGwoARiXii9Jqc72I&restaurant_name=California Pizza Kitchen")
+ end
+
+ Then("I should be on the restaurants page") do
+   expect(page).to have_current_path("/ImHungry/restaurant_page.jsp?restaurant_id=ChIJLR-E1kjGwoARiXii9Jqc72I&restaurant_name=California%20Pizza%20Kitchen")
+ end
+
+When("I click on the first recipe result") do
+  click_on("Homemade Pizza")
+end
+
+Then("I should be on the recipe page") do
+  expect(page).to have_current_path("http://localhost:8080/ImHungry/recipe_page.jsp?recipe_id=https://www.tasteofhome.com/recipes/homemade-pizza/")
+end
+
 #
 #Given("I am on the recipe page after clicking on first recipe results") do
 #  visit 'http://localhost:8080/ImHungry/recipe_page.jsp?recipe_id=https://www.jocooks.com/recipes/pizza-dough-recipe/'
@@ -211,22 +257,6 @@ end
 #Then("I should see flour in grocery list")do
 #    expect(page).to have_content("flour")
 #end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #end of add to grocery test
 
