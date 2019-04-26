@@ -8,7 +8,9 @@ public class ListReorderTest {
 
 	@Test
 	public void testSwap() {
-		User myUser = new User("GJHalfond");
+		LoginHelper lh = new LoginHelper();
+		User myUser = new User();
+		lh.login("GJHalfond", "Scrum", myUser);
 		myUser.reset();
 		
 		myUser.addToFavorites(myUser.getRecipe("http://localhost:8080/ImHungry/testrecipe.html"));
@@ -17,7 +19,6 @@ public class ListReorderTest {
 		assertEquals(myUser.getFavorites().get(1),myUser.getRestaurant("ChIJwajStEu5woAR9O3sDMuI1UM"));
 		myUser.swapFavorites(0,1);
 		
-		LoginHelper lh = new LoginHelper();
 		lh.logout(myUser);
 		lh.login("GJHalfond", "Scrum", myUser);
 		

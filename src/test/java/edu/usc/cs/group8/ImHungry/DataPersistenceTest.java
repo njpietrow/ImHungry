@@ -44,6 +44,7 @@ public class DataPersistenceTest {
 		helper.login("GJHalfond","Scrum",currUser);
 		IHSearch searchy = new IHSearch(); 
 		searchy.doRestaurantSearch("Curry", "3", "5000", currUser); 
+		currUser.addToQuickAccess(new Query("Curry","3","5000"));
 		helper.logout(currUser);
 		helper.login("GJHalfond","Scrum",currUser);
 		assertEquals(currUser.getLastSearch(),new Query("Curry","3", "5000" ));
