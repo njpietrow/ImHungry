@@ -44,7 +44,7 @@
 		
 		Random r = new Random(); 
 		
-		for(int k = 0; k <imgs.size(); k++) { 
+		for(int k = imgs.size(); k >-1 ; k--) { 
 		%> 
 			<img class="collage_sm" src=<%=imgs.get(k)%> style="max-width:30%; max-height:30%; object-fit: contain; transform: rotate(<%= r.nextInt(31) - 15 %>deg)">
 		<% 

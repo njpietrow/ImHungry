@@ -39,7 +39,7 @@ public class IHSearch extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static String MAPS_API_KEY = "AIzaSyCe6MRPk3bmzAC476OWtgbH91rJ8hWwRyA";
+	private static String MAPS_API_KEY = "AIzaSyCGsxCmVveyEYtob-Uy5HbH0HX9ukxuT_M";
 	private static final String TOMMY_TROJAN_LOC = "34.020593,-118.285447";
 
 	public IHSearch() {
