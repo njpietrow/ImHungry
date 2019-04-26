@@ -97,10 +97,13 @@ Then("I should I should be on the {string} page") do |string|
 end
 
 # Results page tests
-#Given("I am on the results page after pizza search") do
-#  visit 'http://localhost:8080/ImHungry/IHSearch?search_query=pizza&num_results=10&num_miles=5'
-#  sleep(6)
-#end
+Given("I am on the results page after pizza search") do
+  visit 'http://localhost:8080/ImHungry/search_page.jsp'
+  click_on("Login")
+  fill_in("uname_login_id", :with => "GJHalfond")
+  fill_in("password_login_id", :with => "Scrum")
+  sleep(6)
+end
 ##
 #Then("I should see an image collage on the IH Search Page") do
 #  expect(page).to have_selector('img', :class=> 'collage_image')
